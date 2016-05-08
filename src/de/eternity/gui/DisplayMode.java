@@ -13,7 +13,7 @@ public class DisplayMode {
 	 */
 	public DisplayMode(int displayWidth, int displayHeight, int resolutionX, int resolutionY) {
 
-		this(displayHeight, displayWidth, resolutionX, resolutionY, 2);
+		this(displayWidth, displayHeight, resolutionX, resolutionY, 2);
 	}
 	
 	/**
