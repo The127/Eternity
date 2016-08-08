@@ -4,44 +4,42 @@ import java.awt.Rectangle;
 
 public class RenderQueueEntry {
 	
-	private Rectangle cameraArea;
-	
 	private Rectangle toDraw = new Rectangle();
 	private Texture texture;
-	private double x, y;
-	private int depth = 0;
+	private int x, y;
+	private int depth;
 	
 	public void enableBackgroundMode(){
-		depth = -1;
+		depth = Renderer.BACKGROUND_DEPTH;
 	}
 	
-	public void setValues(Texture texture, double x, double y, Rectangle cameraArea){
+	/**
+	 * Sets the values and calculates the area of the texture that needs to be drawn.
+	 * @return True if the area is greater than zero.
+	 */
+	public boolean setValues(Texture texture, double x, double y, Rectangle cameraArea){
 		this.texture = texture;
-		this.x = x;
-		this.y = y;
-		this.depth = (int) ((y + 0.5d) + texture.getHeight());
-		this.cameraArea = cameraArea;
+		this.x = (int)(x + 0.5d);
+		this.y = (int)(y + 0.5d);
+		this.depth = (int) (y + texture.getHeight());
+
+		//TODO calc draw area
+		return true;
 	}
 	
 	public Texture getTexture(){
 		return texture;
 	}
 	
-	public int getXAsInt(){
-		return (int)(x + 0.d);
+	public int getX(){
+		return x;
 	}
 
-	public int getYAsInt(){
-		return (int)(y + 0.d);
+	public int getY(){
+		return y;
 	}
 	
-	/**
-	 * Calculates the area of the texture that needs to be drawn.
-	 * @return True if the area is greate than zero.
-	 */
-	boolean calculateArea(){
-		
-		//TODO calc
-		return true;
+	public int getDepth(){
+		return depth;
 	}
 }
