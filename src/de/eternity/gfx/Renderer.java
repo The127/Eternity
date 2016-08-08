@@ -43,6 +43,9 @@ public class Renderer {
 			//determine if the other thread is waiting
 			if(!waitState.compareAndSet(false, true)){
 				waitState.set(false);
+				
+				//switch context
+				renderContext = (renderContext + 1) % 2;
 				//wake the other thread
 				waitLock.notifyAll();
 			}else{
@@ -65,8 +68,7 @@ public class Renderer {
 	 */
 	public void switchContext(){
 
-		renderContext = (renderContext + 1) % 2; 
-		awaitContextSwitch();
+		awaitContextSwitch(); 
 	}
 	
 	/**
