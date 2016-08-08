@@ -4,25 +4,27 @@ import java.util.Arrays;
 
 public class Renderer {
 	
-	public static final int NO_DEPTH = -1;
+	public static final int BACKGROUND_DEPTH = -1;
 	
 	//use 2 render queues to flip between rendering and updating
 	private int renderContext = 0, updateContext = 1;
-	private RenderQueue[] renderQueues = new RenderQueue[]{
-		new RenderQueue(),
-		new RenderQueue()
-	};
+	private RenderQueue[] renderQueues;
 	
 	private int clearColor = 0xFFFF00FF;
 	private int[] colorBuffer;
 	
 	private int width;
 	
-	public Renderer(Texture texture){
+	public Renderer(Texture texture, Camera camera){
 		
 		this.width = texture.getWidth();
 		
 		colorBuffer = texture.getBuffer();
+		
+		renderQueues = new RenderQueue[]{
+			new RenderQueue(camera),
+			new RenderQueue(camera)
+		};
 		
 		clearScreen();
 	}
@@ -30,7 +32,7 @@ public class Renderer {
 	/**
 	 * Switches the render context.
 	 * There are 2 render contexts.
-	 * One for rendering and one for updating.
+	 * One for rendering(active/shown) and one for updating(passive/hidden).
 	 */
 	public void switchContext(){
 
@@ -61,9 +63,14 @@ public class Renderer {
 	 */
 	public void renderQueue(){
 		
-		for(RenderQueueEntry entry : renderQueues[renderContext]){
+		RenderQueue queue = renderQueues[renderContext];
+		int size = queue.size();
+		RenderQueueEntry entry;
+		
+		for(int i = 0; i < size; i++){
 			
-			renderTexture(entry.getTexture(), entry.getXAsInt(), entry.getYAsInt());
+			entry = queue.get(i);
+			renderTexture(entry.getTexture(), entry.getX(), entry.getY());
 		}
 	}
 	
