@@ -154,4 +154,9 @@ public class Texture {
 		
 		return path;
 	}
+	
+	public void foo(){
+		for(int i = 0; i < buffer.length; i++)
+			buffer[i] = i;
+	}
 }
