@@ -4,6 +4,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import de.eternity.Game;
+import de.eternity.gfx.Camera;
 import de.eternity.gfx.Renderer;
 import de.eternity.gfx.Texture;
 import de.eternity.gui.Display;
@@ -44,11 +45,13 @@ public class DemoLauncher {
 			public void windowActivated(WindowEvent e) {}
 		});
 		
-		//init renderer
-		Renderer renderer = new Renderer(new Texture(display.getCanvas()));
+		//init renderer and camera
+		Texture renderTexture = new Texture(display.getCanvas());
+		Camera camera = new Camera(renderTexture.getWidth(), renderTexture.getHeight());
+		Renderer renderer = new Renderer(renderTexture, camera);
 		
 		//init game
-		Game game = new Game(renderer, () -> display.refreshScreen());
+		Game game = new Game(renderer, display::refreshScreen);
 		
 		int demoState = game.addGameState(new DemoState());
 		game.setCurrentGameState(demoState);
