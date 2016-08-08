@@ -28,7 +28,7 @@ public class RenderQueue implements IRenderQueue {
 	}
 	
 	public int size(){
-		return entries.size();
+		return size;
 	}
 	
 	private RenderQueueEntry addEntry(Texture texture, double x, double y){

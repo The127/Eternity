@@ -65,12 +65,10 @@ public class Renderer {
 		
 		RenderQueue queue = renderQueues[renderContext];
 		int size = queue.size();
-		RenderQueueEntry entry;
 		
 		for(int i = 0; i < size; i++){
 			
-			entry = queue.get(i);
-			renderTexture(entry.getTexture(), entry.getX(), entry.getY());
+			renderEntry(queue.get(i));
 		}
 	}
 	
@@ -83,17 +81,27 @@ public class Renderer {
 	}
 	
 	/**
-	 * Renders a texture to the screen.
-	 * @param texture The texture.
-	 * @param worldX The world x coordinate of the texture.
-	 * @param worldY The world y coordinate of the texture.
+	 * Renders an entry to the screen.
+	 * @param entry The entry from the render queue.
 	 */
-	void renderTexture(Texture texture, int worldX, int worldY){
-
-		//TODO: maybe there is some more stuff to do here later
-		for(int x = 0; x < texture.getWidth(); x++){
-			for(int y = 0; y < texture.getHeight(); y++){
-				colorBuffer[x + worldX + (y + worldY) * width] = texture.getBuffer()[x + y * texture.getWidth()];
+	void renderEntry(RenderQueueEntry entry){
+		
+		int[] texture = entry.getTexture().getBuffer();
+		
+		int startX = entry.getDrawX();
+		int startY = entry.getDrawY();
+		
+		int textureXOffset = Math.abs(entry.getX() - startX);
+		int textureYOffset = Math.abs(entry.getY() - startY);
+		
+		int endX = entry.getDrawWidth();
+		int endY = entry.getDrawHeight();
+		
+		int textureWidth = entry.getTexture().getWidth();
+		
+		for(int x = 0; x < endX; x++){
+			for(int y = 0; y < endY; y++){
+				colorBuffer[x + startX + (y + startY) * width] = texture[textureXOffset + x + (y + textureYOffset) * textureWidth];
 			}
 		}
 	}
