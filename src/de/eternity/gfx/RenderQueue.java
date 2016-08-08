@@ -1,18 +1,22 @@
 package de.eternity.gfx;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-public class RenderQueue implements IRenderQueue, Iterable<RenderQueueEntry> {
+public class RenderQueue implements IRenderQueue {
 	
-	private List<RenderQueueEntry> entries = new LinkedList<>();
+	private Camera camera;
+	
+	//ArrayList has best list.get(index) time
+	private List<RenderQueueEntry> entries = new ArrayList<>();
 	private int size = 0;
+	
+	public RenderQueue(Camera camera) {
+		this.camera = camera;
+	}
 	
 	@Override
 	public void addEntity(Texture texture, double x, double y) {
-
 		addEntry(texture, x, y);
 	}
 	
@@ -29,40 +33,35 @@ public class RenderQueue implements IRenderQueue, Iterable<RenderQueueEntry> {
 	
 	private RenderQueueEntry addEntry(Texture texture, double x, double y){
 		
+		//request new RenderQueueEntry
 		if(entries.size() < size +1)
 			entries.add(new RenderQueueEntry());
 		
+		//reuse old RenderQueueEntry
 		RenderQueueEntry entry = entries.get(size);
-		entry.setValues(texture, x, y, null);
 		
-		if(!entry.calculateArea())//if not on screen
+		if(!entry.setValues(texture, x, y, camera.getCameraArea()))//if not on screen
 			return null;
 		
+		//increment current size
 		size++;
 		
 		return entry;
 	}
 	
+	public RenderQueueEntry get(int index){
+		return entries.get(index);
+	}
+	
 	public void sort(){
 		
-		entries.sort(new Comparator<RenderQueueEntry>() {
-
-			@Override
-			public int compare(RenderQueueEntry e1, RenderQueueEntry e2) {
-				
-				return 0;
-			}
+		entries.sort((e1, e2) ->{
+			return e1.getDepth() - e2.getDepth();
 		});
 	}
 
 	public void reset() {
-
+		//reset current size for next iteration
 		size = 0;
-	}
-
-	@Override
-	public Iterator<RenderQueueEntry> iterator() {
-		
-		return entries.iterator();
 	}
 }
