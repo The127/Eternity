@@ -49,12 +49,10 @@ public class Game {
 		
 		renderThread = new Thread(() -> {
 			
-			//TODO: calculate fps? (fps are always equal to ups in this setup)
 			while(true){
 				
-				//TODO: maybe use an interface with a doRendering method for more flexibility
-				renderer.clearScreen();
 				renderer.switchContext();
+				renderer.clearScreen();
 				renderer.renderQueue();
 				
 				updateScreen.run();
@@ -71,6 +69,7 @@ public class Game {
 			while(true){
 				
 				try {
+					
 					//await new context
 					RenderQueue queue = renderer.getUpdateContext();
 					

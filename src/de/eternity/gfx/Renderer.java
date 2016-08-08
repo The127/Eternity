@@ -1,13 +1,17 @@
 package de.eternity.gfx;
 
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Renderer {
 	
 	public static final int BACKGROUND_DEPTH = -1;
 	
+	private Object waitLock = new Object(){};
+	AtomicBoolean waitState = new AtomicBoolean(false);
+	
 	//use 2 render queues to flip between rendering and updating
-	private int renderContext = 0, updateContext = 1;
+	private int renderContext = 0;
 	private RenderQueue[] renderQueues;
 	
 	private int clearColor = 0xFFFF00FF;
@@ -30,18 +34,39 @@ public class Renderer {
 	}
 	
 	/**
+	 * Handles concurrency issues between the update and render thread.
+	 */
+	private void awaitContextSwitch(){
+		
+		synchronized (waitLock) {
+			
+			//determine if the other thread is waiting
+			if(!waitState.compareAndSet(false, true)){
+				waitState.set(false);
+				//wake the other thread
+				waitLock.notifyAll();
+			}else{
+				
+				try {
+					//wait for the other thread
+					waitLock.wait();
+				} catch (InterruptedException e) {
+					//TODO: Logging
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Switches the render context.
 	 * There are 2 render contexts.
 	 * One for rendering(active/shown) and one for updating(passive/hidden).
 	 */
 	public void switchContext(){
 
-		synchronized (renderQueues[renderContext]) {
-			
-			renderQueues[renderContext].reset();
-			renderQueues[renderContext].notifyAll();
-		}
 		renderContext = (renderContext + 1) % 2; 
+		awaitContextSwitch();
 	}
 	
 	/**
@@ -51,11 +76,8 @@ public class Renderer {
 	 */
 	public RenderQueue getUpdateContext() throws InterruptedException{
 
-		updateContext = (updateContext + 1) % 2; 
-		synchronized (renderQueues[updateContext]) {
-			renderQueues[updateContext].wait();
-		}
-		return renderQueues[updateContext];
+		awaitContextSwitch();
+		return renderQueues[(renderContext + 1) % 2];
 	}
 	
 	/**
@@ -70,6 +92,7 @@ public class Renderer {
 			
 			renderEntry(queue.get(i));
 		}
+		renderQueues[renderContext].reset();
 	}
 	
 	/**
