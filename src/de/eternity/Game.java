@@ -13,13 +13,15 @@ public class Game {
 	public static double getRelativeTimeInSeconds(){
 		return relativeTime;
 	}
-	private static void addDelta(double delta){
-		relativeTime += delta;
-	}
 	public double getTime(){
 		return relativeTime;
 	}
 
+	private static int fps = 0;
+	public static int getFps(){
+		return fps;
+	}
+	
 	//class code
 	private List<IGameState> gameStates = new ArrayList<>();
 	private int currentGameState = -1;
@@ -57,13 +59,14 @@ public class Game {
 				
 				updateScreen.run();
 			}
-		});
+		}, "renderThread");
 		
 		updateThread = new Thread(() -> {
 			
+			int fpsCounter = 0;
 			long lastTime = System.nanoTime();
 			long currentTime = 0, absDelta = 0;
-			double relDelta = 0;
+			double relDelta = 0, fpsTimer = 0;
 			
 			while(true){
 				
@@ -77,12 +80,25 @@ public class Game {
 					lastTime = currentTime;
 					
 					relDelta = absDelta / 1000000000d;
-					addDelta(relDelta);
+					//update game time and fps count
+					relativeTime += relDelta;
+					fpsTimer += relDelta;
 					
 					//TODO: handle input data in some way
 					
 					gameStates.get(currentGameState).update(relDelta);
 					gameStates.get(currentGameState).applyRenderContext(queue);
+					queue.sort();
+					
+					//calculate fps
+					fpsCounter++;
+					if(fpsTimer >= 1){
+						fps = fpsCounter;
+						fpsCounter = 0;
+						fpsTimer = 0;
+						
+						System.out.println("FPS: " + fps);
+					}
 					
 				} catch (Exception e) {
 					//TODO: maybe not use Exception in catch clause
@@ -92,7 +108,7 @@ public class Game {
 					System.exit(-1);
 				}
 			}
-		});
+		}, "updateThread");
 		
 		updateThread.start();
 		renderThread.start();
