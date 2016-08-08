@@ -18,7 +18,7 @@ public class DemoState implements IGameState {
 	Texture t2 = new Texture(100, 100, 0xff<<8);//full green
 	{t1.foo();t2.foo();}
 	
-	Texture[] textures = new Texture[100000];
+	Texture[] textures = new Texture[10000];
 	int[] xs = new int[textures.length], ys = new int[xs.length];
 	{
 		Random rand = new Random();
@@ -46,17 +46,17 @@ public class DemoState implements IGameState {
 
 		//render rectangles
 		renderQueue.addBackground(t1, x, x);
-		renderQueue.addBackground(t1, 300+x, -x);
+		renderQueue.addBackground(t1, 300-x, x);
 		renderQueue.addBackground(t1, x, 200-x);
-		renderQueue.addBackground(t1, 300+x, 200+x);
+		renderQueue.addBackground(t1, 300-x, 200-x);
 		
 		renderQueue.addBackground(t1, x, 100);
 
-		renderQueue.addBackground(t1, x+300, 100);
+		renderQueue.addBackground(t1, 300-x, 100);
 		
 		renderQueue.addBackground(t1, 150, x);
-		renderQueue.addBackground(t1, 150, 200+x);
-		renderQueue.addBackground(t2, 200, 0);
+		renderQueue.addBackground(t1, 150, 200-x);
+		renderQueue.addBackground(t2, 150, 100);
 		
 		for(int i = 0; i < xs.length; i++){
 			renderQueue.addEntity(textures[i], xs[i], ys[i]);
