@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 /**
  * A Texture represents the color data and the dimensional data of an image.
+ * Textures will be pre-multiplied after loading or generation.
  * See the Textures class for utility methods.
  * @author Julian Sven Baehr
  */
@@ -36,6 +37,8 @@ public class Texture {
 		height = tempImage.getHeight();
 		
 		buffer = tempImage.getRGB(0, 0, width, height, null, 0, width);
+		
+		preMultiply();
 	}
 	
 	/**
@@ -51,6 +54,8 @@ public class Texture {
 		for(int x = 0; x < width; x++)
 			for(int y = 0; y < height; y++)
 				buffer[x + y * width] = color;
+		
+		preMultiply();
 	}
 	
 	/**
@@ -155,8 +160,25 @@ public class Texture {
 		return path;
 	}
 	
+	private void preMultiply(){
+		
+		int a, r, g, b;
+		
+		for(int i = 0; i < buffer.length; i++){
+			
+			a = (buffer[i] >>> 24);
+			r = ((buffer[i] >> 16) & 0xff) * a / 0xff;
+			g = ((buffer[i] >> 8) & 0xff) * a / 0xff;
+			b = ((buffer[i]) & 0xff) * a / 0xff;
+			
+			buffer[i] = (a<<24) | (r<<16) | (g<<8) | b;
+		}
+	}
+	
 	public void foo(){
+		
 		for(int i = 0; i < buffer.length; i++)
-			buffer[i] = i;
+			buffer[i] = 0xffffffff;
+		preMultiply();
 	}
 }
