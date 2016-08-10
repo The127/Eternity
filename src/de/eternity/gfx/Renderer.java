@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Renderer {
 	
-	public static final int BACKGROUND_DEPTH = -1;
+	public static final int BACKGROUND_DEPTH = -1337;
 	
 	private Object waitLock = new Object(){};
 	AtomicBoolean waitState = new AtomicBoolean(false);
@@ -14,7 +14,7 @@ public class Renderer {
 	private int renderContext = 0;
 	private RenderQueue[] renderQueues;
 	
-	private int clearColor = 0xFFFF00FF;
+	private int clearColor = 0x00000000;
 	private int[] colorBuffer;
 	
 	private int width;
@@ -124,9 +124,50 @@ public class Renderer {
 		
 		int textureWidth = entry.getTexture().getWidth();
 		
+		int bufferOffset;
+		
+		int textureColor, originalColor;
+		int textureA, textureR, textureG, textureB;
+		int originalR, originalG, originalB;
+		
 		for(int x = 0; x < endX; x++){
 			for(int y = 0; y < endY; y++){
-				colorBuffer[x + startX + (y + startY) * width] = texture[textureXOffset + x + (y + textureYOffset) * textureWidth];
+				
+				bufferOffset = x + startX + (y + startY) * width;
+				
+				textureColor = texture[textureXOffset + x + (y + textureYOffset) * textureWidth];
+				textureA = (textureColor >> 24) & 0xff;
+
+				if(textureA != 0){//if not invisible
+				
+					//full alpha -> copy
+					if(textureA == 0xff){
+
+						colorBuffer[bufferOffset] = textureColor;
+					}else{//alpha support code
+						
+						//calculate new color
+						originalColor = colorBuffer[bufferOffset];
+						
+						//texture rgb
+						textureR = (textureColor >> 16) & 0xff;
+						textureG = (textureColor >> 8) & 0xff;
+						textureB = (textureColor) & 0xff;
+						
+						//current rgb
+						originalR = (originalColor >> 16) & 0xff;
+						originalG = (originalColor >> 8) & 0xff;
+						originalB = (originalColor) & 0xff;
+						
+						//calculate new current rgb
+						originalR = textureR + originalR * (0xff-textureA) / 0xff;
+						originalG = textureG + originalG * (0xff-textureA) / 0xff;
+						originalB = textureB + originalB * (0xff-textureA) / 0xff;
+						
+						//calculate and set the effective color
+						colorBuffer[bufferOffset] = (0xff<<24) | (originalR<<16) | (originalG<<8) | originalB;
+					}
+				}
 			}
 		}
 	}
