@@ -76,7 +76,7 @@ public class Renderer {
 	 * @return The next context.
 	 * @throws InterruptedException
 	 */
-	public RenderQueue getUpdateContext() throws InterruptedException{
+	public RenderQueue getUpdateContext() {
 
 		awaitContextSwitch();
 		return renderQueues[(renderContext + 1) % 2];
