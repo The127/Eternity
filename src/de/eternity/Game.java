@@ -68,43 +68,33 @@ public class Game {
 			
 			while(true){
 				
-				try {
+				//await new context
+				RenderQueue queue = renderer.getUpdateContext();
+				
+				//timer handling
+				currentTime = System.nanoTime();
+				absDelta = currentTime - lastTime;
+				lastTime = currentTime;
+				
+				relDelta = absDelta / 1000000000d;
+				//update game time and fps count
+				relativeTime += relDelta;
+				fpsTimer += relDelta;
+				
+				//TODO: handle input data in some way
+				
+				gameStates.get(currentGameState).update(relDelta);
+				gameStates.get(currentGameState).applyRenderContext(queue);
+				queue.sort();
+				
+				//calculate fps
+				fpsCounter++;
+				if(fpsTimer >= 1){
+					fps = fpsCounter;
+					fpsCounter = 0;
+					fpsTimer = 0;
 					
-					//await new context
-					RenderQueue queue = renderer.getUpdateContext();
-					
-					//timer handling
-					currentTime = System.nanoTime();
-					absDelta = currentTime - lastTime;
-					lastTime = currentTime;
-					
-					relDelta = absDelta / 1000000000d;
-					//update game time and fps count
-					relativeTime += relDelta;
-					fpsTimer += relDelta;
-					
-					//TODO: handle input data in some way
-					
-					gameStates.get(currentGameState).update(relDelta);
-					gameStates.get(currentGameState).applyRenderContext(queue);
-					queue.sort();
-					
-					//calculate fps
-					fpsCounter++;
-					if(fpsTimer >= 1){
-						fps = fpsCounter;
-						fpsCounter = 0;
-						fpsTimer = 0;
-						
-						System.out.println("FPS: " + fps);
-					}
-					
-				} catch (Exception e) {
-					//TODO: maybe not use Exception in catch clause
-					
-					//TODO: use a logging framework of some sort
-					e.printStackTrace();
-					System.exit(-1);
+					System.out.println("FPS: " + fps);
 				}
 			}
 		}, "updateThread");
