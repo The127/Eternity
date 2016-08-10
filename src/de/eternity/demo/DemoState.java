@@ -18,7 +18,7 @@ public class DemoState implements IGameState {
 	Texture t2 = new Texture(100, 100, 0xff<<8);//full green
 	{t1.foo();t2.foo();}
 	
-	Texture[] textures = new Texture[10000];
+	Texture[] textures = new Texture[1000];
 	int[] xs = new int[textures.length], ys = new int[xs.length];
 	{
 		Random rand = new Random();
@@ -27,7 +27,6 @@ public class DemoState implements IGameState {
 			xs[i] = rand.nextInt(390);
 			ys[i] = rand.nextInt(290);
 		}
-		
 	}
 	
 	double x = 0, speed = 100;
