@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Renderer {
 	
 	public static final int BACKGROUND_DEPTH = -1337;
+	public static final int CLEAR_COLOR = 0x00000000;
 	
 	private Object waitLock = new Object(){};
 	AtomicBoolean waitState = new AtomicBoolean(false);
@@ -14,7 +15,6 @@ public class Renderer {
 	private int renderContext = 0;
 	private RenderQueue[] renderQueues;
 	
-	private int clearColor = 0x00000000;
 	private int[] colorBuffer;
 	
 	private int width;
@@ -48,8 +48,7 @@ public class Renderer {
 				renderContext = (renderContext + 1) % 2;
 				//wake the other thread
 				waitLock.notifyAll();
-			}else{
-				
+			}else
 				try {
 					//wait for the other thread
 					waitLock.wait();
@@ -57,7 +56,6 @@ public class Renderer {
 					//TODO: Logging
 					e.printStackTrace();
 				}
-			}
 		}
 	}
 	
@@ -90,10 +88,9 @@ public class Renderer {
 		RenderQueue queue = renderQueues[renderContext];
 		int size = queue.size();
 		
-		for(int i = 0; i < size; i++){
-			
+		for(int i = 0; i < size; i++)
 			renderEntry(queue.get(i));
-		}
+		
 		renderQueues[renderContext].reset();
 	}
 	
@@ -102,7 +99,7 @@ public class Renderer {
 	 */
 	public void clearScreen(){
 		
-		Arrays.fill(colorBuffer, clearColor);
+		Arrays.fill(colorBuffer, CLEAR_COLOR);
 	}
 	
 	/**
@@ -136,7 +133,7 @@ public class Renderer {
 				bufferOffset = x + startX + (y + startY) * width;
 				
 				textureColor = texture[textureXOffset + x + (y + textureYOffset) * textureWidth];
-				textureA = (textureColor >> 24) & 0xff;
+				textureA = (textureColor >>> 24);
 
 				if(textureA != 0){//if not invisible
 				

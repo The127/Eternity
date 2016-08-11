@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -51,9 +52,11 @@ public class Texture {
 
 		this(width, height);
 		
-		for(int x = 0; x < width; x++)
-			for(int y = 0; y < height; y++)
-				buffer[x + y * width] = color;
+//		for(int x = 0; x < width; x++)
+//			for(int y = 0; y < height; y++)
+//				buffer[x + y * width] = color;
+		
+		Arrays.fill(buffer, color);
 		
 		preMultiply();
 	}
@@ -177,8 +180,7 @@ public class Texture {
 	
 	public void foo(){
 		
-		for(int i = 0; i < buffer.length; i++)
-			buffer[i] = 0xffffffff;
+		Arrays.fill(buffer, 0xffffffff);
 		preMultiply();
 	}
 }

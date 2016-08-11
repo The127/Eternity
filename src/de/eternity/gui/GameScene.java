@@ -28,8 +28,9 @@ public class GameScene extends Canvas{
 		
 		//create compatible buffered image for hopefully the best possible performance
 		buffer = GraphicsEnvironment.getLocalGraphicsEnvironment()
-				.getDefaultScreenDevice().getDefaultConfiguration()
-				.createCompatibleImage(displayMode.getResolutionX(), displayMode.getResolutionY(), Transparency.OPAQUE);;
+					.getDefaultScreenDevice()
+					.getDefaultConfiguration()
+					.createCompatibleImage(displayMode.getResolutionX(), displayMode.getResolutionY(), Transparency.OPAQUE);;
 	}
 	
 	/**
