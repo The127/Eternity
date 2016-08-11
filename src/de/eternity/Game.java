@@ -110,9 +110,9 @@ public class Game {
 	 */
 	public void setCurrentGameState(int gameState){
 		
-		if(currentGameState < 0 || currentGameState > gameStates.size())
+		if(gameState < 0 || gameState > gameStates.size())
 			throw new IllegalArgumentException("'gameState' cannot be less than 0 or greater than the amount of registered game states!");
-		else
+		else if(currentGameState != -1)
 			gameStates.get(currentGameState).shutdown();
 		
 		currentGameState = gameState;

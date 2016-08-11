@@ -46,9 +46,8 @@ public class DemoLauncher {
 		});
 		
 		//init renderer and camera
-		Texture renderTexture = new Texture(display.getCanvas());
-		Camera camera = new Camera(renderTexture.getWidth(), renderTexture.getHeight());
-		Renderer renderer = new Renderer(renderTexture, camera);
+		Camera camera = new Camera(displayMode.getResolutionX(), displayMode.getResolutionY());
+		Renderer renderer = new Renderer(new Texture(display.getCanvas()), camera);
 		
 		//init game
 		Game game = new Game(renderer, display::refreshScreen);
