@@ -10,18 +10,20 @@ public class Renderer {
 	
 	private Object waitLock = new Object(){};
 	AtomicBoolean waitState = new AtomicBoolean(false);
-	
 	//use 2 render queues to flip between rendering and updating
 	private int renderContext = 0;
 	private RenderQueue[] renderQueues;
 	
-	private int[] colorBuffer;
+	private Camera camera, activeCamera;
 	
+	private int[] colorBuffer;
 	private int width;
 	
 	public Renderer(Texture texture, Camera camera){
 		
 		this.width = texture.getWidth();
+		this.camera = camera;
+		activeCamera = new Camera(camera.getResolutionX(), camera.getResolutionY());
 		
 		colorBuffer = texture.getBuffer();
 		
@@ -44,8 +46,8 @@ public class Renderer {
 			if(!waitState.compareAndSet(false, true)){
 				waitState.set(false);
 				
-				//switch context
-				renderContext = (renderContext + 1) % 2;
+				handleContextSwitch();
+				
 				//wake the other thread
 				waitLock.notifyAll();
 			}else
@@ -59,12 +61,21 @@ public class Renderer {
 		}
 	}
 	
+	private void handleContextSwitch(){
+
+		//switch context
+		renderContext = (renderContext + 1) % 2;
+		
+		//switch camera context
+		activeCamera.set(camera.getX(), camera.getY());
+	}
+	
 	/**
 	 * Switches the render context.
 	 * There are 2 render contexts.
 	 * One for rendering(active/shown) and one for updating(passive/hidden).
 	 */
-	public void switchContext(){
+	public void switchRenderContext(){
 
 		awaitContextSwitch(); 
 	}
@@ -127,10 +138,13 @@ public class Renderer {
 		int textureA, textureR, textureG, textureB;
 		int originalR, originalG, originalB;
 		
+		int cameraXOffset = activeCamera.getCameraArea().x;
+		int cameraYOffset = activeCamera.getCameraArea().y;
+		
 		for(int x = 0; x < endX; x++){
 			for(int y = 0; y < endY; y++){
 				
-				bufferOffset = x + startX + (y + startY) * width;
+				bufferOffset = x + startX - cameraXOffset + (y + startY - cameraYOffset) * width;
 				
 				textureColor = texture[textureXOffset + x + (y + textureYOffset) * textureWidth];
 				textureA = (textureColor >>> 24);

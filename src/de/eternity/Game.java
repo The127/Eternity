@@ -55,7 +55,7 @@ public class Game {
 		
 		while(true){
 			
-			renderer.switchContext();
+			renderer.switchRenderContext();
 			renderer.clearScreen();
 			renderer.renderQueue();
 			

@@ -27,6 +27,10 @@ public class RenderQueue implements IRenderQueue {
 		if(entry != null)entry.enableBackgroundMode();
 	}
 	
+	public Camera getCamera(){
+		return camera;
+	}
+	
 	public int size(){
 		return size;
 	}
