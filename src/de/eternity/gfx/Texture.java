@@ -180,7 +180,8 @@ public class Texture {
 	
 	public void foo(){
 		
-		Arrays.fill(buffer, 0xffffffff);
+		for(int i = 0; i < buffer.length; i++)
+			buffer[i] = 0xff000000 | (i << i);
 		preMultiply();
 	}
 }
