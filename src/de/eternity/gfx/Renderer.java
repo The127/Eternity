@@ -134,9 +134,9 @@ public class Renderer {
 		
 		int bufferOffset;
 		
-		int textureColor, originalColor;
+		int textureColor, currentColor;
 		int textureA, textureR, textureG, textureB;
-		int originalR, originalG, originalB;
+		int currentR, currentG, currentB;
 		
 		int cameraXOffset = activeCamera.getCameraArea().x;
 		int cameraYOffset = activeCamera.getCameraArea().y;
@@ -144,21 +144,21 @@ public class Renderer {
 		for(int x = 0; x < endX; x++){
 			for(int y = 0; y < endY; y++){
 				
-				bufferOffset = x + startX - cameraXOffset + (y + startY - cameraYOffset) * width;
-				
 				textureColor = texture[textureXOffset + x + (y + textureYOffset) * textureWidth];
 				textureA = (textureColor >>> 24);
 
-				if(textureA != 0){//if not invisible
-				
-					//full alpha -> copy
-					if(textureA == 0xff){
+				if(textureA != 0){//if visible
+					
+					//calculate index in buffer
+					bufferOffset = x + startX - cameraXOffset + (y + startY - cameraYOffset) * width;
+					
+					if(textureA == 0xff){//full alpha -> overwrite
 
 						colorBuffer[bufferOffset] = textureColor;
 					}else{//alpha support code
 						
 						//calculate new color
-						originalColor = colorBuffer[bufferOffset];
+						currentColor = colorBuffer[bufferOffset];
 						
 						//texture rgb
 						textureR = (textureColor >> 16) & 0xff;
@@ -166,17 +166,17 @@ public class Renderer {
 						textureB = (textureColor) & 0xff;
 						
 						//current rgb
-						originalR = (originalColor >> 16) & 0xff;
-						originalG = (originalColor >> 8) & 0xff;
-						originalB = (originalColor) & 0xff;
+						currentR = (currentColor >> 16) & 0xff;
+						currentG = (currentColor >> 8) & 0xff;
+						currentB = (currentColor) & 0xff;
 						
 						//calculate new current rgb
-						originalR = textureR + originalR * (0xff-textureA) / 0xff;
-						originalG = textureG + originalG * (0xff-textureA) / 0xff;
-						originalB = textureB + originalB * (0xff-textureA) / 0xff;
+						currentR = textureR + currentR * (0xff-textureA) / 0xff;
+						currentG = textureG + currentG * (0xff-textureA) / 0xff;
+						currentB = textureB + currentB * (0xff-textureA) / 0xff;
 						
 						//calculate and set the effective color
-						colorBuffer[bufferOffset] = (0xff<<24) | (originalR<<16) | (originalG<<8) | originalB;
+						colorBuffer[bufferOffset] = (currentR<<16) | (currentG<<8) | currentB;//no alpha channel needed
 					}
 				}
 			}
