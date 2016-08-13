@@ -178,10 +178,36 @@ public class Texture {
 		}
 	}
 	
+	/**
+	 * Creates a new texture with a copy of the specified area of this texture as its content.
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @return The selected area in a new texture.
+	 */
+	public Texture subTexture(int x, int y, int width, int height){
+		
+		Texture texture = new Texture(width, height);
+		
+		for(int xx = 0; xx < width; xx++)
+			for(int yy = 0; yy < height; yy++)
+				texture.buffer[xx + yy*width] = buffer[x + xx + (y + yy) * this.width];
+		
+		return texture;
+	}
+	
 	public void foo(){
 		
 		for(int i = 0; i < buffer.length; i++)
-			buffer[i] = 0xff000000 | (i << i);
+			if(i < 10)
+				buffer[i] = 0xffff00ff;
+			else if(i > 100 && i < 110)
+				buffer[i] = 0xffff00ff;
+			else if(i > 100*9+1 && i < 100*9+8)
+				buffer[i] = 0xffff00ff;
+			else
+				buffer[i] = 0xff000000 | (i << i);
 		preMultiply();
 	}
 }

@@ -9,7 +9,7 @@ import com.google.gson.JsonSyntaxException;
 import de.eternity.IGameState;
 import de.eternity.gfx.IRenderQueue;
 import de.eternity.gfx.Texture;
-import de.eternity.map.Map;
+import de.eternity.support.tiled.Map;
 
 /**
  * Draws a default background with a red and a green rectangle. One rectangle is moving sideways.
@@ -22,6 +22,8 @@ public class DemoState implements IGameState {
 	Texture t1 = new Texture(100, 100, 0xff<<16);//full red
 	Texture t2 = new Texture(100, 100, 0xff<<8);//full green
 	{t1.foo();t2.foo();}
+	
+	Texture sub = t1.subTexture(0, 0, 10, 10);
 	
 	Map m;
 	{
@@ -64,11 +66,12 @@ public class DemoState implements IGameState {
 	@Override
 	public void applyRenderContext(IRenderQueue renderQueue) {
 
-		renderQueue.getCamera().set(10, 10);
+		renderQueue.getCamera().set(0, 0);
 		//m.renderMap(renderQueue);
 		
 //		//render rectangles
-		renderQueue.addBackground(t1, x, x);
+		renderQueue.addBackground(t1, 0, 0);
+		renderQueue.addBackground(sub, t1.getWidth(), 0);
 //		renderQueue.addBackground(t1, 300-x, x);
 //		renderQueue.addBackground(t1, x, 200-x);
 //		renderQueue.addBackground(t1, 300-x, 200-x);
