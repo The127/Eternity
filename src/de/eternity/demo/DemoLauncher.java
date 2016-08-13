@@ -50,9 +50,10 @@ public class DemoLauncher {
 		Renderer renderer = new Renderer(new Texture(display.getCanvas()), camera);
 		
 		//init game
-		Game game = new Game(renderer, display::refreshScreen);
+		//TODO: create game data instance from file
+		Game game = new Game(null, renderer, display::refreshScreen);
 		
-		int demoState = game.addGameState(new DemoState());
+		int demoState = game.addGameState(new DemoState(null));
 		game.setCurrentGameState(demoState);
 		
 		game.start();

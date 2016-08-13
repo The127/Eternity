@@ -6,7 +6,8 @@ import java.util.Random;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import de.eternity.IGameState;
+import de.eternity.GameData;
+import de.eternity.GameState;
 import de.eternity.gfx.IRenderQueue;
 import de.eternity.gfx.Texture;
 import de.eternity.support.tiled.Map;
@@ -16,8 +17,8 @@ import de.eternity.support.tiled.Map;
  * @author Julian Sven Baehr
  *
  */
-public class DemoState implements IGameState {
-	
+public class DemoState extends GameState {
+
 	//no alpha channel is used in rendering
 	Texture t1 = new Texture(100, 100, 0xff<<16);//full red
 	Texture t2 = new Texture(100, 100, 0xff<<8);//full green
@@ -53,6 +54,10 @@ public class DemoState implements IGameState {
 	}
 	
 	double x = 0, speed = 100;
+	
+	public DemoState(GameData gameData) {
+		super(gameData);
+	}
 	
 	@Override
 	public void update(double delta) {

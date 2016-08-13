@@ -7,7 +7,7 @@ import de.eternity.gfx.RenderQueue;
 import de.eternity.gfx.Renderer;
 
 public class Game {
-
+	
 	//game time
 	private static double relativeTime = 0;
 	public static double getRelativeTimeInSeconds(){
@@ -23,18 +23,21 @@ public class Game {
 	}
 	
 	//class code
-	private List<IGameState> gameStates = new ArrayList<>();
+	private List<GameState> gameStates = new ArrayList<>();
 	private int currentGameState = -1;
 	
 	private Runnable updateScreen;
 	private Renderer renderer;
+	
+	private boolean hasStarted = false;
 	
 	/**
 	 * Creates a new game instance.
 	 * @param renderer The renderer for the game.
 	 * @param updateScreen This method declares how the rendered image is shown on the screen.
 	 */
-	public Game(Renderer renderer, Runnable updateScreen){
+	public Game(GameData gameData, Renderer renderer, Runnable updateScreen){
+		
 		this.renderer = renderer;
 		this.updateScreen = updateScreen;
 	}
@@ -42,10 +45,15 @@ public class Game {
 	/**
 	 * Starts the game.
 	 */
-	public void start(){
+	public synchronized void start(){
 		
-		new Thread(this::render, "renderThread").start();
-		new Thread(this::update, "updateThread").start();
+		if(!hasStarted){
+		
+			hasStarted = true;
+			
+			new Thread(this::render, "renderThread").start();
+			new Thread(this::update, "updateThread").start();
+		}
 	}
 	
 	/**
@@ -124,7 +132,7 @@ public class Game {
 	 * @param gameState The new game state.
 	 * @return The id of the game state.
 	 */
-	public int addGameState(IGameState gameState){
+	public int addGameState(GameState gameState){
 		
 		gameStates.add(gameState);
 		return gameStates.size()-1;
