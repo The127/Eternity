@@ -10,7 +10,7 @@ import de.eternity.GameData;
 import de.eternity.GameState;
 import de.eternity.gfx.IRenderQueue;
 import de.eternity.gfx.Texture;
-import de.eternity.support.tiled.Map;
+import de.eternity.support.tiled.TiledMap;
 
 /**
  * Draws a default background with a red and a green rectangle. One rectangle is moving sideways.
@@ -26,10 +26,10 @@ public class DemoState extends GameState {
 	
 	Texture sub = t1.subTexture(0, 0, 10, 10);
 	
-	Map m;
+	TiledMap m;
 	{
 		try {
-			m = Map.readMap("res/t.json");
+			m = TiledMap.readMap("res/t.json");
 		} catch (JsonSyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

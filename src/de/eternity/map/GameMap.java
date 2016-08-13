@@ -1,31 +1,19 @@
-package de.eternity.support.tiled;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
+package de.eternity.map;
 
 import de.eternity.gfx.Camera;
 import de.eternity.gfx.IRenderQueue;
 import de.eternity.gfx.Texture;
 
-public class Map{
+public class GameMap {
+
+	private final int width, height, tilewidth;
+	private final int[] data;
 	
-	private String path;
-	
-	private int width, height, tilewidth;
-	
-	private Layer[] layers;
-	private Tileset[] tilesets;
-	
-	public static Map readMap(String path) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
-		
-		Map map = new Gson().fromJson(new FileReader(path), Map.class);
-		map.path = path;
-		
-		return map;
+	public GameMap(int[] data, int width, int height, int tilewidth){
+		this.data = data;
+		this.width = width;
+		this.height = height;
+		this.tilewidth = tilewidth;
 	}
 	
 	public void renderMap(IRenderQueue renderQueue){

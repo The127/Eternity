@@ -1,6 +1,6 @@
 package de.eternity.support.tiled;
 
-class Layer {
+class TiledLayer {
 
 	String name;
 	int height, width;

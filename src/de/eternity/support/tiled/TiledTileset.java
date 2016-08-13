@@ -1,6 +1,6 @@
 package de.eternity.support.tiled;
 
-class Tileset {
+class TiledTileset {
 
 	int firstgid, tilecount;
 	String name;
