@@ -1,4 +1,4 @@
-package de.eternity.map;
+package de.eternity.support.tiled;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

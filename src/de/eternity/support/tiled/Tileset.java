@@ -1,4 +1,4 @@
-package de.eternity.map;
+package de.eternity.support.tiled;
 
 class Tileset {
 
