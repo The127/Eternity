@@ -1,0 +1,6 @@
+tileset = "icetiles"
+textureIds = [ 0, 1, 2 ]
+
+[animationTimer]
+	currentTexture = 0
+	frameTimesSeconds = [ 0.25, 2.25, 0.5 ]
