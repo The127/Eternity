@@ -11,24 +11,27 @@ public class Animation {
 		
 		private void update(double delta){
 			
-			//add delta to unaccounted time
-			unaccountedTimeSeconds += delta;
-			
-			boolean isSkipping = true;
-			int skippedFrames = 0;
-			//calculate how many frames are to be skipped
-			while(isSkipping){
+			//only if there are more than 1 frames in the animation
+			if(Animation.this.textureCount > 1){
+				//add delta to unaccounted time
+				unaccountedTimeSeconds += delta;
 				
-				//calculate if the next frame has been reached
-				double timeForNextFrame = frameTimesSeconds[(currentTexture + skippedFrames) % Animation.this.textureCount];
-				if(unaccountedTimeSeconds > timeForNextFrame){
-					skippedFrames++;
-					unaccountedTimeSeconds -= timeForNextFrame;
+				boolean isSkipping = true;
+				int skippedFrames = 0;
+				//calculate how many frames are to be skipped
+				while(isSkipping){
+					
+					//calculate if the next frame has been reached
+					double timeForNextFrame = frameTimesSeconds[(currentTexture + skippedFrames) % Animation.this.textureCount];
+					if(unaccountedTimeSeconds > timeForNextFrame){
+						skippedFrames++;
+						unaccountedTimeSeconds -= timeForNextFrame;
+					}
 				}
+				
+				//update current texture id
+				currentTexture = (currentTexture + skippedFrames) % Animation.this.textureCount;
 			}
-			
-			//update current texture id
-			currentTexture = (currentTexture + skippedFrames) % Animation.this.textureCount;
 		}
 	}
 	
