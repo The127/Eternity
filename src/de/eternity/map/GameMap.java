@@ -32,6 +32,7 @@ public class GameMap {
 		for(int x = startX; x < endX; x++){
 			for(int y = startY; y < endY; y++){
 				
+				//TODO: use actual background textures
 				renderQueue.addBackground(t, camera.getX() + x*tilewidth, camera.getY() + y*tilewidth);
 			}
 		}
