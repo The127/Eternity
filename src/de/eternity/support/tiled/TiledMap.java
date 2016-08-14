@@ -27,6 +27,10 @@ public class TiledMap{
 		return map;
 	}
 	
+	private TiledMap(){
+		//private constructor
+	}
+	
 	/**
 	 * Translates and calculates a game map from the loaded map data.
 	 * @param textureStorage
