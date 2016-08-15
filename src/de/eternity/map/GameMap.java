@@ -2,24 +2,20 @@ package de.eternity.map;
 
 import de.eternity.gfx.Camera;
 import de.eternity.gfx.IRenderQueue;
-import de.eternity.gfx.Texture;
+import de.eternity.gfx.TextureStorage;
 
 public class GameMap {
 
-	private final int width, height, tilewidth;
+	private final int width, tilewidth;
 	private final int[] data;
 	
-	public GameMap(int[] data, int width, int height, int tilewidth){
+	public GameMap(int[] data, int width, int tilewidth){
 		this.data = data;
 		this.width = width;
-		this.height = height;
 		this.tilewidth = tilewidth;
 	}
 	
-	public void renderMap(IRenderQueue renderQueue){
-		
-		Texture t = new Texture(32, 32);
-		t.foo();
+	public void renderMap(IRenderQueue renderQueue, TextureStorage textureStorage, TileStorage tileStorage){
 		
 		Camera camera = renderQueue.getCamera();
 		
@@ -32,8 +28,7 @@ public class GameMap {
 		for(int x = startX; x < endX; x++){
 			for(int y = startY; y < endY; y++){
 				
-				//TODO: use actual background textures
-				renderQueue.addBackground(t, camera.getX() + x*tilewidth, camera.getY() + y*tilewidth);
+				tileStorage.get(data[x + y * width]).applyRenderContext(renderQueue, textureStorage, camera.getX() + x*tilewidth, camera.getY() + y*tilewidth);
 			}
 		}
 	}
