@@ -33,8 +33,8 @@ public class TextureStorage {
 			int tilesVertical = tileset.getHeight() / textureHeight;
 			
 			//cut the texture into single tiles
-			for(int x = 0; x < tilesHorizontal; x++)
-				for(int y = 0; y < tilesVertical; y++)
+			for(int y = 0; y < tilesHorizontal; y++)
+				for(int x = 0; x < tilesVertical; x++)
 					allTextures.add(tileset.subTexture(x * textureWidth, y * textureHeight, textureWidth, textureHeight));
 		}
 	}
