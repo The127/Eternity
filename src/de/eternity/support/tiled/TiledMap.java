@@ -15,7 +15,7 @@ public class TiledMap{
 	
 	private String path;
 	
-	private int width, height, tilewidth;
+	private int width, tilewidth;
 	
 	private TiledLayer[] layers;
 	private TiledTileset[] tilesets;
@@ -56,7 +56,7 @@ public class TiledMap{
 			layers[0].data[i] = textureStorage.translateToGlobalTextureId(tilesets[tilesetIndex].name, localTileId);
 		}
 		
-		return new GameMap(layers[0].data, width, height, tilewidth);
+		return new GameMap(layers[0].data, width, tilewidth);
 	}
 	
 	private int getTilesetIndex(int mapTileId){

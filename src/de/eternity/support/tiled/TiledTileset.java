@@ -3,7 +3,6 @@ package de.eternity.support.tiled;
 import java.util.Map;
 
 import de.eternity.gfx.Animation;
-import de.eternity.gfx.Animation.AnimationTimer;
 import de.eternity.gfx.TextureStorage;
 import de.eternity.map.Tile;
 import de.eternity.map.TileStorage;
