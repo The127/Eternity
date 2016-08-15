@@ -33,7 +33,8 @@ public class Animation {
 					if(unaccountedTimeSeconds > timeForNextFrame){
 						skippedFrames++;
 						unaccountedTimeSeconds -= timeForNextFrame;
-					}
+					}else
+						isSkipping = false;
 				}
 				
 				//update current texture id
