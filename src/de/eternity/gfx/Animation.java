@@ -2,12 +2,19 @@ package de.eternity.gfx;
 
 public class Animation {
 	
-	private class AnimationTimer{
+	public class AnimationTimer{
 		
-		private int currentTexture;
 		private double[] frameTimesSeconds;
+
+		private transient int currentTexture = 0;
+		private transient double unaccountedTimeSeconds = 0;
 		
-		private transient double unaccountedTimeSeconds;
+		public AnimationTimer(int[] animationFrameTimesMillis){
+			
+			frameTimesSeconds = new double[animationFrameTimesMillis.length];
+			for(int i = 0; i < frameTimesSeconds.length; i++)
+				frameTimesSeconds[i] = animationFrameTimesMillis[i] / 1000d;
+		}
 		
 		private void update(double delta){
 			
@@ -36,37 +43,41 @@ public class Animation {
 	}
 	
 	//non saved variables
-	private transient boolean isInitialized = false;
+//	private transient boolean isInitialized = false;
 	private transient int textureCount;
 
 	//saved and loaded variables
-	private String tileset;
 	private int[] textureIds;
 	
 	private AnimationTimer animationTimer;
 	
-	/**
-	 * Initializes the animation.
-	 * @param textureStorage
-	 */
-	public synchronized void init(TextureStorage textureStorage){
-		//only initialize once
-		if(!isInitialized){
-			isInitialized = true;
-			
-			textureCount = textureIds.length;
-			
-			//translate the texture ids
-			for(int i = 0; i < textureIds.length; i++)
-				textureIds[i] = textureStorage.translateToGlobalTextureId(tileset, i);
-		}
+	public Animation(int[] textureIds, AnimationTimer animationTimer){
+		this.textureIds = textureIds;
+		textureCount = textureIds.length;
 	}
+
+	//	/**
+//	 * Initializes the animation.
+//	 * @param textureStorage
+//	 */
+//	public synchronized void init(TextureStorage textureStorage){
+//		//only initialize once
+//		if(!isInitialized){
+//			isInitialized = true;
+//			
+//			textureCount = textureIds.length;
+//			
+//			//translate the texture ids
+//			for(int i = 0; i < textureIds.length; i++)
+//				textureIds[i] = textureStorage.translateToGlobalTextureId(tileset, i);
+//		}
+//	}
 	
 	public void update(double delta){
 		animationTimer.update(delta);
 	}
 	
 	public Texture getCurrentTexture(TextureStorage textureStorage){
-		return textureStorage.getTexture(animationTimer.currentTexture);
+		return textureStorage.getTexture(textureIds[animationTimer.currentTexture]);
 	}
 }
