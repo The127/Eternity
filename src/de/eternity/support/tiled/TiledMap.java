@@ -9,6 +9,7 @@ import com.google.gson.JsonSyntaxException;
 
 import de.eternity.gfx.TextureStorage;
 import de.eternity.map.GameMap;
+import de.eternity.map.TileStorage;
 
 public class TiledMap{
 	
@@ -36,9 +37,12 @@ public class TiledMap{
 	 * @param textureStorage
 	 * @return The game map of this map.
 	 */
-	public GameMap createGameMap(TextureStorage textureStorage){
+	public GameMap createGameMap(TextureStorage textureStorage, TileStorage tileStorage){
 		
-		//tilesets are already loaded into memory
+		//load tiles into the tile storage
+		for(int i = 0; i < tilesets.length; i++){
+			tilesets[i].initialize(tileStorage, textureStorage);
+		}
 		
 		//translate tile texture ids
 		int tileCount = layers[0].data.length;//layer 0 (first) is background layer
