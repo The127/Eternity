@@ -51,9 +51,10 @@ public class Animation {
 	
 	private AnimationTimer animationTimer;
 	
-	public Animation(int[] textureIds, AnimationTimer animationTimer){
+	public Animation(int[] textureIds, int[] animationFrameTimesMillis){
 		this.textureIds = textureIds;
 		textureCount = textureIds.length;
+		this.animationTimer = new AnimationTimer(animationFrameTimesMillis);
 	}
 
 	//	/**
