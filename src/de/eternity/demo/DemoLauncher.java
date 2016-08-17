@@ -9,15 +9,21 @@ import de.eternity.gfx.Renderer;
 import de.eternity.gfx.Texture;
 import de.eternity.gui.Display;
 import de.eternity.gui.DisplayMode;
+import de.eternity.input.ButtonInput;
+import de.eternity.input.KeyboardAdapter;
 
 public class DemoLauncher {
 
 	public static void main(String[] args) {
 		
+		ButtonInput keyboard = new ButtonInput(256);
+		KeyboardAdapter keyboardAdapter = new KeyboardAdapter(keyboard);
+		
 		//init display
 		DisplayMode displayMode = new DisplayMode(800, 600, 400, 300);
 		Display display = new Display("Demo", displayMode);
 		
+		display.addKeyListener(keyboardAdapter);
 		display.addWindowListener(new WindowListener() {
 			
 			@Override
@@ -56,6 +62,6 @@ public class DemoLauncher {
 		int demoState = game.addGameState(new DemoState(null));
 		game.setCurrentGameState(demoState);
 		
-		game.start();
+		//game.start();
 	}
 }
