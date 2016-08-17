@@ -20,7 +20,7 @@ public class Sound {
 	
 	private Clip clip;
 	
-	private boolean playState = PLAYING;
+	private boolean playState = PLAYING, pauseState = false;
 	
 	private BooleanControl mute;
 	private FloatControl
@@ -46,30 +46,74 @@ public class Sound {
 		this.mute.setValue(mute);;
 	}
 	
+	public boolean getMute(){
+		return this.mute.getValue();
+	}
+	
 	/**
-	 * +6 to -80
+	 * +6 to -80 (auto fix to min or max if boundaries crossed)
 	 * @param gain
 	 */
 	public void setGain(float gain){
-		this.gain.setValue(gain);
+		
+		if(gain > this.gain.getMaximum())
+			this.gain.setValue(this.gain.getMaximum());
+		
+		else if(gain < this.gain.getMinimum())
+			this.gain.setValue(this.gain.getMinimum());
+		
+		else
+			this.gain.setValue(gain);
+	}
+	
+	public float getGain(){
+		return this.gain.getValue();
 	}
 	
 	/**
-	 * -1 to 1
+	 * -1 to 1 (auto fix to min or max if boundaries crossed)
 	 * @param pan
 	 */
 	public void setPan(float pan){
-		this.pan.setValue(pan);
+		
+		if(pan > this.pan.getMaximum())
+			this.pan.setValue(this.pan.getMaximum());
+		
+		else if(pan < this.pan.getMinimum())
+			this.pan.setValue(this.pan.getMinimum());
+		
+		else
+			this.pan.setValue(pan);
+	}
+	
+	public float getPan(){
+		return this.pan.getValue();
 	}
 	
 	/**
-	 * -1 to 1
+	 * -1 to 1 (auto fix to min or max if boundaries crossed)
 	 * @param balance
 	 */
 	public void setBalance(float balance){
-		this.balance.setValue(balance);
+		
+		if(balance > this.balance.getMaximum())
+			this.balance.setValue(this.balance.getMaximum());
+		
+		else if(balance < this.balance.getMinimum())
+			this.balance.setValue(this.balance.getMinimum());
+		
+		else
+			this.balance.setValue(balance);
 	}
 	
+	public float getBalance(){
+		return this.balance.getValue();
+	}
+	
+	/**
+	 * Loops the sound continuously.
+	 * If the sound is already running it will be stopped.
+	 */
 	public void loop(){
 		
 		reset();
@@ -79,7 +123,7 @@ public class Sound {
 	}
 	
 	/**
-	 * 
+	 * Finishes the current play back.
 	 */
 	public void finishLoop(){
 		
@@ -90,6 +134,10 @@ public class Sound {
 		}
 	}
 	
+	/**
+	 * Starts playing the sound from the beginning.
+	 * If the sound is already running it will be stopped.
+	 */
 	public void play(){
 		
 		reset();
@@ -97,8 +145,12 @@ public class Sound {
 		clip.start();
 	}
 	
+	/**
+	 * Resets the clip.
+	 */
 	private void reset(){
-		
+
+		pauseState = false;
 		if(clip.isRunning())
 			clip.stop();
 		
@@ -106,12 +158,19 @@ public class Sound {
 		clip.setFramePosition(0);
 	}
 	
-	public void switchPause(){
+	/**
+	 * If the clip is playing the clip will be paused.
+	 * If the clip is not playing the clip will resume either playing or looping.
+	 * This method will not do anything if the clip was not previously paused.
+	 */
+	public void pauseUnpause(){
 		
-		if(clip.isRunning())
+		if(clip.isRunning()){
 			clip.stop();
+			pauseState = true;
+		}
 		
-		else{
+		else if(pauseState){//only start if it was paused
 			if(playState == LOOPING)
 				clip.loop(Clip.LOOP_CONTINUOUSLY);
 			else
