@@ -1,5 +1,6 @@
 package de.eternity.sound;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
@@ -29,6 +30,8 @@ public class Sound {
 		gain;
 	
 	public Sound(String path) throws LineUnavailableException, UnsupportedAudioFileException, IOException{
+		
+		System.out.println(AudioSystem.getAudioFileFormat(new File(path)));
 		
 		AudioInputStream audioIn = AudioSystem.getAudioInputStream(DemoLauncher.class.getResource(path));
 		
@@ -160,17 +163,26 @@ public class Sound {
 	
 	/**
 	 * If the clip is playing the clip will be paused.
-	 * If the clip is not playing the clip will resume either playing or looping.
-	 * This method will not do anything if the clip was not previously paused.
 	 */
-	public void pauseUnpause(){
+	public void pause(){
 		
 		if(clip.isRunning()){
 			clip.stop();
 			pauseState = true;
 		}
+	}
+	
+	/**
+	 * If the clip is not playing the clip will resume either playing or looping.
+	 * This method will not do anything if the clip was not previously paused.
+	 */
+	public void unpause(){
 		
-		else if(pauseState){//only start if it was paused
+		if(pauseState){//only start if it was paused
+			
+			pauseState = false;
+			
+			//loop or play
 			if(playState == LOOPING)
 				clip.loop(Clip.LOOP_CONTINUOUSLY);
 			else
