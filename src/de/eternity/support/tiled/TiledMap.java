@@ -15,7 +15,7 @@ public class TiledMap{
 	
 	private String path;
 	
-	private int width, tilewidth;
+	private int width;
 	
 	private TiledLayer[] layers;
 	private TiledTileset[] tilesets;
@@ -58,7 +58,7 @@ public class TiledMap{
 			
 		}
 		
-		return new GameMap(layers[0].data, width, tilewidth);
+		return new GameMap(layers[0].data, width);
 	}
 	
 	private int getTilesetIndex(int mapTileId){

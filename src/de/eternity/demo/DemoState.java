@@ -26,7 +26,7 @@ public class DemoState extends GameState {
 	@Override
 	public void applyRenderContext(IRenderQueue renderQueue) {
 
-		map.renderMap(renderQueue, getGameData().getTextureStorage(), getGameData().getTileStorage());
+		map.renderMap(renderQueue, getGameData());
 	}
 
 	@Override
