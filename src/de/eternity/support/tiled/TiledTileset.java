@@ -42,6 +42,7 @@ class TiledTileset {
 				for(int n = 0; n < animationFrameTimesMillis.length; n++){
 					animationFrameTimesMillis[n] = loadedTile.animation[n].duration;
 					translatedAnimationTextures[n] = textureStorage.translateToGlobalTextureId(name, firstgid + loadedTile.animation[n].tileid -1);
+					
 				}
 				
 				tileAnimation = new Animation(translatedAnimationTextures, animationFrameTimesMillis);

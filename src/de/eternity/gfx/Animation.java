@@ -82,4 +82,8 @@ public class Animation {
 	public Texture getCurrentTexture(TextureStorage textureStorage){
 		return textureStorage.getTexture(textureIds[animationTimer.currentTexture]);
 	}
+	
+	public int getCurrentTextureId(){
+		return textureIds[animationTimer.currentTexture];
+	}
 }

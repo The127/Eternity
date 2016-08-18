@@ -7,7 +7,16 @@ public class TileStorage {
 	private ArrayList<Tile> tiles = new ArrayList<>();
 	
 	public void addTile(Tile tile, int index){
-		tiles.add(tile);
+		
+		//ensure capacity
+		if(index + 1 >= tiles.size()){
+			tiles.ensureCapacity(index+1);
+			for(int i = tiles.size(); i < index+1; i++)
+				tiles.add(null);
+		}
+		
+		//set the tile
+		tiles.set(index, tile);
 	}
 	
 	/**

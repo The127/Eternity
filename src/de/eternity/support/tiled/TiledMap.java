@@ -50,10 +50,12 @@ public class TiledMap{
 			//get tileset
 			int tilesetIndex = getTilesetIndex(layers[0].data[i]);
 			//get local tileset id
+			
 			int localTileId = layers[0].data[i] - tilesets[tilesetIndex].firstgid;
 			
 			//translate to global id
 			layers[0].data[i] = textureStorage.translateToGlobalTextureId(tilesets[tilesetIndex].name, localTileId);
+			
 		}
 		
 		return new GameMap(layers[0].data, width, tilewidth);

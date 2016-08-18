@@ -1,10 +1,14 @@
 package de.eternity.gfx;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 public class TextureStorage {
 	
@@ -32,9 +36,10 @@ public class TextureStorage {
 			int tilesHorizontal = tileset.getWidth() / textureWidth;
 			int tilesVertical = tileset.getHeight() / textureHeight;
 			
+			int c = 0;
 			//cut the texture into single tiles
-			for(int y = 0; y < tilesHorizontal; y++)
-				for(int x = 0; x < tilesVertical; x++)
+			for(int y = 0; y < tilesVertical; y++)
+				for(int x = 0; x < tilesHorizontal; x++)
 					allTextures.add(tileset.subTexture(x * textureWidth, y * textureHeight, textureWidth, textureHeight));
 		}
 	}
