@@ -4,6 +4,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import de.eternity.Game;
+import de.eternity.GameData;
 import de.eternity.gfx.Camera;
 import de.eternity.gfx.Renderer;
 import de.eternity.gfx.Texture;
@@ -16,6 +17,7 @@ public class DemoLauncher {
 
 	public static void main(String[] args) {
 		
+		//init input
 		ButtonInput keyboard = new ButtonInput(256);
 		KeyboardAdapter keyboardAdapter = new KeyboardAdapter(keyboard);
 		
@@ -23,6 +25,7 @@ public class DemoLauncher {
 		DisplayMode displayMode = new DisplayMode(800, 600, 400, 300);
 		Display display = new Display("Demo", displayMode);
 		
+		//set listeners
 		display.addKeyListener(keyboardAdapter);
 		display.addWindowListener(new WindowListener() {
 			
@@ -46,8 +49,9 @@ public class DemoLauncher {
 		Renderer renderer = new Renderer(new Texture(display.getCanvas()), camera);
 		
 		//init game
-		//TODO: create game data instance from file
-		Game game = new Game(null, renderer, display::refreshScreen);
+		GameData gameData = new GameData(32, keyboard);
+		
+		Game game = new Game(gameData, renderer, display::refreshScreen);
 		
 		int demoState = game.addGameState(new DemoState(null));
 		game.setCurrentGameState(demoState);
