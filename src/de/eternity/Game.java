@@ -1,7 +1,7 @@
 package de.eternity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Deque;
+import java.util.LinkedList;
 
 import de.eternity.gfx.RenderQueue;
 import de.eternity.gfx.Renderer;
@@ -23,13 +23,15 @@ public class Game {
 	}
 	
 	//class code
-	private List<GameState> gameStates = new ArrayList<>();
-	private int currentGameState = -1;
+	private Deque<GameState> gameStates = new LinkedList<>();
+	private GameState currentGameState = null;
 	
 	private Runnable updateScreen;
 	private Renderer renderer;
 	
 	private boolean hasStarted = false;
+	
+	private GameData gameData;
 	
 	/**
 	 * Creates a new game instance.
@@ -38,6 +40,7 @@ public class Game {
 	 */
 	public Game(GameData gameData, Renderer renderer, Runnable updateScreen){
 		
+		this.gameData = gameData;
 		this.renderer = renderer;
 		this.updateScreen = updateScreen;
 	}
@@ -96,8 +99,8 @@ public class Game {
 			relativeTime += relDelta;
 			fpsTimer += relDelta;
 			
-			gameStates.get(currentGameState).update(relDelta);
-			gameStates.get(currentGameState).applyRenderContext(queue);
+			currentGameState.update(relDelta);
+			currentGameState.applyRenderContext(queue);
 			queue.sort();
 			
 			//calculate fps
@@ -113,28 +116,49 @@ public class Game {
 	}
 	
 	/**
-	 * Switches to the desired game state.
-	 * @param gameState The id of the game state.
+	 * Pushes a game state to the gamestate stack.
+	 * @param gameState The new game state.
 	 */
-	public void setCurrentGameState(int gameState){
+	public void pushGameState(GameState gameState){
 		
-		if(gameState < 0 || gameState > gameStates.size())
-			throw new IllegalArgumentException("'gameState' cannot be less than 0 or greater than the amount of registered game states!");
-		else if(currentGameState != -1)
-			gameStates.get(currentGameState).shutdown();
+		//handle previous game state if it exists
+		if(currentGameState != null)
+			if(currentGameState.doesRemainOnStack()){
+				
+				//pause the game state
+				currentGameState.pause();
+			}else{
+				
+				//remove the game state since it does not remain on the stack
+				gameStates.removeLast();
+			}
 		
+		//handle new game state
+		gameStates.addLast(gameState);
 		currentGameState = gameState;
-		gameStates.get(currentGameState).startup();
+		currentGameState.setGameData(gameData);
+		currentGameState.startup();
 	}
 	
-	/**
-	 * Adds a game state to the game.
-	 * @param gameState The new game state.
-	 * @return The id of the game state.
-	 */
-	public int addGameState(GameState gameState){
+	public void popGameState(){
 		
-		gameStates.add(gameState);
-		return gameStates.size()-1;
+		//error handling !!!
+		if(gameStates.size() > 0){
+			
+			//handle current game state
+			currentGameState.shutdown();
+			gameStates.removeLast();
+			
+			//if there are no more game states left exit the game
+			if(gameStates.size() == 0){
+				//everything is done now shut the game down
+				System.exit(0);
+			}else{
+				
+				//handle new game state
+				currentGameState = gameStates.peekLast();
+				currentGameState.unpause();
+			}
+		}
 	}
 }

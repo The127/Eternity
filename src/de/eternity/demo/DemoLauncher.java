@@ -40,6 +40,7 @@ public class DemoLauncher {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				//handle closing of window
+				//maybe handle saving of game
 				System.exit(0);
 			}
 		});
@@ -53,9 +54,9 @@ public class DemoLauncher {
 		
 		Game game = new Game(gameData, renderer, display::refreshScreen);
 		
-		int demoState = game.addGameState(new DemoState(null));
-		game.setCurrentGameState(demoState);
+		game.pushGameState(new DemoState());
 		
-		//game.start();
+		//start the game
+		game.start();
 	}
 }
