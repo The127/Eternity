@@ -64,6 +64,7 @@ public class Renderer {
 	private void handleContextSwitch(){
 
 		//switch context
+		renderQueues[renderContext].reset();
 		renderContext = (renderContext + 1) % 2;
 		
 		//switch camera context
@@ -101,8 +102,6 @@ public class Renderer {
 		
 		for(int i = 0; i < size; i++)
 			renderEntry(queue.get(i));
-		
-		renderQueues[renderContext].reset();
 	}
 	
 	/**
@@ -118,7 +117,7 @@ public class Renderer {
 	 * @param entry The entry from the render queue.
 	 */
 	void renderEntry(RenderQueueEntry entry){
-		
+
 		int[] texture = entry.getTexture().getBuffer();
 		
 		int startX = entry.getDrawX();
