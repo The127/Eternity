@@ -1,0 +1,11 @@
+tilesize = 32 
+modsPath = '/mods'
+mapsPath = '/maps'
+tilesetsPath = '/tilesets'
+
+[displayMode]
+	displayWidth = 800
+	displayHeight = 600
+	resolutionX = 400
+	resolutionY = 300
+	canvasBufferSize = 2
