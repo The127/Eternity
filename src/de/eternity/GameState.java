@@ -4,7 +4,7 @@ import de.eternity.gfx.IRenderQueue;
 
 public abstract class GameState {
 	
-	private boolean remainOnStack = true;
+	protected boolean doesRemainOnStack = true;
 
 	private GameData gameData;
 
@@ -12,8 +12,8 @@ public abstract class GameState {
 		this(true);
 	}
 	
-	public GameState(boolean remainOnStack){
-		this.remainOnStack = remainOnStack;
+	public GameState(boolean doesRemainOnStack){
+		this.doesRemainOnStack = doesRemainOnStack;
 	}
 	
 	void setGameData(GameData gameData){
@@ -21,7 +21,7 @@ public abstract class GameState {
 	}
 	
 	public boolean doesRemainOnStack(){
-		return remainOnStack;
+		return doesRemainOnStack;
 	}
 	
 	protected GameData getGameData(){
