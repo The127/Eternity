@@ -1,28 +1,22 @@
 package de.eternity.input;
 
+import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class KeyboardAdapter implements KeyListener{
+public class KeyboardAdapter implements KeyEventDispatcher{
 
 	private ButtonInput buttonInput;
 	
 	public KeyboardAdapter(ButtonInput buttonInput){
 		this.buttonInput = buttonInput;
 	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		buttonInput.setBuffer(e.getKeyCode(), ButtonInput.STATE_PRESSED);
-	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		buttonInput.setBuffer(e.getKeyCode(), ButtonInput.STATE_RELEASED);
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		//ignored
+	public boolean dispatchKeyEvent(KeyEvent e) {
+		if(e.getID() == KeyEvent.KEY_PRESSED)
+			buttonInput.setBuffer(e.getKeyCode(), ButtonInput.STATE_PRESSED);
+		else if(e.getID() == KeyEvent.KEY_RELEASED)
+			buttonInput.setBuffer(e.getKeyCode(), ButtonInput.STATE_RELEASED);
+		return false;
 	}
 }
