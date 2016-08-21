@@ -28,15 +28,12 @@ public class GameMap {
 		//only draw needed tiles
 		int startX = ((int)camera.getX()) / gameData.tileSize;
 		int startY = ((int)camera.getY()) / gameData.tileSize;
-		int endX = startX + camera.getResolutionX()/gameData.tileSize + 1;
-		int endY = startY + camera.getResolutionY()/gameData.tileSize + 1;
+		int endX = startX + camera.getResolutionX()/gameData.tileSize + 2;
+		int endY = startY + camera.getResolutionY()/gameData.tileSize + 2;
 		
-		for(int x = startX; x < endX; x++){
-			for(int y = startY; y < endY; y++){
-				
+		for(int x = startX; x < endX; x++)
+			for(int y = startY; y < endY; y++)
 				gameData.getTileStorage().get(data[x + y * width])
-						.applyRenderContext(renderQueue, gameData.getTextureStorage(), camera.getX() + x*gameData.tileSize, camera.getY() + y*gameData.tileSize);
-			}
-		}
+						.applyRenderContext(renderQueue, gameData.getTextureStorage(), x*gameData.tileSize, y*gameData.tileSize);
 	}
 }
