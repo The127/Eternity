@@ -52,6 +52,10 @@ public class GameData {
 		luaGameStates.loadGameStates(gameSettings.getGameStatesPath(), engineLuaEnvironment);
 	}
 	
+	public GameMaps getGameMaps(){
+		return gameMaps;
+	}
+	
 	public GameState getLuaGameState(String name){
 		return luaGameStates.getGameState(name);
 	}

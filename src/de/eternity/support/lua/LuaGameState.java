@@ -2,6 +2,7 @@ package de.eternity.support.lua;
 
 import org.luaj.vm2.LuaFunction;
 import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
 import de.eternity.GameState;
 import de.eternity.gfx.IRenderQueue;
@@ -69,7 +70,7 @@ public class LuaGameState extends GameState{
 
 	@Override
 	protected void applyRenderContext(IRenderQueue renderQueue) {
-		applyRenderContext.call();
+		applyRenderContext.call(CoerceJavaToLua.coerce(renderQueue));
 	}
 
 }

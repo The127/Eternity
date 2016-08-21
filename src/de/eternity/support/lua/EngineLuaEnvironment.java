@@ -8,10 +8,13 @@ import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 import de.eternity.Game;
+import de.eternity.support.lua.functions.GetGameData;
+import de.eternity.support.lua.functions.GetGameMap;
 import de.eternity.support.lua.functions.IsKeyPressed;
 import de.eternity.support.lua.functions.PollKeyboard;
 import de.eternity.support.lua.functions.PopGameState;
 import de.eternity.support.lua.functions.PushGameState;
+import de.eternity.support.lua.functions.UpdateTileAnimations;
 import de.eternity.util.LuaGameStates;
 
 public class EngineLuaEnvironment {
@@ -44,6 +47,15 @@ public class EngineLuaEnvironment {
 		//init keyboard handling lua functions
 		_G.set("poll_keyboard", new PollKeyboard(game.getGameData().getKeyboard()));
 		_G.set("is_key_pressed", new IsKeyPressed(game.getGameData().getKeyboard()));
+		
+		//init game map methods
+		_G.set("get_game_map", new GetGameMap(game.getGameData().getGameMaps()));
+		
+		//init utility methods
+		_G.set("get_game_data", new GetGameData(game.getGameData()));
+		
+		//init graphics methods
+		_G.set("update_tile_animations", new UpdateTileAnimations(game.getGameData().getTileStorage()));
 	}
 	
 	public LuaGameState loadGameState(Path scriptPath){

@@ -2,8 +2,11 @@ local luaGameState = {}
 
 local does_remain_on_stack = true
 
+local map
+
 local function startup()
 	print('startup lua')
+	map = get_game_map('test')
 end
 
 local function shutdown()
@@ -23,10 +26,15 @@ local function update(delta)
 	if is_key_pressed(VK_A) then
 		pop_game_state()
 	end
+	
+	update_tile_animations(delta)
 
 end
 
 local function apply_render_context(renderQueue)
+
+	map:renderMap(renderQueue, get_game_data())
+	
 end
 
 luaGameState.does_remain_on_stack = does_remain_on_stack

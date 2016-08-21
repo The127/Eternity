@@ -63,7 +63,7 @@ public class DemoLauncher {
 		gameData.init(engineLuaEnvironment);
 		
 		//demo game states
-		game.pushGameState(new DemoState());
+//		game.pushGameState(new DemoState());
 		game.pushGameState(gameData.getLuaGameState("lua_test_state"));
 		
 		//start the game

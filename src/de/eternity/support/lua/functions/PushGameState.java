@@ -1,6 +1,5 @@
 package de.eternity.support.lua.functions;
 
-import org.luaj.vm2.LuaString;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.OneArgFunction;
 
@@ -20,9 +19,7 @@ public class PushGameState extends OneArgFunction{
 	@Override
 	public LuaValue call(LuaValue gameStateFileName) {
 		
-		LuaString sGameStateFileName = gameStateFileName.checkstring();
-		String jsGameStateFileName = sGameStateFileName.tojstring();
-		
+		String jsGameStateFileName = gameStateFileName.checkjstring();
 		game.pushGameState(luaGameStates.getGameState(jsGameStateFileName));
 		
 		return null;
