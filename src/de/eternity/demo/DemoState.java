@@ -32,10 +32,7 @@ public class DemoState extends GameState {
 	@Override
 	public void startup() {
 		try {
-			getGameData().getTextureStorage().loadTileset("/walls.png", "walls", 32, 32);
-			getGameData().getTextureStorage().loadTileset("/icetiles.png", "icetiles", 32, 32);
-			
-			TiledMap tm = TiledMap.readMap("res/test.json");
+			TiledMap tm = TiledMap.readMap("res/maps/test.json");
 			map = tm.createGameMap(getGameData().getTextureStorage(), getGameData().getTileStorage());
 		} catch (IOException e) {
 			e.printStackTrace();
