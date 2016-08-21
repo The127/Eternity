@@ -45,6 +45,10 @@ public class Game {
 		this.updateScreen = updateScreen;
 	}
 	
+	public GameData getGameData(){
+		return gameData;
+	}
+	
 	/**
 	 * Starts the game.
 	 */
