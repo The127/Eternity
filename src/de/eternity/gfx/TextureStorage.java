@@ -34,8 +34,11 @@ public class TextureStorage {
 			
 			//cut the texture into single tiles
 			for(int y = 0; y < tilesVertical; y++)
-				for(int x = 0; x < tilesHorizontal; x++)
-					allTextures.add(tileset.subTexture(x * textureWidth, y * textureHeight, textureWidth, textureHeight));
+				for(int x = 0; x < tilesHorizontal; x++){
+					Texture texture = tileset.subTexture(x * textureWidth, y * textureHeight, textureWidth, textureHeight);
+					allTextures.add(texture);
+					texture.path = "TILESET_" + name + " - LTID_" + (x + y * tilesHorizontal) + " - GTID_" + (allTextures.size()-1);
+				}
 		}
 	}
 	

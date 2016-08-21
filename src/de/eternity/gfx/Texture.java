@@ -21,7 +21,7 @@ public class Texture {
 	private int[] buffer = null;
 	private int width = -1, height = -1;
 	
-	private String path = GENERATED;
+	String path = GENERATED;
 	
 	/**
 	 * Loads a texture from an image file.
