@@ -34,7 +34,6 @@ public class GameData {
 	private LuaGameStates luaGameStates = new LuaGameStates();
 	private GameMaps gameMaps = new GameMaps();
 	
-	//TODO: create from a file
 	public GameData(ButtonInput keyboard){
 		
 		gameSettings = new Toml().read(new File("res/settings.toml")).to(GameSettings.class);
