@@ -51,7 +51,7 @@ public class Camera {
 		y += deltaY;
 		
 		areaOfView.x = (int)(x + 0.5d);
-		areaOfView.y = (int)(x + 0.5d);
+		areaOfView.y = (int)(y + 0.5d);
 	}
 	
 	/**
