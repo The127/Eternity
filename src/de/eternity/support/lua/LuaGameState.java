@@ -10,6 +10,8 @@ public class LuaGameState extends GameState{
 
 	private final LuaValue luaGameState;
 	
+	private String name;
+	
 	private final LuaFunction 
 		startup,
 		shutdown,
@@ -18,7 +20,10 @@ public class LuaGameState extends GameState{
 		update,
 		applyRenderContext;
 	
-	public LuaGameState(LuaValue luaGameState) {
+	public LuaGameState(LuaValue luaGameState, String name) {
+		
+		this.name = name;
+		
 		this.luaGameState = luaGameState.call();
 		
 		doesRemainOnStack = this.luaGameState.get("does_remain_on_stack").checkboolean();
@@ -31,6 +36,10 @@ public class LuaGameState extends GameState{
 
 		update = this.luaGameState.get("update").checkfunction();
 		applyRenderContext = this.luaGameState.get("apply_render_context").checkfunction();
+	}
+	
+	public String getName(){
+		return name;
 	}
 	
 	@Override

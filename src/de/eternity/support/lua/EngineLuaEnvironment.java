@@ -2,6 +2,7 @@ package de.eternity.support.lua;
 
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
+import java.nio.file.Path;
 
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
@@ -11,20 +12,17 @@ import de.eternity.support.lua.functions.IsKeyPressed;
 import de.eternity.support.lua.functions.PollKeyboard;
 import de.eternity.support.lua.functions.PopGameState;
 import de.eternity.support.lua.functions.PushGameState;
+import de.eternity.util.LuaGameStates;
 
 public class EngineLuaEnvironment {
 
 	private Globals _G = JsePlatform.standardGlobals();
 	
-	private Game game;
-	
-	public EngineLuaEnvironment(Game game){
-		this.game = game;
-		
-		init();
+	public EngineLuaEnvironment(Game game, LuaGameStates luaGameStates){
+		init(game, luaGameStates);
 	}
 	
-	private void init(){
+	private void init(Game game, LuaGameStates luaGameStates){
 		
 		//load hard coded key bindings from KeyEvent class
 		Class<KeyEvent> keyEventClass = KeyEvent.class;
@@ -40,7 +38,7 @@ public class EngineLuaEnvironment {
 				}
 		
 		//init game state handling lua functions
-		_G.set("push_game_state", new PushGameState(game, this));
+		_G.set("push_game_state", new PushGameState(game, luaGameStates));
 		_G.set("pop_game_state", new PopGameState(game));
 		
 		//init keyboard handling lua functions
@@ -48,7 +46,8 @@ public class EngineLuaEnvironment {
 		_G.set("is_key_pressed", new IsKeyPressed(game.getGameData().getKeyboard()));
 	}
 	
-	public LuaGameState loadGameState(String script){
-		return new LuaGameState(_G.load(script));
+	public LuaGameState loadGameState(Path scriptPath){
+		System.out.println(scriptPath);
+		return new LuaGameState(_G.loadfile(scriptPath.toString()), scriptPath.getFileName().toString().split("\\.")[0]);
 	}
 }

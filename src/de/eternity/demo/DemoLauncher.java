@@ -32,7 +32,7 @@ public class DemoLauncher {
 		GameData gameData = new GameData(keyboard);
 		
 		//init display
-		DisplayMode displayMode = gameData.getDisplayMode();
+		DisplayMode displayMode = gameData.getSettings().getDisplayMode();
 		Display display = new Display("Demo", displayMode);
 		
 		//set listeners
@@ -48,9 +48,7 @@ public class DemoLauncher {
 			
 			@Override
 			public void windowClosing(WindowEvent e) {
-				//handle closing of window
-				//maybe handle saving of game
-				System.exit(0);
+				System.exit(0);//handle closing of window
 			}
 		});
 		
@@ -58,58 +56,15 @@ public class DemoLauncher {
 		Camera camera = new Camera(displayMode.getResolutionX(), displayMode.getResolutionY());
 		Renderer renderer = new Renderer(new Texture(display.getCanvas()), camera);
 		
-		//init game
-		
+		//init game and lua
 		Game game = new Game(gameData, renderer, display::refreshScreen);
-		EngineLuaEnvironment engineLuaEnvironment = new EngineLuaEnvironment(game);
+		EngineLuaEnvironment engineLuaEnvironment = new EngineLuaEnvironment(game, gameData.getLuaGameStates());
 		
+		gameData.init(engineLuaEnvironment);
+		
+		//demo game states
 		game.pushGameState(new DemoState());
-		game.pushGameState(engineLuaEnvironment.loadGameState(
-				   "local luaGameState = {}\n\r"
-				
-				+  "local does_remain_on_stack = true\n\r"
-				
-				+  "local function startup()\n\r"
-				+  "	print('startup lua')\n\r"
-				+  "end\n\r"
-				
-				+  "local function shutdown()\n\r"
-				+  "	print('shutdown lua')\n\r"
-				+  "end\n\r"
-
-				+  "local function pause()\n\r"
-				+  "	print('pause lua')\n\r"
-				+  "end\n\r"
-
-				+  "local function unpause()\n\r"
-				+  "	print('unpause lua')\n\r"
-				+  "end\n\r"
-				
-				+  "local function update(delta)\n\r"
-//				+  "	print('update lua')\n\r"
-				+  "	poll_keyboard()\r\n"
-				+  "	if is_key_pressed(VK_A) then\r\n"
-				+  "		pop_game_state()\r\n"
-				+  "	end\r\n"
-				+  "end\n\r"
-
-				+  "local function apply_render_context(renderQueue)\n\r"
-//				+  "	print('render lua')\n\r"
-				+  "end\n\r"
-
-				+  "luaGameState.does_remain_on_stack = does_remain_on_stack\n\r"
-				
-				+  "luaGameState.startup = startup\n\r"
-				+  "luaGameState.shutdown = shutdown\n\r"
-				
-				+  "luaGameState.pause = pause\n\r"
-				+  "luaGameState.unpause = unpause\n\r"
-				
-				+  "luaGameState.update = update\n\r"
-				+  "luaGameState.apply_render_context = apply_render_context\n\r"
-
-				+  "return luaGameState\n\r"
-		));
+		game.pushGameState(gameData.getLuaGameState("lua_test_state"));
 		
 		//start the game
 		game.start();

@@ -5,16 +5,16 @@ import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.OneArgFunction;
 
 import de.eternity.Game;
-import de.eternity.support.lua.EngineLuaEnvironment;
+import de.eternity.util.LuaGameStates;
 
 public class PushGameState extends OneArgFunction{
 
 	private Game game;
-	private EngineLuaEnvironment engineLuaEnvironment;
+	private LuaGameStates luaGameStates;
 	
-	public PushGameState(Game game, EngineLuaEnvironment engineLuaEnvironment){
+	public PushGameState(Game game, LuaGameStates luaGameStates){
 		this.game = game;
-		this.engineLuaEnvironment = engineLuaEnvironment;
+		this.luaGameStates = luaGameStates;
 	}
 	
 	@Override
@@ -23,8 +23,7 @@ public class PushGameState extends OneArgFunction{
 		LuaString sGameStateFileName = gameStateFileName.checkstring();
 		String jsGameStateFileName = sGameStateFileName.tojstring();
 		
-		//TODO:
-		game.pushGameState(engineLuaEnvironment.loadGameState(jsGameStateFileName));
+		game.pushGameState(luaGameStates.getGameState(jsGameStateFileName));
 		
 		return null;
 	}

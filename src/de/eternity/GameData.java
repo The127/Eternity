@@ -6,10 +6,11 @@ import java.io.IOException;
 import com.moandjiezana.toml.Toml;
 
 import de.eternity.gfx.TextureStorage;
-import de.eternity.gui.DisplayMode;
 import de.eternity.input.ButtonInput;
 import de.eternity.map.GameMap;
 import de.eternity.map.TileStorage;
+import de.eternity.support.lua.EngineLuaEnvironment;
+import de.eternity.util.LuaGameStates;
 import de.eternity.util.TextureLoader;
 
 /**
@@ -29,19 +30,27 @@ public class GameData {
 	
 	private GameSettings gameSettings;
 	
+	private LuaGameStates luaGameStates = new LuaGameStates();
+	
 	//TODO: create from a file
-	public GameData(ButtonInput keyboard) throws IOException {
+	public GameData(ButtonInput keyboard){
 		
 		gameSettings = new Toml().read(new File("res/settings.toml")).to(GameSettings.class);
 		
 		this.tileSize = gameSettings.getTilesize();
 		this.keyboard = keyboard;
-		
-		TextureLoader.loadTextures(gameSettings.getTilesetsPath(), textureStorage);
 	}
 	
-	public DisplayMode getDisplayMode(){
-		return gameSettings.getDisplayMode();
+	public void init(EngineLuaEnvironment engineLuaEnvironment) throws IOException{
+		
+		TextureLoader.loadTextures(gameSettings.getTilesetsPath(), textureStorage);
+		
+		//load game states from lua files
+		luaGameStates.loadGameStates(gameSettings.getGameStatesPath(), engineLuaEnvironment);
+	}
+	
+	public GameState getLuaGameState(String name){
+		return luaGameStates.getGameState(name);
 	}
 	
 	public ButtonInput getKeyboard(){
@@ -62,5 +71,9 @@ public class GameData {
 	
 	public GameSettings getSettings(){
 		return gameSettings;
+	}
+
+	public LuaGameStates getLuaGameStates() {
+		return luaGameStates;
 	}
 }
