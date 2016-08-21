@@ -8,6 +8,7 @@ import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 import de.eternity.Game;
+import de.eternity.support.lua.functions.GetFps;
 import de.eternity.support.lua.functions.GetGameData;
 import de.eternity.support.lua.functions.GetGameMap;
 import de.eternity.support.lua.functions.IsKeyPressed;
@@ -53,6 +54,7 @@ public class EngineLuaEnvironment {
 		
 		//init utility methods
 		_G.set("get_game_data", new GetGameData(game.getGameData()));
+		_G.set("get_fps", new GetFps());
 		
 		//init graphics methods
 		_G.set("update_tile_animations", new UpdateTileAnimations(game.getGameData().getTileStorage()));

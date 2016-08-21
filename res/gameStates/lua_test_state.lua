@@ -22,6 +22,7 @@ local function unpause()
 end
 
 local function update(delta)
+
 	poll_keyboard()
 	if is_key_pressed(VK_A) then
 		pop_game_state()
