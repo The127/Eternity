@@ -47,7 +47,6 @@ public class EngineLuaEnvironment {
 	}
 	
 	public LuaGameState loadGameState(Path scriptPath){
-		System.out.println(scriptPath);
 		return new LuaGameState(_G.loadfile(scriptPath.toString()), scriptPath.getFileName().toString().split("\\.")[0]);
 	}
 }

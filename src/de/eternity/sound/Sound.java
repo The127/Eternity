@@ -31,8 +31,6 @@ public class Sound {
 	
 	public Sound(String path) throws LineUnavailableException, UnsupportedAudioFileException, IOException{
 		
-		System.out.println(AudioSystem.getAudioFileFormat(new File(path)));
-		
 		AudioInputStream audioIn = AudioSystem.getAudioInputStream(DemoLauncher.class.getResource(path));
 		
 		clip = AudioSystem.getClip();

@@ -10,6 +10,7 @@ import de.eternity.input.ButtonInput;
 import de.eternity.map.GameMap;
 import de.eternity.map.TileStorage;
 import de.eternity.support.lua.EngineLuaEnvironment;
+import de.eternity.util.GameMaps;
 import de.eternity.util.LuaGameStates;
 import de.eternity.util.TextureLoader;
 
@@ -31,6 +32,7 @@ public class GameData {
 	private GameSettings gameSettings;
 	
 	private LuaGameStates luaGameStates = new LuaGameStates();
+	private GameMaps gameMaps = new GameMaps();
 	
 	//TODO: create from a file
 	public GameData(ButtonInput keyboard){
@@ -44,6 +46,8 @@ public class GameData {
 	public void init(EngineLuaEnvironment engineLuaEnvironment) throws IOException{
 		
 		TextureLoader.loadTextures(gameSettings.getTilesetsPath(), textureStorage);
+		
+		gameMaps.loadGameMaps(gameSettings.getMapsPath(), textureStorage, tileStorage);
 		
 		//load game states from lua files
 		luaGameStates.loadGameStates(gameSettings.getGameStatesPath(), engineLuaEnvironment);
@@ -66,7 +70,7 @@ public class GameData {
 	}
 	
 	public GameMap getGameMap(String mapName){
-		return null;
+		return gameMaps.getGameMap(mapName);
 	}
 	
 	public GameSettings getSettings(){

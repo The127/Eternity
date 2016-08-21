@@ -29,7 +29,7 @@ class TiledTileset {
 			//-1 because the tile id 0 is empty in the editor
 			int globalId = textureStorage.translateToGlobalTextureId(name, firstgid + i) -1;
 			
-			boolean isPresent = tiles.containsKey("" + i);
+			boolean isPresent = tiles != null ? tiles.containsKey("" + i) : false;//consider that tiles might be null
 			Animation tileAnimation;
 			if(isPresent && tiles.get("" + i).hasAnimation()){
 				

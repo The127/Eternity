@@ -58,7 +58,12 @@ public class TiledMap{
 			
 		}
 		
-		return new GameMap(layers[0].data, width);
+		//get name
+		String[] split = path.replace("\\", "/").split("/");
+		String name = split[split.length-1].split("\\.")[0];
+		
+		//return new map
+		return new GameMap(name, layers[0].data, width);
 	}
 	
 	private int getTilesetIndex(int mapTileId){

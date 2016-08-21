@@ -5,13 +5,20 @@ import de.eternity.gfx.Camera;
 import de.eternity.gfx.IRenderQueue;
 
 public class GameMap {
+	
+	private String name;
 
 	private final int width;
 	private final int[] data;
 	
-	public GameMap(int[] data, int width){
+	public GameMap(String name, int[] data, int width){
+		this.name = name;
 		this.data = data;
 		this.width = width;
+	}
+	
+	public String getName(){
+		return name;
 	}
 	
 	public void renderMap(IRenderQueue renderQueue, GameData gameData){

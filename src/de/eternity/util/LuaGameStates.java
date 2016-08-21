@@ -17,10 +17,8 @@ public class LuaGameStates {
 		File root = new File(Paths.get("res", path).toAbsolutePath().toString());
 		String[] subFiles = root.list();
 		
-		//there are always two files that belong together (.toml and .png)
 		for(int i = 0; i < subFiles.length; i++){
 			
-			System.out.println(subFiles[i]);
 			gameStates.add(engineLuaEnvironment.loadGameState(Paths.get("res"+path, subFiles[i]).toAbsolutePath()));
 		}
 	}
