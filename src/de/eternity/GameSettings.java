@@ -4,11 +4,36 @@ import de.eternity.gui.DisplayMode;
 
 public class GameSettings {
 
-	int tilesize;
+	private int tilesize;
 	
-	String modsPath;
-	String mapsPath;
-	String tilesetsPath;
+	private String modsPath;
+	private String mapsPath;
+	private String tilesetsPath;
+	private String gameStatesPath;
 	
-	DisplayMode displayMode;
+	private DisplayMode displayMode;
+
+	public int getTilesize() {
+		return tilesize;
+	}
+
+	public String getModsPath() {
+		return modsPath;
+	}
+
+	public String getMapsPath() {
+		return mapsPath;
+	}
+
+	public String getTilesetsPath() {
+		return tilesetsPath;
+	}
+
+	public String getGameStatesPath() {
+		return gameStatesPath;
+	}
+
+	public DisplayMode getDisplayMode() {
+		return displayMode;
+	}
 }

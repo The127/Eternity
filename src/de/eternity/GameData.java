@@ -34,14 +34,14 @@ public class GameData {
 		
 		gameSettings = new Toml().read(new File("res/settings.toml")).to(GameSettings.class);
 		
-		this.tileSize = gameSettings.tilesize;
+		this.tileSize = gameSettings.getTilesize();
 		this.keyboard = keyboard;
 		
-		TextureLoader.loadTextures(gameSettings.tilesetsPath, textureStorage);
+		TextureLoader.loadTextures(gameSettings.getTilesetsPath(), textureStorage);
 	}
 	
 	public DisplayMode getDisplayMode(){
-		return gameSettings.displayMode;
+		return gameSettings.getDisplayMode();
 	}
 	
 	public ButtonInput getKeyboard(){
@@ -58,5 +58,9 @@ public class GameData {
 	
 	public GameMap getGameMap(String mapName){
 		return null;
+	}
+	
+	public GameSettings getSettings(){
+		return gameSettings;
 	}
 }
