@@ -12,7 +12,7 @@ speed = 10
 local function startup()
 	print('startup lua')
 	map = get_game_map('test')
-	tex = get_game_data():getTextureStorage():getTexture(400)
+	tex = get_texture_storage():getTexture(get_texture_storage():translateToGlobalTextureId("walls", 0))
 end
 
 local function shutdown()
@@ -35,16 +35,16 @@ local function update(delta)
 	y = 0
 	
 	if is_key_pressed(VK_A) then
-		x = 100 * delta
-	end
-	if is_key_pressed(VK_D) then
 		x = -100 * delta
 	end
+	if is_key_pressed(VK_D) then
+		x = 100 * delta
+	end
 	if is_key_pressed(VK_W) then
-		y = 100 * delta
+		y = -100 * delta
 	end
 	if is_key_pressed(VK_S) then
-		y = -100 * delta
+		y = 100 * delta
 	end
 	
 	update_tile_animations(delta)
