@@ -5,6 +5,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
 
+import org.luaj.vm2.LuaFunction;
+
 import de.eternity.gfx.Camera;
 import de.eternity.gfx.Renderer;
 import de.eternity.gfx.Texture;
@@ -67,8 +69,8 @@ public class Launcher {
 		game.pushGameState(gameData.getLuaGameState(startGameState));
 	}
 	
-	public static void addLuaMethod(){
-		
+	public static void addLuaMethod(String methodName, LuaFunction function){
+		engineLuaEnvironment.setMethod(methodName, function);
 	}
 	
 	public static void start(){

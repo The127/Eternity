@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.nio.file.Path;
 
 import org.luaj.vm2.Globals;
+import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 import de.eternity.Game;
@@ -59,6 +60,10 @@ public class EngineLuaEnvironment {
 		_G.set("set_window_title", new SetWindowTitle(display));
 		_G.set("update_tile_animations", new UpdateTileAnimations(game.getGameData().getTileStorage()));
 		_G.set("get_texture_storage", new GetTextureStorage(game.getGameData().getTextureStorage()));
+	}
+	
+	public void setMethod(String methodName, LuaValue function){
+		_G.set(methodName, function);
 	}
 	
 	public LuaGameState loadGameState(Path scriptPath){
