@@ -11,6 +11,7 @@ import de.eternity.Game;
 import de.eternity.support.lua.functions.GetFps;
 import de.eternity.support.lua.functions.GetGameData;
 import de.eternity.support.lua.functions.GetGameMap;
+import de.eternity.support.lua.functions.GetTextureStorage;
 import de.eternity.support.lua.functions.IsKeyPressed;
 import de.eternity.support.lua.functions.PollKeyboard;
 import de.eternity.support.lua.functions.PopGameState;
@@ -58,6 +59,7 @@ public class EngineLuaEnvironment {
 		
 		//init graphics methods
 		_G.set("update_tile_animations", new UpdateTileAnimations(game.getGameData().getTileStorage()));
+		_G.set("get_texture_storage", new GetTextureStorage(game.getGameData().getTextureStorage()));
 	}
 	
 	public LuaGameState loadGameState(Path scriptPath){
