@@ -1,12 +1,10 @@
-package de.eternity.demo;
+package de.eternity;
 
 import java.awt.KeyboardFocusManager;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
 
-import de.eternity.Game;
-import de.eternity.GameData;
 import de.eternity.gfx.Camera;
 import de.eternity.gfx.Renderer;
 import de.eternity.gfx.Texture;
@@ -16,9 +14,12 @@ import de.eternity.input.ButtonInput;
 import de.eternity.input.KeyboardAdapter;
 import de.eternity.support.lua.EngineLuaEnvironment;
 
-public class DemoLauncher {
+public class Launcher {
 
-	public static void main(String[] args) throws IOException {
+	private static Game game;
+	private static EngineLuaEnvironment engineLuaEnvironment;
+	
+	public static void initGame(String windowTitle, String startGameState) throws IOException {
 		
 		//init input
 		ButtonInput keyboard = new ButtonInput(256);
@@ -33,7 +34,7 @@ public class DemoLauncher {
 		
 		//init display
 		DisplayMode displayMode = gameData.getSettings().getDisplayMode();
-		Display display = new Display("Demo", displayMode);
+		Display display = new Display(windowTitle, displayMode);
 		
 		//set listeners
 		display.addWindowListener(new WindowListener() {
@@ -57,16 +58,25 @@ public class DemoLauncher {
 		Renderer renderer = new Renderer(new Texture(display.getCanvas()), camera);
 		
 		//init game and lua
-		Game game = new Game(gameData, renderer, display::refreshScreen);
-		EngineLuaEnvironment engineLuaEnvironment = new EngineLuaEnvironment(game, gameData.getLuaGameStates());
+		game = new Game(gameData, renderer, display::refreshScreen);
+		engineLuaEnvironment = new EngineLuaEnvironment(display, game, gameData.getLuaGameStates());
 		
 		gameData.init(engineLuaEnvironment);
 		
-		//demo game states
-//		game.pushGameState(new DemoState());
-		game.pushGameState(gameData.getLuaGameState("lua_test_state"));
+		//push the start game state
+		game.pushGameState(gameData.getLuaGameState(startGameState));
+	}
+	
+	public static void addLuaMethod(){
 		
-		//start the game
+	}
+	
+	public static void start(){
 		game.start();
+	}
+	
+	public static void main(String[] args) throws IOException {
+		initGame("testTitle", "lua_test_state");
+		start();
 	}
 }

@@ -8,6 +8,7 @@ import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 import de.eternity.Game;
+import de.eternity.gui.Display;
 import de.eternity.support.lua.functions.GetFps;
 import de.eternity.support.lua.functions.GetGameData;
 import de.eternity.support.lua.functions.GetGameMap;
@@ -16,6 +17,7 @@ import de.eternity.support.lua.functions.IsKeyPressed;
 import de.eternity.support.lua.functions.PollKeyboard;
 import de.eternity.support.lua.functions.PopGameState;
 import de.eternity.support.lua.functions.PushGameState;
+import de.eternity.support.lua.functions.SetWindowTitle;
 import de.eternity.support.lua.functions.UpdateTileAnimations;
 import de.eternity.util.LuaGameStates;
 
@@ -23,11 +25,7 @@ public class EngineLuaEnvironment {
 
 	private Globals _G = JsePlatform.standardGlobals();
 	
-	public EngineLuaEnvironment(Game game, LuaGameStates luaGameStates){
-		init(game, luaGameStates);
-	}
-	
-	private void init(Game game, LuaGameStates luaGameStates){
+	public EngineLuaEnvironment(Display display, Game game, LuaGameStates luaGameStates){
 		
 		//load hard coded key bindings from KeyEvent class
 		Class<KeyEvent> keyEventClass = KeyEvent.class;
@@ -58,6 +56,7 @@ public class EngineLuaEnvironment {
 		_G.set("get_fps", new GetFps());
 		
 		//init graphics methods
+		_G.set("set_window_title", new SetWindowTitle(display));
 		_G.set("update_tile_animations", new UpdateTileAnimations(game.getGameData().getTileStorage()));
 		_G.set("get_texture_storage", new GetTextureStorage(game.getGameData().getTextureStorage()));
 	}

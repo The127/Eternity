@@ -11,7 +11,7 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import de.eternity.demo.DemoLauncher;
+import de.eternity.Launcher;
 
 public class Sound {
 	
@@ -31,7 +31,7 @@ public class Sound {
 	
 	public Sound(String path) throws LineUnavailableException, UnsupportedAudioFileException, IOException{
 		
-		AudioInputStream audioIn = AudioSystem.getAudioInputStream(DemoLauncher.class.getResource(path));
+		AudioInputStream audioIn = AudioSystem.getAudioInputStream(Launcher.class.getResource(path));
 		
 		clip = AudioSystem.getClip();
 		clip.open(audioIn);
