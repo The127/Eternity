@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
+import de.eternity.GameData;
 import de.eternity.gfx.TextureStorage;
 import de.eternity.map.GameMap;
 import de.eternity.map.TileStorage;
@@ -37,7 +38,7 @@ public class TiledMap{
 	 * @param textureStorage
 	 * @return The game map of this map.
 	 */
-	public GameMap createGameMap(TextureStorage textureStorage, TileStorage tileStorage){
+	public GameMap createGameMap(TextureStorage textureStorage, TileStorage tileStorage, GameData gameData){
 		
 		//load tiles into the tile storage
 		for(int i = 0; i < tilesets.length; i++){
@@ -63,7 +64,7 @@ public class TiledMap{
 		String name = split[split.length-1].split("\\.")[0];
 		
 		//return new map
-		return new GameMap(name, layers[0].data, width);
+		return new GameMap(name, layers[0].data, width, gameData);
 	}
 	
 	private int getTilesetIndex(int mapTileId){

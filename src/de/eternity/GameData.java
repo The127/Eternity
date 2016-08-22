@@ -46,7 +46,7 @@ public class GameData {
 		
 		TextureLoader.loadTextures(gameSettings.getTilesetsPath(), textureStorage);
 		
-		gameMaps.loadGameMaps(gameSettings.getMapsPath(), textureStorage, tileStorage);
+		gameMaps.loadGameMaps(gameSettings.getMapsPath(), this);
 		
 		//load game states from lua files
 		luaGameStates.loadGameStates(gameSettings.getGameStatesPath(), engineLuaEnvironment);
