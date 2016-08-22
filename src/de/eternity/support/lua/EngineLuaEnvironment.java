@@ -19,6 +19,7 @@ import de.eternity.support.lua.functions.PollKeyboard;
 import de.eternity.support.lua.functions.PopGameState;
 import de.eternity.support.lua.functions.PushGameState;
 import de.eternity.support.lua.functions.SetWindowTitle;
+import de.eternity.support.lua.functions.ToGlobalTextureId;
 import de.eternity.support.lua.functions.UpdateTileAnimations;
 import de.eternity.util.LuaGameStates;
 
@@ -60,6 +61,7 @@ public class EngineLuaEnvironment {
 		_G.set("set_window_title", new SetWindowTitle(display));
 		_G.set("update_tile_animations", new UpdateTileAnimations(game.getGameData().getTileStorage()));
 		_G.set("get_texture_storage", new GetTextureStorage(game.getGameData().getTextureStorage()));
+		_G.set("to_global_texture_id", new ToGlobalTextureId(game.getGameData().getTextureStorage()));
 	}
 	
 	public void setMethod(String methodName, LuaValue function){

@@ -12,7 +12,7 @@ speed = 10
 local function startup()
 	set_window_title('lua changed this title')
 	map = get_game_map('test')
-	tex = get_texture_storage():getTexture(get_texture_storage():translateToGlobalTextureId("walls", 0))
+	tex = get_texture_storage():getTexture(to_global_texture_id("walls", 0))
 end
 
 local function shutdown()
