@@ -15,6 +15,7 @@ import de.eternity.support.lua.functions.GetGameData;
 import de.eternity.support.lua.functions.GetGameMap;
 import de.eternity.support.lua.functions.GetTextureStorage;
 import de.eternity.support.lua.functions.IsKeyPressed;
+import de.eternity.support.lua.functions.LoadSound;
 import de.eternity.support.lua.functions.PollKeyboard;
 import de.eternity.support.lua.functions.PopGameState;
 import de.eternity.support.lua.functions.PushGameState;
@@ -62,6 +63,9 @@ public class EngineLuaEnvironment {
 		_G.set("update_tile_animations", new UpdateTileAnimations(game.getGameData().getTileStorage()));
 		_G.set("get_texture_storage", new GetTextureStorage(game.getGameData().getTextureStorage()));
 		_G.set("to_global_texture_id", new ToGlobalTextureId(game.getGameData().getTextureStorage()));
+		
+		//init sound methods
+		_G.set("load_sound", new LoadSound());
 	}
 	
 	public void setMethod(String methodName, LuaValue function){

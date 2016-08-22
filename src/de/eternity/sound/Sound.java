@@ -7,6 +7,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.BooleanControl;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -28,9 +29,11 @@ public class Sound {
 		balance,
 		gain;
 	
+	private final AudioInputStream audioIn;
+	
 	public Sound(String path) throws LineUnavailableException, UnsupportedAudioFileException, IOException{
 		
-		AudioInputStream audioIn = AudioSystem.getAudioInputStream(Launcher.class.getResource(path));
+		audioIn = AudioSystem.getAudioInputStream(Launcher.class.getResource(path));
 		
 		clip = AudioSystem.getClip();
 		clip.open(audioIn);
@@ -187,10 +190,28 @@ public class Sound {
 		}
 	}
 	
+	/**
+	 * Stops the clip from playing.
+	 */
+	public void stop(){
+		if(clip.isRunning())
+			clip.stop();
+	}
+	
 	@Override
 	protected void finalize() throws Throwable {
 		
 		super.finalize();
+		
+		stop();
 		clip.close();
+		clip.addLineListener(e -> {
+			if(e.getType() == LineEvent.Type.CLOSE)
+				try {
+					audioIn.close();
+				} catch (Exception exeption) {
+					exeption.printStackTrace();
+				}
+		});
 	}
 }

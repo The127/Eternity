@@ -4,6 +4,7 @@ local does_remain_on_stack = true
 
 local map
 local tex
+local sound
 
 local x, y, speed
 
@@ -13,18 +14,23 @@ local function startup()
 	set_window_title('lua changed this title')
 	map = get_game_map('test')
 	tex = get_texture_storage():getTexture(to_global_texture_id("walls", 0))
+	sound = load_sound("/sounds/t.wav")
+	sound:loop()
 end
 
 local function shutdown()
 	print('shutdown lua')
+	sound:stop()
 end
 
 local function pause()
 	print('pause lua')
+	sound:pause()
 end
 
 local function unpause()
 	print('unpause lua')
+	sound:unpause()
 end
 
 local function update(delta)
@@ -48,7 +54,6 @@ local function update(delta)
 	end
 	
 	update_tile_animations(delta)
-
 end
 
 local function apply_render_context(renderQueue)
