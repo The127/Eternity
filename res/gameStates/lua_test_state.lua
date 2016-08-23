@@ -14,7 +14,7 @@ local function startup()
 	set_window_title('lua changed this title')
 	map = get_game_map('test')
 	tex = get_texture_storage():getTexture(to_global_texture_id("walls", 0))
-	sound = load_sound("/sounds/t.wav")
+	sound = load_sound("t")
 	sound:loop()
 end
 

@@ -14,10 +14,16 @@ import de.eternity.sound.Sound;
 
 public class LoadSound extends OneArgFunction{
 	
+	private final String soundPath;
+	
+	public LoadSound(String soundPath){
+		this.soundPath = soundPath;
+	}
+	
 	@Override
 	public LuaValue call(LuaValue sound) {
 		try {
-			return CoerceJavaToLua.coerce(new Sound(sound.checkjstring()));
+			return CoerceJavaToLua.coerce(new Sound(soundPath + "/" + sound.checkjstring() + ".wav"));
 		} catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
 			throw new LuaError(e);
 		}

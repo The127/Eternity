@@ -2,6 +2,7 @@ tilesize = 32
 
 modsPath = '/mods'
 mapsPath = '/maps'
+soundPath = '/sounds'
 tilesetsPath = '/tilesets'
 gameStatesPath = '/gameStates'
 

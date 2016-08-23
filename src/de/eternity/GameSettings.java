@@ -8,6 +8,7 @@ public class GameSettings {
 	
 	private String modsPath;
 	private String mapsPath;
+	private String soundPath;
 	private String tilesetsPath;
 	private String gameStatesPath;
 	
@@ -31,6 +32,10 @@ public class GameSettings {
 
 	public String getGameStatesPath() {
 		return gameStatesPath;
+	}
+	
+	public String getSoundPath() {
+		return soundPath;
 	}
 
 	public DisplayMode getDisplayMode() {

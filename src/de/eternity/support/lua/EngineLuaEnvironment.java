@@ -65,7 +65,7 @@ public class EngineLuaEnvironment {
 		_G.set("to_global_texture_id", new ToGlobalTextureId(game.getGameData().getTextureStorage()));
 		
 		//init sound methods
-		_G.set("load_sound", new LoadSound());
+		_G.set("load_sound", new LoadSound(game.getGameData().getSettings().getSoundPath()));
 	}
 	
 	public void setMethod(String methodName, LuaValue function){
