@@ -59,9 +59,14 @@ end
 local function apply_render_context(renderQueue)
 
 	renderQueue:getCamera():move(x, y)
+	
+	local screenMiddleX = renderQueue:getCamera():getX() + (renderQueue:getCamera():getResolutionX() / 2)
+	local screenMiddleY = renderQueue:getCamera():getY() + (renderQueue:getCamera():getResolutionY() / 2)
+	
+	sound:applyDirection(250, 250, screenMiddleX, screenMiddleY)
 
 	map:renderMap(renderQueue, get_game_data())
-	renderQueue:addEntity(tex, 100, 100)
+	renderQueue:addEntity(tex, 234, 234)
 end
 
 luaGameState.does_remain_on_stack = does_remain_on_stack

@@ -214,4 +214,27 @@ public class Sound {
 				}
 		});
 	}
+	
+	/**
+	 * Applies a directional effect to the sound.
+	 * @param soundX The sound x position in the world.
+	 * @param soundY The sound y position in the world.
+	 * @param originX The current center of the screen x.
+	 * @param originY The current center of the screen y.
+	 * @param renderQueue
+	 */
+	public void applyDirection(double soundX, double soundY, double originX, double originY){
+		
+		double x = soundX - originX;
+		double y = soundY - originY;
+		
+		//calculate the length of the vecor
+		double length = Math.sqrt((x*x) + (y*y));
+		//normalize the x value
+		x /= length;
+//		y /= length;//y only usefull for 3d sound
+		
+		//Set the balance to the x value (-1f to 1f)
+		setBalance((float)x);
+	}
 }
