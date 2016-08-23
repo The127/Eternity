@@ -8,6 +8,7 @@ public class Animation {
 
 		private transient int currentTexture = 0;
 		private transient double unaccountedTimeSeconds = 0;
+		private transient Animation enclosingThis = null;
 		
 		public AnimationTimer(int[] animationFrameTimesMillis){
 			
@@ -19,7 +20,7 @@ public class Animation {
 		private void update(double delta){
 			
 			//only if there are more than 1 frames in the animation
-			if(Animation.this.textureCount > 1){
+			if((Animation.this == null ? enclosingThis : Animation.this).textureCount > 1){
 				//add delta to unaccounted time
 				unaccountedTimeSeconds += delta;
 				
@@ -29,7 +30,7 @@ public class Animation {
 				while(isSkipping){
 					
 					//calculate if the next frame has been reached
-					double timeForNextFrame = frameTimesSeconds[(currentTexture + skippedFrames) % Animation.this.textureCount];
+					double timeForNextFrame = frameTimesSeconds[(currentTexture + skippedFrames) % (Animation.this == null ? enclosingThis : Animation.this).textureCount];
 					if(unaccountedTimeSeconds > timeForNextFrame){
 						skippedFrames++;
 						unaccountedTimeSeconds -= timeForNextFrame;
@@ -38,7 +39,7 @@ public class Animation {
 				}
 				
 				//update current texture id
-				currentTexture = (currentTexture + skippedFrames) % Animation.this.textureCount;
+				currentTexture = (currentTexture + skippedFrames) % (Animation.this == null ? enclosingThis : Animation.this).textureCount;
 			}
 		}
 	}
@@ -49,6 +50,7 @@ public class Animation {
 
 	//saved and loaded variables
 	private int[] textureIds;
+	private String tileset = null;
 	
 	private AnimationTimer animationTimer;
 	
@@ -74,6 +76,21 @@ public class Animation {
 //				textureIds[i] = textureStorage.translateToGlobalTextureId(tileset, i);
 //		}
 //	}
+	
+	public Animation init(TextureStorage textureStorage){
+		
+		//translate from local ids to global ids only if is loaded from toml file
+		if(tileset != null){
+			textureCount = textureIds.length;
+			
+			animationTimer.enclosingThis = this;
+			
+			for(int i = 0; i < textureIds.length; i++)
+				textureIds[i] = textureStorage.translateToGlobalTextureId(tileset, textureIds[i]);
+		}
+		
+		return this;
+	}
 	
 	public void update(double delta){
 		animationTimer.update(delta);

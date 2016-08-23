@@ -4,6 +4,7 @@ modsPath = '/mods'
 mapsPath = '/maps'
 soundPath = '/sounds'
 tilesetsPath = '/tilesets'
+animationsPath = '/animations'
 gameStatesPath = '/gameStates'
 
 [displayMode]

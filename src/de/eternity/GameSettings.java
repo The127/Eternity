@@ -11,6 +11,7 @@ public class GameSettings {
 	private String soundPath;
 	private String tilesetsPath;
 	private String gameStatesPath;
+	private String animationsPath;
 	
 	private DisplayMode displayMode;
 
@@ -36,6 +37,10 @@ public class GameSettings {
 	
 	public String getSoundPath() {
 		return soundPath;
+	}
+	
+	public String getAnimationsPath() {
+		return animationsPath;
 	}
 
 	public DisplayMode getDisplayMode() {
