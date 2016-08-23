@@ -17,10 +17,11 @@ public class LuaGameStates {
 		File root = new File(Paths.get("res", path).toAbsolutePath().toString());
 		String[] subFiles = root.list();
 		
-		for(int i = 0; i < subFiles.length; i++){
-			
-			gameStates.add(engineLuaEnvironment.loadGameState(Paths.get("res"+path, subFiles[i]).toAbsolutePath()));
-		}
+		if(subFiles != null)
+			for(int i = 0; i < subFiles.length; i++){
+				
+				gameStates.add(engineLuaEnvironment.loadGameState(Paths.get("res"+path, subFiles[i]).toAbsolutePath()));
+			}
 	}
 	
 	public GameState getGameState(String name){
