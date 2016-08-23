@@ -22,6 +22,9 @@ public class GameScene extends Canvas{
 	
 	public GameScene(DisplayMode displayMode){
 		
+		if(displayMode == null)
+			throw new NullPointerException("Display Mode not defined in settings!");
+		
 		this.displayMode = displayMode;
 		
 		setPreferredSize(new Dimension(displayMode.getDisplayWidth(), displayMode.getDisplayHeight()));
