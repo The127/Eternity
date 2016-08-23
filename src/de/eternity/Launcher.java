@@ -77,8 +77,16 @@ public class Launcher {
 		game.start();
 	}
 	
+	/**
+	 * Parameter:
+	 * 	1. Game Name
+	 * 	2. first game state
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
-		initGame("testTitle", "lua_test_state");
+		initGame(args[0], args[1]);
 		start();
 	}
 }
