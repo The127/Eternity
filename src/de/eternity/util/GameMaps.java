@@ -42,6 +42,6 @@ public class GameMaps {
 			if(gameMaps.get(i).getName().equals(name))
 				return gameMaps.get(i);
 		
-		throw new IllegalArgumentException("No lua game state '" + name + "' found!");
+		throw new IllegalArgumentException("No game map '" + name + "' found!");
 	}
 }
