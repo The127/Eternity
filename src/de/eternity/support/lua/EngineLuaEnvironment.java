@@ -1,8 +1,10 @@
 package de.eternity.support.lua;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
@@ -30,6 +32,9 @@ public class EngineLuaEnvironment {
 	private Globals _G = JsePlatform.standardGlobals();
 	
 	public EngineLuaEnvironment(Display display, Game game, LuaGameStates luaGameStates){
+		
+		//load all lua scripts in the dedicated folder and sub folders (first root folder, then subfolders (recursive))
+		loadLuaFolder(new File(Paths.get("res", game.getGameData().getSettings().getLuaScriptsPath()).toAbsolutePath().toString()));
 		
 		//load hard coded key bindings from KeyEvent class
 		Class<KeyEvent> keyEventClass = KeyEvent.class;
@@ -68,6 +73,25 @@ public class EngineLuaEnvironment {
 		
 		//init sound methods
 		_G.set("load_sound", new LoadSound(game.getGameData().getSettings().getSoundPath()));
+	}
+	
+	private void loadLuaFolder(File dir){
+		
+		String[] subFiles = dir.list();
+		
+		if(subFiles != null)//test if subFiles exist
+			for(int i = 0; i < subFiles.length; i++)
+				//only .lua files
+				if(subFiles[i].endsWith(".lua")){
+					
+					_G.get("dofile").call(dir.getAbsolutePath() + "/" + subFiles[i]);
+					
+				}else{
+					
+					File subDir = new File(subFiles[i]);
+					if(subDir.exists() && subDir.isDirectory())
+						loadLuaFolder(subDir);
+				}
 	}
 	
 	public void setMethod(String methodName, LuaValue function){

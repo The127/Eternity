@@ -12,6 +12,7 @@ public class GameSettings {
 	private String tilesetsPath;
 	private String gameStatesPath;
 	private String animationsPath;
+	private String luaScriptsPath;
 	
 	private DisplayMode displayMode;
 
@@ -41,6 +42,10 @@ public class GameSettings {
 	
 	public String getAnimationsPath() {
 		return animationsPath;
+	}
+
+	public String getLuaScriptsPath() {
+		return luaScriptsPath;
 	}
 
 	public DisplayMode getDisplayMode() {
