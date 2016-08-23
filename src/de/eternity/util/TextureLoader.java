@@ -16,13 +16,14 @@ public class TextureLoader {
 		String[] subFiles = root.list();
 		
 		//there are always two files that belong together (.toml and .png)
-		for(int i = 0; i < subFiles.length; i+=2){
-			
-			//read the tolm file and then load the tileset
-			String name =  subFiles[i].split("\\.")[0];
-			Toml toml = new Toml().read(new File(Paths.get("res" + path, name + ".toml").toAbsolutePath().toString()));
-			//use the tilewidth and height from the toml file
-			textureStorage.loadTileset(Paths.get(path, name + ".png").toString().replace("\\", "/"), name, toml.getLong("tilewidth").intValue(), toml.getLong("tileheight").intValue());
-		}
+		if(subFiles != null)
+			for(int i = 0; i < subFiles.length; i+=2){
+				
+				//read the tolm file and then load the tileset
+				String name =  subFiles[i].split("\\.")[0];
+				Toml toml = new Toml().read(new File(Paths.get("res" + path, name + ".toml").toAbsolutePath().toString()));
+				//use the tilewidth and height from the toml file
+				textureStorage.loadTileset(Paths.get(path, name + ".png").toString().replace("\\", "/"), name, toml.getLong("tilewidth").intValue(), toml.getLong("tileheight").intValue());
+			}
 	}
 }
