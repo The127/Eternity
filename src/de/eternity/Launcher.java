@@ -76,17 +76,4 @@ public class Launcher {
 	public static void start(){
 		game.start();
 	}
-	
-	/**
-	 * Parameter:
-	 * 	1. Game Name
-	 * 	2. first game state
-	 * 
-	 * @param args
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws IOException {
-		initGame(args[0], args[1]);
-		start();
-	}
 }
