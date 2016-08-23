@@ -21,20 +21,19 @@ public class GameMaps {
 		File root = new File(Paths.get("res", path).toAbsolutePath().toString());
 		String[] subFiles = root.list();
 		
-		for(int i = 0; i < subFiles.length; i++){
-			
-//			System.out.println(subFiles[i]);
-			String mapPath = Paths.get("res" + path, subFiles[i]).toAbsolutePath().toString();
-			try {
-				TiledMap tiledMap = TiledMap.readMap(mapPath);
-				GameMap gameMap = tiledMap.createGameMap(gameData.getTextureStorage(), gameData.getTileStorage(), gameData);
-				gameMaps.add(gameMap);
+		if(subFiles != null)
+			for(int i = 0; i < subFiles.length; i++){
 				
-			} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
-				throw new RuntimeException("Could not load map '" + mapPath + "'!", e);
+				String mapPath = Paths.get("res" + path, subFiles[i]).toAbsolutePath().toString();
+				try {
+					TiledMap tiledMap = TiledMap.readMap(mapPath);
+					GameMap gameMap = tiledMap.createGameMap(gameData.getTextureStorage(), gameData.getTileStorage(), gameData);
+					gameMaps.add(gameMap);
+					
+				} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+					throw new RuntimeException("Could not load map '" + mapPath + "'!", e);
+				}
 			}
-			
-		}
 	}
 	
 	public GameMap getGameMap(String name){
