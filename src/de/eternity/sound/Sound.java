@@ -11,6 +11,7 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import de.eternity.GameData;
 import de.eternity.Launcher;
 
 public class Sound {
@@ -223,8 +224,15 @@ public class Sound {
 	 * @param originY The current center of the screen y.
 	 * @param renderQueue
 	 */
-	public void applyDirection(double soundX, double soundY, double originX, double originY){
+	public void applyPosition(double soundX, double soundY, double originX, double originY, GameData gameData){
 		
+		//approximation
+		if((int)soundX == (int)originX)
+			soundX = originX;
+		if((int)soundX == (int)originX)
+			soundX = originX;
+		
+		//calcaulate vector
 		double x = soundX - originX;
 		double y = soundY - originY;
 		
@@ -232,9 +240,13 @@ public class Sound {
 		double length = Math.sqrt((x*x) + (y*y));
 		//normalize the x value
 		x /= length;
-//		y /= length;//y only usefull for 3d sound
 		
+		//get the length in meters/units
+		length /= gameData.oneMeter;
+		
+		//Set the gain to -length^2
+		setGain((float)-(length*length));
 		//Set the balance to the x value (-1f to 1f)
-		setBalance((float)x);
+		setPan((float)x);
 	}
 }
