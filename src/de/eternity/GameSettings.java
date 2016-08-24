@@ -5,6 +5,7 @@ import de.eternity.gui.DisplayMode;
 public class GameSettings {
 
 	private int tilesize;
+	private int oneMeter;
 	
 	private String modsPath;
 	private String mapsPath;
@@ -18,6 +19,10 @@ public class GameSettings {
 
 	public int getTilesize() {
 		return tilesize;
+	}
+	
+	public int getOneMeter() {
+		return oneMeter;
 	}
 
 	public String getModsPath() {

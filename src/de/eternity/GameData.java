@@ -23,6 +23,7 @@ import de.eternity.util.TextureLoader;
 public class GameData {
 
 	public final int tileSize;
+	public final int oneMeter;
 	
 	private final ButtonInput keyboard;
 	
@@ -39,6 +40,8 @@ public class GameData {
 		gameSettings = new Toml().read(new File("res/settings.toml")).to(GameSettings.class);
 		
 		this.tileSize = gameSettings.getTilesize();
+		this.oneMeter = gameSettings.getOneMeter();
+		
 		this.keyboard = keyboard;
 	}
 	
