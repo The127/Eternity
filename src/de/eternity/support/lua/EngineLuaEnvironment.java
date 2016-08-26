@@ -22,6 +22,7 @@ import de.eternity.support.lua.functions.LoadSound;
 import de.eternity.support.lua.functions.PollKeyboard;
 import de.eternity.support.lua.functions.PopGameState;
 import de.eternity.support.lua.functions.PushGameState;
+import de.eternity.support.lua.functions.ReadToml;
 import de.eternity.support.lua.functions.SetWindowTitle;
 import de.eternity.support.lua.functions.ToGlobalTextureId;
 import de.eternity.support.lua.functions.UpdateTileAnimations;
@@ -61,6 +62,7 @@ public class EngineLuaEnvironment {
 		_G.set("get_game_map", new GetGameMap(game.getGameData().getGameMaps()));
 		
 		//init utility methods
+		_G.set("read_toml", new ReadToml(game.getGameData()));
 		_G.set("get_game_data", new GetGameData(game.getGameData()));
 		_G.set("get_fps", new GetFps());
 		
@@ -88,7 +90,7 @@ public class EngineLuaEnvironment {
 					
 				}else{
 					
-					File subDir = new File(subFiles[i]);
+					File subDir = new File(dir.getAbsolutePath() + "/" + subFiles[i]);
 					if(subDir.exists() && subDir.isDirectory())
 						loadLuaFolder(subDir);
 				}

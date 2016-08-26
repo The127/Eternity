@@ -7,7 +7,7 @@ public class GameSettings {
 	private int tilesize;
 	private int oneMeter;
 	
-	private String modsPath;
+	private String dataFilesPath;
 	private String mapsPath;
 	private String soundPath;
 	private String tilesetsPath;
@@ -25,8 +25,8 @@ public class GameSettings {
 		return oneMeter;
 	}
 
-	public String getModsPath() {
-		return modsPath;
+	public String getDataFilesPath() {
+		return dataFilesPath;
 	}
 
 	public String getMapsPath() {
