@@ -21,7 +21,7 @@ public class Launcher {
 	private static Game game;
 	private static EngineLuaEnvironment engineLuaEnvironment;
 	
-	public static void initGame(String windowTitle, String startGameState) throws IOException {
+	public static void initGame(String windowTitle) {
 		
 		//init input
 		ButtonInput keyboard = new ButtonInput(256);
@@ -62,11 +62,6 @@ public class Launcher {
 		//init game and lua
 		game = new Game(gameData, renderer, display::refreshScreen);
 		engineLuaEnvironment = new EngineLuaEnvironment(display, game, gameData.getLuaGameStates());
-		
-		gameData.init(engineLuaEnvironment);
-		
-		//push the start game state
-		game.pushGameState(gameData.getLuaGameState(startGameState));
 	}
 	
 	public static GameData getGameData(){
@@ -77,7 +72,13 @@ public class Launcher {
 		engineLuaEnvironment.setMethod(methodName, function);
 	}
 	
-	public static void start(){
+	public static void start(String startGameState) throws IOException{
+		
+		game.getGameData().init(engineLuaEnvironment);
+		
+		//push the start game state
+		game.pushGameState(game.getGameData().getLuaGameState(startGameState));
+		
 		game.start();
 	}
 }
