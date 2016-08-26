@@ -69,6 +69,10 @@ public class Launcher {
 		game.pushGameState(gameData.getLuaGameState(startGameState));
 	}
 	
+	public static GameData getGameData(){
+		return game.getGameData();
+	}
+	
 	public static void addLuaMethod(String methodName, LuaFunction function){
 		engineLuaEnvironment.setMethod(methodName, function);
 	}
