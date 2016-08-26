@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.luaj.vm2.Globals;
+import org.luaj.vm2.LuaError;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
@@ -87,7 +88,12 @@ public class EngineLuaEnvironment {
 			for(int i = 0; i < subFiles.length; i++)
 				//only .lua files
 				if(subFiles[i].endsWith(".lua"))
-					_G.get("dofile").call(dir.getAbsolutePath() + "/" + subFiles[i]);
+					try{
+						_G.get("dofile").call(dir.getAbsolutePath() + "/" + subFiles[i]);
+					}catch(LuaError luaError){
+						System.err.println("Error with file: " + subFiles[i]);
+						throw luaError;
+					}
 			
 			//folders second
 			for(int i = 0; i < subFiles.length; i++)
