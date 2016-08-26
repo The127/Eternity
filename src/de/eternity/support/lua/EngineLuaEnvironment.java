@@ -82,14 +82,17 @@ public class EngineLuaEnvironment {
 		String[] subFiles = dir.list();
 		
 		if(subFiles != null)//test if subFiles exist
+			
+			//files first
 			for(int i = 0; i < subFiles.length; i++)
 				//only .lua files
-				if(subFiles[i].endsWith(".lua")){
-					
+				if(subFiles[i].endsWith(".lua"))
 					_G.get("dofile").call(dir.getAbsolutePath() + "/" + subFiles[i]);
-					
-				}else{
-					
+			
+			//folders second
+			for(int i = 0; i < subFiles.length; i++)
+				//only .lua files
+				if(!subFiles[i].endsWith(".lua")){
 					File subDir = new File(dir.getAbsolutePath() + "/" + subFiles[i]);
 					if(subDir.exists() && subDir.isDirectory())
 						loadLuaFolder(subDir);
