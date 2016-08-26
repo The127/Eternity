@@ -113,8 +113,6 @@ public class Game {
 				fps = fpsCounter;
 				fpsCounter = 0;
 				fpsTimer = 0;
-				
-				System.out.println("FPS: " + fps);
 			}
 		}
 	}
