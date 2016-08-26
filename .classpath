@@ -16,7 +16,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/luaj-jse-3.0.1.jar" sourcepath="lib/luaj-sources-3.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/jinput.jar"/>
+	<classpathentry kind="lib" path="lib/luaj-jse-3.0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
