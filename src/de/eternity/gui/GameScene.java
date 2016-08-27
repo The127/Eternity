@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.gui;
 
 import java.awt.Canvas;
@@ -20,6 +25,10 @@ public class GameScene extends Canvas{
 	
 	protected DisplayMode displayMode;
 	
+	/**
+	 * Creates a new game scene.
+	 * @param displayMode The display mode for the scene.
+	 */
 	public GameScene(DisplayMode displayMode){
 		
 		if(displayMode == null)
@@ -38,6 +47,7 @@ public class GameScene extends Canvas{
 	
 	/**
 	 * Refreshes the screen. This method should be the most time consuming call in the whole engine.
+	 * Is called by the game (rendering thread).
 	 */
 	public void refreshScreen(){
 		
@@ -50,6 +60,9 @@ public class GameScene extends Canvas{
 		bs.show();
 	}
 	
+	/**
+	 * @return The rendering buffer.
+	 */
 	public BufferedImage getCanvas(){
 		
 		return buffer;

@@ -1,5 +1,15 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.input;
 
+/**
+ * Handles button related input.
+ * @author Julian Sven Baehr
+ *
+ */
 public class ButtonInput {
 
 	public static final boolean STATE_PRESSED = true, STATE_RELEASED = false;
@@ -7,6 +17,10 @@ public class ButtonInput {
 	private boolean[] buffer, active;
 	private Object eventLock = new Object(){};
 	
+	/**
+	 * Creates a new button input instance.
+	 * @param buttonCount The amount of buttons.
+	 */
 	public ButtonInput(int buttonCount){
 		buffer = new boolean[buttonCount];
 		active = new boolean[buttonCount];
@@ -26,6 +40,11 @@ public class ButtonInput {
 		}
 	}
 	
+	/**
+	 * Sets the buffer at the key to the given state.
+	 * @param key The key.
+	 * @param state The keys state.
+	 */
 	void setBuffer(int key, boolean state){
 		
 		//for listeners there will always only be one thread in here
@@ -38,6 +57,10 @@ public class ButtonInput {
 		}
 	}
 	
+	/**
+	 * @param key The key.
+	 * @return True if the key is pressed.
+	 */
 	public boolean isPressed(int key){
 		
 		if(key >= 0 && key < buffer.length)

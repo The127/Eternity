@@ -1,11 +1,26 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.map;
 
 import java.util.ArrayList;
 
+/**
+ * A global tile storage.
+ * @author Julian Sven Baehr
+ *
+ */
 public class TileStorage {
 
 	private ArrayList<Tile> tiles = new ArrayList<>();
 	
+	/**
+	 * Adds a tile to the global storage.
+	 * @param tile The tile.
+	 * @param index The index of the tile.
+	 */
 	public void addTile(Tile tile, int index){
 		
 		//ensure capacity
@@ -21,7 +36,7 @@ public class TileStorage {
 	
 	/**
 	 * Updates all tiles.
-	 * @param delta
+	 * @param delta The time since the last call to this method.
 	 */
 	public void update(double delta){
 		
@@ -35,6 +50,10 @@ public class TileStorage {
 		}
 	}
 	
+	/**
+	 * @param index The tile index.
+	 * @return The tile at the given index.
+	 */
 	public Tile get(int index){
 		return tiles.get(index);
 	}

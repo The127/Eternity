@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.support.tiled;
 
 import java.io.FileNotFoundException;
@@ -12,6 +17,11 @@ import de.eternity.gfx.TextureStorage;
 import de.eternity.map.GameMap;
 import de.eternity.map.TileStorage;
 
+/**
+ * A wrapper class for tiled editor json export file support.
+ * It creates game maps from the loaded data.
+ * @author Julian Sven Baehr
+ */
 public class TiledMap{
 	
 	private String path;
@@ -21,6 +31,14 @@ public class TiledMap{
 	private TiledLayer[] layers;
 	private TiledTileset[] tilesets;
 	
+	/**
+	 * Loads a tiled editor json export file.
+	 * @param path The path to the json file.
+	 * @return A tiled map object that represents the file.
+	 * @throws JsonSyntaxException
+	 * @throws JsonIOException
+	 * @throws FileNotFoundException
+	 */
 	public static TiledMap readMap(String path) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		
 		TiledMap map = new Gson().fromJson(new FileReader(path), TiledMap.class);
@@ -29,13 +47,18 @@ public class TiledMap{
 		return map;
 	}
 	
+	/**
+	 * Private empty constructor.
+	 */
 	private TiledMap(){
 		//private constructor
 	}
 	
 	/**
 	 * Translates and calculates a game map from the loaded map data.
-	 * @param textureStorage
+	 * @param textureStorage The global texture storage.
+	 * @param tileStorage The global tile storage.
+	 * @param gameData The game data manager object.
 	 * @return The game map of this map.
 	 */
 	public GameMap createGameMap(TextureStorage textureStorage, TileStorage tileStorage, GameData gameData){
@@ -67,6 +90,10 @@ public class TiledMap{
 		return new GameMap(name, layers[0].data, width, gameData);
 	}
 	
+	/**
+	 * @param mapTileId The id of the tile.
+	 * @return The index of the tileset of the tile.
+	 */
 	private int getTilesetIndex(int mapTileId){
 		
 		for(int i = 0; i < tilesets.length; i++)

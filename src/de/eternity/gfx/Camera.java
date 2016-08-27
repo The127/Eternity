@@ -1,7 +1,17 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.gfx;
 
 import java.awt.Rectangle;
 
+/**
+ * This class handles movement in the game in respect to drawing.
+ * @author Julian Sven Baehr
+ *
+ */
 public class Camera {
 	
 	private Rectangle areaOfView;
@@ -27,8 +37,8 @@ public class Camera {
 	
 	/**
 	 * Sets the current camera position.
-	 * @param x
-	 * @param y
+	 * @param x The world x value.
+	 * @param y The world y value.
 	 */
 	public void set(double x, double y){
 		

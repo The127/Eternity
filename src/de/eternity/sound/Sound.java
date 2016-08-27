@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.sound;
 
 import java.io.IOException;
@@ -16,6 +21,12 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import de.eternity.GameData;
 import de.eternity.Launcher;
 
+/**
+ * A sound class.
+ * It supports multiple controlls and directional/position based sound.
+ * @author Julzenberger
+ *
+ */
 public class Sound {
 	
 	public static final boolean 
@@ -42,6 +53,13 @@ public class Sound {
 	
 	private final AudioInputStream audioIn;
 	
+	/**
+	 * Loads a new sound into a sound object.
+	 * @param path The path to the sound file.
+	 * @throws LineUnavailableException
+	 * @throws UnsupportedAudioFileException
+	 * @throws IOException
+	 */
 	public Sound(String path) throws LineUnavailableException, UnsupportedAudioFileException, IOException{
 		
 		audioIn = AudioSystem.getAudioInputStream(Launcher.class.getResource(path));
@@ -69,10 +87,17 @@ public class Sound {
 		currentVolume = gain.getValue();
 	}
 	
+	/**
+	 * @return True if the sound is stopped.
+	 */
 	public boolean isStopped(){
 		return isStopped;
 	}
 	
+	/**
+	 * Updates the sound if it must be updated.
+	 * @param delta The time since the last call to this method.
+	 */
 	public void update(double delta){
 		
 		if(!isDesiredVolume){
@@ -91,6 +116,9 @@ public class Sound {
 		}
 	}
 	
+	/**
+	 * @return True if this sound has reached its desired volume.
+	 */
 	public boolean isDesiredVolume(){
 		return isDesiredVolume;
 	}
@@ -98,8 +126,8 @@ public class Sound {
 	/**
 	 * Slowly sets the desired volume for the specified amount of time.
 	 * The sound will increase or decrease linearly.
-	 * @param volume
-	 * @param seconds
+	 * @param volume The desired volume in percent.
+	 * @param seconds The time in seconds for it to reach the volume.
 	 */
 	public void setDesiredVolume(int volume, double seconds){
 		desiredVolume = volume * gainMaxMinusMin / 100f + gain.getMinimum();
@@ -119,17 +147,25 @@ public class Sound {
 		}
 	}
 	
+	/**
+	 * Mutes or unmutes the sound.
+	 * @param mute The mute value (mute=true/unmute=false)
+	 */
 	public void mute(boolean mute){
 		this.mute.setValue(mute);;
 	}
 	
+	/**
+	 * @return The current mute state (mute=true/unmute=false).
+	 */
 	public boolean getMute(){
 		return this.mute.getValue();
 	}
 	
 	/**
-	 * +6 to -80 (auto fix to min or max if boundaries crossed)
-	 * @param gain
+	 * Sets the sounds gain value.
+	 * Automatically fixes the value to the minimum or maximum if these boundaries crossed.
+	 * @param gain The gain value.
 	 */
 	private void setGain(float gain){
 		
@@ -145,13 +181,17 @@ public class Sound {
 		currentVolume = this.gain.getValue();
 	}
 	
+	/**
+	 * @return The sounds current gain value.
+	 */
 	public float getGain(){
 		return this.gain.getValue();
 	}
 	
 	/**
-	 * -1 to 1 (auto fix to min or max if boundaries crossed)
-	 * @param pan
+	 * Sets the sounds pan value.
+	 * Automatically fixes the value to the minimum or maximum if these boundaries crossed.
+	 * @param pan The pan value.
 	 */
 	private void setPan(float pan){
 		
@@ -165,13 +205,17 @@ public class Sound {
 			this.pan.setValue(pan);
 	}
 	
+	/**
+	 * @return The sounds current pan value.
+	 */
 	public float getPan(){
 		return this.pan.getValue();
 	}
 	
 	/**
-	 * -1 to 1 (auto fix to min or max if boundaries crossed)
-	 * @param balance
+	 * Sets the sounds balance value.
+	 * Automatically fixes the value to the minimum or maximum if these boundaries crossed.
+	 * @param balance The balance value.
 	 */
 	@SuppressWarnings("unused")
 	private void setBalance(float balance){
@@ -192,7 +236,7 @@ public class Sound {
 	
 	/**
 	 * Loops the sound continuously.
-	 * If the sound is already running it will be stopped.
+	 * If the sound is already running it will be reset first.
 	 */
 	public void loop(){
 		
@@ -302,7 +346,7 @@ public class Sound {
 	 * @param soundY The sound y position in the world.
 	 * @param originX The current center of the screen x.
 	 * @param originY The current center of the screen y.
-	 * @param renderQueue
+	 * @param gameData The game data manager object.
 	 */
 	public void applyPosition(double soundX, double soundY, double originX, double originY, GameData gameData){
 		

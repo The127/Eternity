@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity;
 
 import java.awt.KeyboardFocusManager;
@@ -16,11 +21,20 @@ import de.eternity.input.ButtonInput;
 import de.eternity.input.KeyboardAdapter;
 import de.eternity.support.lua.EngineLuaEnvironment;
 
+/**
+ * A class that handles nearly every initialization for the engine and provides hooks for new lua methods.
+ * @author Julian Sven Baehr
+ *
+ */
 public class Launcher {
 
 	private static Game game;
 	private static EngineLuaEnvironment engineLuaEnvironment;
 	
+	/**
+	 * Initializes the game and the display.
+	 * @param windowTitle The title of the display.
+	 */
 	public static void initGame(String windowTitle) {
 		
 		//init input
@@ -64,14 +78,28 @@ public class Launcher {
 		engineLuaEnvironment = new EngineLuaEnvironment(display, game, gameData.getLuaGameStates());
 	}
 	
+	/**
+	 * @return The games data manager.
+	 */
 	public static GameData getGameData(){
 		return game.getGameData();
 	}
 	
+	/**
+	 * Adds a new global lua method with the given name.
+	 * This is useful to create new lua method based on java methods.
+	 * @param methodName The name of the method.
+	 * @param function The method.
+	 */
 	public static void addLuaMethod(String methodName, LuaFunction function){
 		engineLuaEnvironment.setMethod(methodName, function);
 	}
 	
+	/**
+	 * Starts the game.
+	 * @param startGameState The name of the first lua game state.
+	 * @throws IOException
+	 */
 	public static void start(String startGameState) throws IOException{
 		
 		game.getGameData().init(engineLuaEnvironment);

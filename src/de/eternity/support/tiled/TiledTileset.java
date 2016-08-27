@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.support.tiled;
 
 import java.util.Map;
@@ -7,6 +12,11 @@ import de.eternity.gfx.TextureStorage;
 import de.eternity.map.Tile;
 import de.eternity.map.TileStorage;
 
+
+/**
+ * A wrapper class for tiled editor json export file support.
+ * @author Julian Sven Baehr
+ */
 class TiledTileset {
 
 	int firstgid, tilecount;
@@ -16,9 +26,8 @@ class TiledTileset {
 	
 	/**
 	 * Makes a game tile for every texture tile in the tileset and loads the animations.
-	 * @param tileStorage
-	 * @param textureStorage
-	 * @param tileset
+	 * @param tileStorage The global tile storage.
+	 * @param textureStorage The global texture storage.
 	 */
 	void initialize(TileStorage tileStorage, TextureStorage textureStorage){
 		

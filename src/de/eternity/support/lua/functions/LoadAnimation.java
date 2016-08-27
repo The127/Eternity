@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.support.lua.functions;
 
 import java.io.File;
@@ -12,6 +17,11 @@ import de.eternity.GameData;
 import de.eternity.gfx.Animation;
 import de.eternity.gfx.TextureStorage;
 
+/**
+ * Loads an animation from the dedicated animation directory.
+ * Takes an animation name and locates it in the dedicated animatino directory.
+ * @author Julian Sven Baehr
+ */
 public class LoadAnimation extends OneArgFunction{
 
 	private String animationsPath;

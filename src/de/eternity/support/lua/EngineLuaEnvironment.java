@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.support.lua;
 
 import java.awt.event.KeyEvent;
@@ -28,10 +33,22 @@ import de.eternity.support.lua.functions.ToGlobalTextureId;
 import de.eternity.support.lua.functions.UpdateTileAnimations;
 import de.eternity.util.LuaGameStates;
 
+/**
+ * Encapsulates the lua support for the game engine.
+ * @author Julian Sven Baehr
+ *
+ */
 public class EngineLuaEnvironment {
 
 	private Globals _G = JsePlatform.standardGlobals();
 	
+	/**
+	 * Creates a new lua environment.
+	 * Initializes all provided lua functions from the game engine.
+	 * @param display The game display.
+	 * @param game The game.
+	 * @param luaGameStates The lua game states manager object.
+	 */
 	public EngineLuaEnvironment(Display display, Game game, LuaGameStates luaGameStates){
 		
 		//load all lua scripts in the dedicated folder and sub folders (first root folder, then subfolders (recursive))
@@ -76,6 +93,10 @@ public class EngineLuaEnvironment {
 		_G.set("load_sound", new LoadSound(game.getGameData().getSettings().getSoundPath()));
 	}
 	
+	/**
+	 * Loads a lua folder.
+	 * @param dir The directory file object.
+	 */
 	private void loadLuaFolder(File dir){
 		
 		String[] subFiles = dir.list();
@@ -103,10 +124,20 @@ public class EngineLuaEnvironment {
 				}
 	}
 	
+	/**
+	 * Sets a global lua method.
+	 * @param methodName The name of the method.
+	 * @param function The lua method.
+	 */
 	public void setMethod(String methodName, LuaValue function){
 		_G.set(methodName, function);
 	}
 	
+	/**
+	 * Loads a lua game state.
+	 * @param scriptPath The path to the script.
+	 * @return The loaded script wrapped in a lua game state object.
+	 */
 	public LuaGameState loadGameState(Path scriptPath){
 		return new LuaGameState(_G.loadfile(scriptPath.toString()), scriptPath.getFileName().toString().split("\\.")[0]);
 	}

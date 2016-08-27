@@ -1,7 +1,24 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.gfx;
 
+/**
+ * This class represents an animation.
+ * An animation contains the ids of one or more textures and their respective display time.
+ * Animations can be loaded from toml files within the dedicated animation directory.
+ * @author Julian Sven Baehr
+ *
+ */
 public class Animation {
 	
+	/**
+	 * This class handles the timing of an animation.
+	 * @author Julian Sven Baehr
+	 *
+	 */
 	public class AnimationTimer{
 		
 		private double[] frameTimesSeconds;
@@ -10,6 +27,10 @@ public class Animation {
 		private transient double unaccountedTimeSeconds = 0;
 		private transient Animation enclosingThis = null;
 		
+		/**
+		 * Creates a new AnimationTimer instance.
+		 * @param animationFrameTimesMillis An array of the milliseconds for each animatino frame.
+		 */
 		public AnimationTimer(int[] animationFrameTimesMillis){
 			
 			frameTimesSeconds = new double[animationFrameTimesMillis.length];
@@ -17,6 +38,10 @@ public class Animation {
 				frameTimesSeconds[i] = animationFrameTimesMillis[i] / 1000d;
 		}
 		
+		/**
+		 * Updates the animation.
+		 * @param delta The time since the last call to this method.
+		 */
 		private void update(double delta){
 			
 			//only if there are more than 1 frames in the animation
@@ -54,6 +79,11 @@ public class Animation {
 	
 	private AnimationTimer animationTimer;
 	
+	/**
+	 * Creates a new animation.
+	 * @param textureIds An array with the ids for each animation frame.
+	 * @param animationFrameTimesMillis An array of the milliseconds for each animation frame.
+	 */
 	public Animation(int[] textureIds, int[] animationFrameTimesMillis){
 		this.textureIds = textureIds;
 		textureCount = textureIds.length;
@@ -77,6 +107,11 @@ public class Animation {
 //		}
 //	}
 	
+	/**
+	 * Initializes the animation.
+	 * @param textureStorage The global texture storage.
+	 * @return The animation itself.
+	 */
 	public Animation init(TextureStorage textureStorage){
 		
 		//translate from local ids to global ids only if is loaded from toml file
@@ -92,14 +127,25 @@ public class Animation {
 		return this;
 	}
 	
+	/**
+	 * Updates the animation.
+	 * @param delta The time since the last call to this method.
+	 */
 	public void update(double delta){
 		animationTimer.update(delta);
 	}
 	
+	/**
+	 * @param textureStorage The global texture storage.
+	 * @return The current texture/animation frame of this animation.
+	 */
 	public Texture getCurrentTexture(TextureStorage textureStorage){
 		return textureStorage.getTexture(textureIds[animationTimer.currentTexture]);
 	}
 	
+	/**
+	 * @return The global id of the current animation frame/texture.
+	 */
 	public int getCurrentTextureId(){
 		return textureIds[animationTimer.currentTexture];
 	}

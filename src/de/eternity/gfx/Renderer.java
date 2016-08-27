@@ -1,8 +1,18 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.gfx;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * This class handles the rendering of textures to the screen buffer.
+ * @author Julian Sven Baehr
+ *
+ */
 public class Renderer {
 	
 	public static final int BACKGROUND_DEPTH = -1337;
@@ -19,6 +29,11 @@ public class Renderer {
 	private int[] colorBuffer;
 	private int width;
 	
+	/**
+	 * Creates a new renderer that draws on the given texture within the area of the given camera.
+	 * @param texture The render texture.
+	 * @param camera The render camera.
+	 */
 	public Renderer(Texture texture, Camera camera){
 		
 		this.width = texture.getWidth();
@@ -61,6 +76,9 @@ public class Renderer {
 		}
 	}
 	
+	/**
+	 * Handles the actual context switch.
+	 */
 	private void handleContextSwitch(){
 
 		//switch context

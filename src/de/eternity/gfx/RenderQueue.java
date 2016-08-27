@@ -1,7 +1,17 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.gfx;
 
 import java.util.Arrays;
 
+/**
+ * A render queue is a queue of reusable entries that hold information about entities and background that is to be drawn.
+ * @author Julian Sven Baehr
+ *
+ */
 public class RenderQueue implements IRenderQueue {
 	
 	private Camera camera;
@@ -10,6 +20,10 @@ public class RenderQueue implements IRenderQueue {
 	private RenderQueueEntry[] entries = {new RenderQueueEntry()};//new array with 1 entry
 	private int size = 0;
 	
+	/**
+	 * Creates a new render queue.
+	 * @param camera The game camera.
+	 */
 	public RenderQueue(Camera camera) {
 		this.camera = camera;
 	}
@@ -26,14 +40,27 @@ public class RenderQueue implements IRenderQueue {
 		if(entry != null)entry.enableBackgroundMode();
 	}
 	
+	/**
+	 * @return The game camera.
+	 */
 	public Camera getCamera(){
 		return camera;
 	}
 	
+	/**
+	 * @return The current amount of render queue entries.
+	 */
 	public int size(){
 		return size;
 	}
 	
+	/**
+	 * Adds a render queue entry to the queue.
+	 * @param texture The texture that is to be drawn.
+	 * @param x The world x coordinate.
+	 * @param y The world y coordinate.
+	 * @return The render queue entry or null if it is not within the camera area.
+	 */
 	private RenderQueueEntry addEntry(Texture texture, double x, double y){
 
 		//request new RenderQueueEntry
@@ -52,6 +79,9 @@ public class RenderQueue implements IRenderQueue {
 		return entry;
 	}
 	
+	/**
+	 * Handles array enlargment.
+	 */
 	private void enlargeArray(){
 		RenderQueueEntry[] temp = entries;
 		entries = new RenderQueueEntry[temp.length*2];
@@ -61,16 +91,26 @@ public class RenderQueue implements IRenderQueue {
 			entries[i] = new RenderQueueEntry();
 	}
 	
+	/**
+	 * @param index The index of the render queue entry.
+	 * @return The render queue entry at the given index.
+	 */
 	public RenderQueueEntry get(int index){
 		return entries[index];
 	}
 	
+	/**
+	 * Sorts the render queue entries by their depth.
+	 */
 	public void sort(){
 		Arrays.sort(entries, 0, size, (e1, e2) ->{
 			return e1.getDepth() - e2.getDepth();
 		});
 	}
 	
+	/**
+	 * Resets the render queue.
+	 */
 	void reset() {
 		//reset current size for next iteration
 		size = 0;

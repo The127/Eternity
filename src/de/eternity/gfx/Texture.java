@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.gfx;
 
 import java.awt.Graphics;
@@ -163,6 +168,9 @@ public class Texture {
 		return path;
 	}
 	
+	/**
+	 * Pre-multiplies every pixel of a texture with its alpha value.
+	 */
 	private void preMultiply(){
 		
 		int a, r, g, b;
@@ -180,10 +188,10 @@ public class Texture {
 	
 	/**
 	 * Creates a new texture with a copy of the specified area of this texture as its content.
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
+	 * @param x The x coordinate in the texture.
+	 * @param y The y coordinate in the texture.
+	 * @param width The width of the sub texture.
+	 * @param height The height of the sub texture.
 	 * @return The selected area in a new texture.
 	 */
 	public Texture subTexture(int x, int y, int width, int height){
@@ -197,6 +205,9 @@ public class Texture {
 		return texture;
 	}
 	
+	/**
+	 * Demo method to fill empty textures with 'random' data.
+	 */
 	public void foo(){
 		
 		for(int i = 0; i < buffer.length; i++)

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Julian Sven Baehr
+ * 
+ * See the file license.txt for copying permission.
+ */
 package de.eternity.gfx;
 
 import java.io.IOException;
@@ -6,6 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is a global texture storage.
+ * It can handle the loading of a tileset image.
+ * It can handle the translation from a tileset local id to a global id.
+ * @author Julian Sven Baehr
+ *
+ */
 public class TextureStorage {
 	
 	private Map<String, Integer> tilesets = new HashMap<>();
