@@ -102,7 +102,6 @@ public class Renderer {
 	/**
 	 * Lets the update thread wait on the next context.
 	 * @return The next context.
-	 * @throws InterruptedException
 	 */
 	public RenderQueue getUpdateContext() {
 

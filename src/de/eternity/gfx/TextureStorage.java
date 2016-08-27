@@ -57,7 +57,7 @@ public class TextureStorage {
 	/**
 	 * Translates a local texture id from a tileset to the corresponding global texture id.
 	 * @param tileset The name of the tileset.
-	 * @param localTileId The local texture id.
+	 * @param localTextureId The local texture id.
 	 * @return The global texture id.
 	 */
 	public int translateToGlobalTextureId(String tileset, int localTextureId){
@@ -69,7 +69,7 @@ public class TextureStorage {
 	}
 	
 	/**
-	 * @param globalTextureId
+	 * @param globalTextureId The global texture id.
 	 * @return The texture with the given global tile id.
 	 */
 	public Texture getTexture(int globalTextureId){

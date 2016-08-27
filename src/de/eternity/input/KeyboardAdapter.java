@@ -19,7 +19,7 @@ public class KeyboardAdapter implements KeyEventDispatcher{
 	
 	/**
 	 * Creates a new keyboard adapter for the given button input.
-	 * @param buttonInput
+	 * @param buttonInput The button input instance.
 	 */
 	public KeyboardAdapter(ButtonInput buttonInput){
 		this.buttonInput = buttonInput;

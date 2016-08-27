@@ -91,7 +91,7 @@ public class Texture {
 	}
 	
 	/**
-	 * Creates a new Texture object with the specified BufferedImage as the drawing canvas. Changes to this texture will result in changes to the image. <br/>
+	 * Creates a new Texture object with the specified BufferedImage as the drawing canvas. Changes to this texture will result in changes to the image.
 	 * Make sure to pass a compatible TYPE_INT_ARGB BufferedImage.
 	 * @param canvas The drawing canvas and base image.
 	 */

@@ -20,7 +20,7 @@ public class Tile {
 	
 	/**
 	 * Creates a new tile with the given animation.
-	 * @param animation
+	 * @param animation The tile animation.
 	 */
 	public Tile(Animation animation){
 		this.animation = animation;

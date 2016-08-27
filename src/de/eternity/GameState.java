@@ -30,7 +30,7 @@ public abstract class GameState {
 	 * Creates a new game state.
 	 * If doesRemainOnStack is true this game state remains on the stack if a new game state is pushed above it on the stack.
 	 * Otherwise it will be removed from the stack first.
-	 * @param doesRemainOnStack
+	 * @param doesRemainOnStack True if it should remain on the stack when another game state is pushed on the stack.
 	 */
 	public GameState(boolean doesRemainOnStack){
 		this.doesRemainOnStack = doesRemainOnStack;
