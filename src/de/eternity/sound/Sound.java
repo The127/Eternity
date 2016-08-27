@@ -8,6 +8,8 @@ import javax.sound.sampled.BooleanControl;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineEvent.Type;
+import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -21,6 +23,14 @@ public class Sound {
 		PLAYING = false;
 	
 	private Clip clip;
+	
+	private boolean isStopped = true;
+	
+	private float desiredVolume = 0, currentVolume;
+	private boolean isDesiredVolume = true;
+	private double increasePerSecond;
+	
+	private final float gainMaxMinusMin;
 	
 	private boolean playState = PLAYING, pauseState = false;
 	
@@ -39,11 +49,74 @@ public class Sound {
 		clip = AudioSystem.getClip();
 		clip.open(audioIn);
 		
+		clip.addLineListener(new LineListener() {
+			
+			@Override
+			public void update(LineEvent event) {
+				if(event.getType() == Type.STOP)
+					isStopped = true;
+			}
+		});
+		
 		mute = (BooleanControl)	clip.getControl(BooleanControl.Type.MUTE);
 		
 		pan 		= (FloatControl)	clip.getControl(FloatControl.Type.PAN);
 		gain 		= (FloatControl)	clip.getControl(FloatControl.Type.MASTER_GAIN);
 		balance 	= (FloatControl)	clip.getControl(FloatControl.Type.BALANCE);
+		
+		//assume that gain.max should be '0' because everything over zero will result in noise
+		gainMaxMinusMin = -gain.getMinimum();
+		currentVolume = gain.getValue();
+	}
+	
+	public boolean isStopped(){
+		return isStopped;
+	}
+	
+	public void update(double delta){
+		
+		if(!isDesiredVolume){
+			
+			float volume = (float) (currentVolume + delta*increasePerSecond);
+			
+			if(volume >= 0){
+				volume = 0;
+				isDesiredVolume = true;
+			}else if(volume <= -gainMaxMinusMin){
+				volume = -gainMaxMinusMin;
+				isDesiredVolume = true;
+				pause();
+			}
+			setGain(volume);
+		}
+	}
+	
+	public boolean isDesiredVolume(){
+		return isDesiredVolume;
+	}
+	
+	/**
+	 * Slowly sets the desired volume for the specified amount of time.
+	 * The sound will increase or decrease linearly.
+	 * @param volume
+	 * @param seconds
+	 */
+	public void setDesiredVolume(int volume, double seconds){
+		desiredVolume = volume * gainMaxMinusMin / 100f + gain.getMinimum();
+
+		if(seconds <= 0){
+			isDesiredVolume = true;
+			setGain(desiredVolume);
+			pause();
+		}else{
+			
+			//unpause if is paused because volume is too low
+			if(volume <= 0 && pauseState == true)
+				unpause();
+			
+			isDesiredVolume = false;
+			increasePerSecond = (currentVolume + desiredVolume) / seconds;
+		}
 	}
 	
 	public void mute(boolean mute){
@@ -58,7 +131,7 @@ public class Sound {
 	 * +6 to -80 (auto fix to min or max if boundaries crossed)
 	 * @param gain
 	 */
-	public void setGain(float gain){
+	private void setGain(float gain){
 		
 		if(gain > this.gain.getMaximum())
 			this.gain.setValue(this.gain.getMaximum());
@@ -68,6 +141,8 @@ public class Sound {
 		
 		else
 			this.gain.setValue(gain);
+		
+		currentVolume = this.gain.getValue();
 	}
 	
 	public float getGain(){
@@ -78,7 +153,7 @@ public class Sound {
 	 * -1 to 1 (auto fix to min or max if boundaries crossed)
 	 * @param pan
 	 */
-	public void setPan(float pan){
+	private void setPan(float pan){
 		
 		if(pan > this.pan.getMaximum())
 			this.pan.setValue(this.pan.getMaximum());
@@ -98,7 +173,8 @@ public class Sound {
 	 * -1 to 1 (auto fix to min or max if boundaries crossed)
 	 * @param balance
 	 */
-	public void setBalance(float balance){
+	@SuppressWarnings("unused")
+	private void setBalance(float balance){
 		
 		if(balance > this.balance.getMaximum())
 			this.balance.setValue(this.balance.getMaximum());
@@ -147,6 +223,7 @@ public class Sound {
 		reset();
 		playState = PLAYING;
 		clip.start();
+		isStopped = false;
 	}
 	
 	/**
@@ -154,6 +231,7 @@ public class Sound {
 	 */
 	private void reset(){
 
+		isStopped = false;
 		pauseState = false;
 		if(clip.isRunning())
 			clip.stop();
@@ -195,6 +273,7 @@ public class Sound {
 	 * Stops the clip from playing.
 	 */
 	public void stop(){
+		isStopped = true;
 		if(clip.isRunning())
 			clip.stop();
 	}
@@ -205,6 +284,7 @@ public class Sound {
 		super.finalize();
 		
 		stop();
+		isStopped = true;
 		clip.close();
 		clip.addLineListener(e -> {
 			if(e.getType() == LineEvent.Type.CLOSE)
