@@ -19,6 +19,7 @@ import de.eternity.gui.Display;
 import de.eternity.gui.DisplayMode;
 import de.eternity.input.ButtonInput;
 import de.eternity.input.KeyboardAdapter;
+import de.eternity.input.MouseAdapter;
 import de.eternity.support.lua.EngineLuaEnvironment;
 
 /**
@@ -38,7 +39,10 @@ public class Launcher {
 	public static void initGame(String windowTitle) {
 		
 		//init input
+		ButtonInput mouse = new ButtonInput(16);
 		ButtonInput keyboard = new ButtonInput(256);
+		
+		MouseAdapter mouseAdapter = new MouseAdapter(mouse);
 		
 		//directly apply keyboard adapter to the keyboard focus manager
 		//this way not every component must have a key listener
@@ -46,13 +50,14 @@ public class Launcher {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyboardAdapter);
 		
 		//init game data
-		GameData gameData = new GameData(keyboard);
+		GameData gameData = new GameData(keyboard, mouse);
 		
 		//init display
 		DisplayMode displayMode = gameData.getSettings().getDisplayMode();
 		Display display = new Display(windowTitle, displayMode);
 		
 		//set listeners
+		display.addMouseListener(mouseAdapter);
 		display.addWindowListener(new WindowListener() {
 			
 			//ignore all these

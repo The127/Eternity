@@ -15,18 +15,20 @@ import de.eternity.input.ButtonInput;
  * @author Julian Sven Baehr
  * @see ButtonInput#flip()
  */
-public class PollKeyboard extends ZeroArgFunction{
+public class PollInput extends ZeroArgFunction{
 
-	private ButtonInput keyboard;
+	private final ButtonInput keyboard, mouse;
 	
-	public PollKeyboard(ButtonInput keyboard) {
+	public PollInput(ButtonInput keyboard, ButtonInput mouse) {
 		this.keyboard = keyboard;
+		this.mouse = mouse;
 	}
 	
 	@Override
 	public LuaValue call() {
 		try {
 			keyboard.flip();
+			mouse.flip();
 		} catch (InterruptedException e) {
 			//should never happen
 			//TODO: logging

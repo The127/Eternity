@@ -29,7 +29,7 @@ public class GameData {
 	public final int tileSize;
 	public final int oneMeter;
 	
-	private final ButtonInput keyboard;
+	private final ButtonInput keyboard, mouse;
 	
 	private TextureStorage textureStorage = new TextureStorage();
 	private TileStorage tileStorage = new TileStorage();
@@ -43,7 +43,7 @@ public class GameData {
 	 * Loads the settings and sets some 'global' variables.
 	 * @param keyboard The ButtonInput object for the keyboard.
 	 */
-	public GameData(ButtonInput keyboard){
+	public GameData(ButtonInput keyboard, ButtonInput mouse){
 		
 		gameSettings = new Toml().read(new File("res/settings.toml")).to(GameSettings.class);
 		
@@ -51,6 +51,7 @@ public class GameData {
 		this.oneMeter = gameSettings.getOneMeter();
 		
 		this.keyboard = keyboard;
+		this.mouse = mouse;
 	}
 	
 	/**
@@ -91,6 +92,13 @@ public class GameData {
 	 */
 	public ButtonInput getKeyboard(){
 		return keyboard;
+	}
+	
+	/**
+	 * @return The ButtonInput instance that is connected to the mouse.
+	 */
+	public ButtonInput getMouse(){
+		return mouse;
 	}
 	
 	/**

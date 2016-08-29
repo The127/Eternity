@@ -6,6 +6,7 @@
 package de.eternity.support.lua;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
@@ -24,9 +25,10 @@ import de.eternity.support.lua.functions.GetGameData;
 import de.eternity.support.lua.functions.GetGameMap;
 import de.eternity.support.lua.functions.GetTextureStorage;
 import de.eternity.support.lua.functions.IsKeyPressed;
+import de.eternity.support.lua.functions.IsMousePressed;
 import de.eternity.support.lua.functions.LoadAnimation;
 import de.eternity.support.lua.functions.LoadSound;
-import de.eternity.support.lua.functions.PollKeyboard;
+import de.eternity.support.lua.functions.PollInput;
 import de.eternity.support.lua.functions.PopGameState;
 import de.eternity.support.lua.functions.PushGameState;
 import de.eternity.support.lua.functions.SetWindowTitle;
@@ -68,13 +70,27 @@ public class EngineLuaEnvironment {
 					System.exit(-1);
 				}
 		
+		//load hard coded key bindings form the MouseEvent class
+		Class<MouseEvent> mouseEventClass = MouseEvent.class;
+		Field[] fields2 = mouseEventClass.getFields();
+		for(int i = 0; i < fields2.length; i++)
+			if(fields2[i].getName().startsWith("BUTTON"))
+				try{
+					_G.load(fields2[i].getName() + " = " + fields2[i].getInt(null)).call();
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					//this error is not possible
+					e.printStackTrace();
+					System.exit(-1);
+				}
+		
 		//init game state handling lua functions
 		_G.set("push_game_state", new PushGameState(game, luaGameStates));
 		_G.set("pop_game_state", new PopGameState(game));
 		
 		//init keyboard handling lua functions
-		_G.set("poll_keyboard", new PollKeyboard(game.getGameData().getKeyboard()));
+		_G.set("poll_input", new PollInput(game.getGameData().getKeyboard(), game.getGameData().getMouse()));
 		_G.set("is_key_pressed", new IsKeyPressed(game.getGameData().getKeyboard()));
+		_G.set("is_mouse_pressed", new IsMousePressed(game.getGameData().getMouse()));
 		
 		//init game map methods
 		_G.set("get_game_map", new GetGameMap(game.getGameData().getGameMaps()));
