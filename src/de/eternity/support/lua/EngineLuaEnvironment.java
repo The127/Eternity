@@ -23,6 +23,7 @@ import de.eternity.support.lua.functions.ArgbToColor;
 import de.eternity.support.lua.functions.GetFps;
 import de.eternity.support.lua.functions.GetGameData;
 import de.eternity.support.lua.functions.GetGameMap;
+import de.eternity.support.lua.functions.GetMousePosition;
 import de.eternity.support.lua.functions.GetTextureStorage;
 import de.eternity.support.lua.functions.IsKeyPressed;
 import de.eternity.support.lua.functions.IsMousePressed;
@@ -88,9 +89,10 @@ public class EngineLuaEnvironment {
 		_G.set("pop_game_state", new PopGameState(game));
 		
 		//init keyboard handling lua functions
-		_G.set("poll_input", new PollInput(game.getGameData().getKeyboard(), game.getGameData().getMouse()));
+		_G.set("poll_input", new PollInput(game.getGameData().getKeyboard(), game.getGameData().getMouse(), display));
 		_G.set("is_key_pressed", new IsKeyPressed(game.getGameData().getKeyboard()));
 		_G.set("is_mouse_pressed", new IsMousePressed(game.getGameData().getMouse()));
+		_G.set("get_mouse_position", new GetMousePosition());
 		
 		//init game map methods
 		_G.set("get_game_map", new GetGameMap(game.getGameData().getGameMaps()));
