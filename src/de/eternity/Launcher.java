@@ -58,6 +58,8 @@ public class Launcher {
 		
 		//set listeners
 		display.addMouseListener(mouseAdapter);
+		display.getScene().addMouseListener(mouseAdapter);
+		
 		display.addWindowListener(new WindowListener() {
 			
 			//ignore all these
