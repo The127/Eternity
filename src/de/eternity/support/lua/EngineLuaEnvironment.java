@@ -18,6 +18,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 
 import de.eternity.Game;
 import de.eternity.gui.Display;
+import de.eternity.support.lua.functions.ArgbToColor;
 import de.eternity.support.lua.functions.GetFps;
 import de.eternity.support.lua.functions.GetGameData;
 import de.eternity.support.lua.functions.GetGameMap;
@@ -83,6 +84,7 @@ public class EngineLuaEnvironment {
 		_G.set("get_fps", new GetFps());
 		
 		//init graphics methods
+		_G.set("argb_to_color", new ArgbToColor());
 		_G.set("load_animation", new LoadAnimation(game.getGameData()));
 		_G.set("set_window_title", new SetWindowTitle(display));
 		_G.set("update_tile_animations", new UpdateTileAnimations(game.getGameData().getTileStorage()));
