@@ -43,13 +43,18 @@ public class TextureStorage {
 			Texture tileset = new Texture(path);
 			int tilesHorizontal = tileset.getWidth() / textureWidth;
 			int tilesVertical = tileset.getHeight() / textureHeight;
-			
+
 			//cut the texture into single tiles
 			for(int y = 0; y < tilesVertical; y++)
 				for(int x = 0; x < tilesHorizontal; x++){
 					Texture texture = tileset.subTexture(x * textureWidth, y * textureHeight, textureWidth, textureHeight);
 					allTextures.add(texture);
-					texture.path = "TILESET_" + name + " - LTID_" + (x + y * tilesHorizontal) + " - GTID_" + (allTextures.size()-1);
+					
+					//create generated name
+					if(name.equals("abc"))
+						texture.path = "GEN: ABC_" + (char)(x + y * tilesHorizontal + 32);
+					else
+						texture.path = "GEN: TILESET_" + name + " - LTID_" + (x + y * tilesHorizontal) + " - GTID_" + (allTextures.size()-1);
 				}
 		}
 	}

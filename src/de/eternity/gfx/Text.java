@@ -31,19 +31,18 @@ public class Text extends Texture{
 		maxChars = horizontalChars*verticalChars;
 		//safe buffer
 		buffer2 = buffer;
-		
-		update();
 	}
 	
 	public Text(String oneLine, int textColor, GameData gameData){
-		this(1, oneLine.length(), textColor, gameData);
+		this(oneLine.length(), 1, textColor, gameData);
 		text = oneLine;
+		
+		update();
 	}
 	
 	public void setTextColor(int textColor){
 		this.textColor = textColor & 0x00FFFFFF;//get rid of alpha
 		hasChanged = true;
-		maxChars = text.length();
 	}
 	
 	public void setText(String text){
@@ -67,23 +66,26 @@ public class Text extends Texture{
 				
 				int cWidth = character.getWidth();
 				int cHeight = character.getHeight();
-				
-				for(int x = 0; x < cWidth; x++)
-					for(int y = 0; y < cHeight; y++)
-						buffer[x + width + (y + height) * cWidth] = textColor | character.buffer[x + y * cWidth];
+
+				for(int y = 0; y < cHeight; y++)
+					for(int x = 0; x < cWidth; x++)
+						buffer[x + width + (y) * this.width] = 
+								textColor | character.buffer[x + y * cWidth];
+
+				width += cWidth;
 			}
 		}
 	}
 	
 	public void clear(){
 		
+		//clear image (invisible)
+		Arrays.fill(buffer, 0x00000000);
+		
 		//for faster rendering set buffer temporary to null (invisible flag)
 		buffer = null;
 		
 		//clear flag
 		hasChanged = false;
-		
-		//clear image (invisible)
-		Arrays.fill(buffer, 0x00000000);
 	}
 }
