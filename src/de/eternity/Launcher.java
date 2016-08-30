@@ -30,6 +30,7 @@ import de.eternity.support.lua.EngineLuaEnvironment;
 public class Launcher {
 
 	private static Game game;
+	private static Display display;
 	private static EngineLuaEnvironment engineLuaEnvironment;
 	
 	/**
@@ -54,7 +55,7 @@ public class Launcher {
 		
 		//init display
 		DisplayMode displayMode = gameData.getSettings().getDisplayMode();
-		Display display = new Display(windowTitle, displayMode);
+		display = new Display(windowTitle, displayMode);
 		
 		//set listeners
 		display.addMouseListener(mouseAdapter);
@@ -103,17 +104,20 @@ public class Launcher {
 	}
 	
 	/**
-	 * Starts the game.
+	 * Prepares last steps and starts the game.
+	 * This needs to be an extra step because otherwise it would not be possible to load external java-lua methods.
 	 * @param startGameState The name of the first lua game state.
 	 * @throws IOException
 	 */
 	public static void start(String startGameState) throws IOException{
-		
+
 		game.getGameData().init(engineLuaEnvironment);
 		
 		//push the start game state
 		game.pushGameState(game.getGameData().getLuaGameState(startGameState));
 		
+		//after everything is initialized
+		display.setVisible(true);
 		game.start();
 	}
 }

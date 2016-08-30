@@ -36,7 +36,6 @@ public class Display extends Frame {
 		
 		setTitle(title);
 		setLocationRelativeTo(null);
-		setVisible(true);
 		
 		gameScene.createBufferStrategy(displayMode.getBufferSize());
 	}
