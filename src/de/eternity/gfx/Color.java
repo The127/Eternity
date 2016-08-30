@@ -25,6 +25,6 @@ public class Color {
 		r &= 0xFF;
 		g &= 0xFF;
 		b &= 0xFF;
-		return (a<<24)|(r<<24)|(g<<24)|b;
+		return (a<<24)|(r<<16)|(g<<8)|b;
 	}
 }

@@ -24,7 +24,7 @@ public class Text extends Texture{
 	
 	public Text(int horizontalChars, int verticalChars, int textColor, GameData gameData) {
 		super(horizontalChars*8, (verticalChars == 1 ? 10 : verticalChars*11 - 1)/*include spacing between lines*/);
-		
+
 		this.textColor = textColor & 0x00FFFFFF;//get rid of alpha
 		this.gameData = gameData;
 		
