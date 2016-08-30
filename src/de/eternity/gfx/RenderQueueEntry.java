@@ -39,6 +39,12 @@ public class RenderQueueEntry {
 	 * @return True if the area is greater than zero.
 	 */
 	public boolean setValues(Texture texture, double x, double y, Rectangle cameraArea){
+		
+		//don't draw if texture is null (flag for fully invisible image)
+		if(texture == null)
+			return false;
+		
+		//apply values
 		this.texture = texture;
 		this.x = (int)(x + 0.5d);
 		this.y = (int)(y + 0.5d);
@@ -51,6 +57,7 @@ public class RenderQueueEntry {
 		
 		Rectangle2D.intersect(toDraw, cameraArea, toDraw);
 			
+		//determine wether or not the image is on the screen
 		return toDraw.getWidth() > 0 && toDraw.getHeight() > 0;
 	}
 	

@@ -36,8 +36,9 @@ public class Launcher {
 	/**
 	 * Initializes the game and the display.
 	 * @param windowTitle The title of the display.
+	 * @throws IOException If the character set cannot be found.
 	 */
-	public static void initGame(String windowTitle) {
+	public static void initGame(String windowTitle) throws IOException {
 		
 		//init input
 		ButtonInput mouse = new ButtonInput(16);

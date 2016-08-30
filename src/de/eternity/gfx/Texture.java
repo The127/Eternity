@@ -23,8 +23,8 @@ public class Texture {
 
 	public static final String GENERATED = "GENERATED";
 	
-	private int[] buffer = null;
-	private int width = -1, height = -1;
+	protected int[] buffer = null;
+	protected int width = -1, height = -1;
 	
 	String path = GENERATED;
 	
@@ -171,7 +171,7 @@ public class Texture {
 	/**
 	 * Pre-multiplies every pixel of a texture with its alpha value.
 	 */
-	private void preMultiply(){
+	protected void preMultiply(){
 		
 		int a, r, g, b;
 		

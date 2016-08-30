@@ -42,8 +42,12 @@ public class GameData {
 	/**
 	 * Loads the settings and sets some 'global' variables.
 	 * @param keyboard The ButtonInput object for the keyboard.
+	 * @throws IOException If the character set cannot be found.
 	 */
-	public GameData(ButtonInput keyboard, ButtonInput mouse){
+	public GameData(ButtonInput keyboard, ButtonInput mouse) throws IOException{
+		
+		//load character set first
+		textureStorage.loadTileset("/abc.png", "abc", 8, 10);
 		
 		gameSettings = new Toml().read(new File("res/settings.toml")).to(GameSettings.class);
 		
@@ -60,7 +64,7 @@ public class GameData {
 	 * Loads all game maps.
 	 * Loads all lua game states.
 	 * @param engineLuaEnvironment The lua scripting environment object for the game.
-	 * @throws IOException
+	 * @throws IOException If a tileset cannot be found.
 	 */
 	public void init(EngineLuaEnvironment engineLuaEnvironment) throws IOException{
 		

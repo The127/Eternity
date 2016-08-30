@@ -29,7 +29,7 @@ public class TextureStorage {
 	 * @param name The name of the tileset.
 	 * @param textureWidth The width of a single texture within the tileset.
 	 * @param textureHeight The height of a single texture within the tileset.
-	 * @throws IOException
+	 * @throws IOException If the tileset cannot be found.
 	 */
 	public void loadTileset(String path, String name, int textureWidth, int textureHeight) throws IOException{
 		
