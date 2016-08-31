@@ -50,17 +50,19 @@ Audio
 #Java
 The java programming part can be as easy as to write the following code:
 
-import java.io.IOException;
-
-import de.eternity.Launcher;
-
-public class Main {
-
-	public static void main(String[] args) throws IOException {
-		
-		Launcher.initGame("Demo Game");
-		//add your java-lua functions here
-		Launcher.start("in_game");
+ {
+	import java.io.IOException;
+	
+	import de.eternity.Launcher;
+	
+	public class Main {
+	
+		public static void main(String[] args) throws IOException {
+			
+			Launcher.initGame("Demo Game");
+			//add your java-lua functions here
+			Launcher.start("in_game");
+		}
 	}
 }
 
