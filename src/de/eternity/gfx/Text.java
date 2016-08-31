@@ -139,12 +139,15 @@ public class Text extends Texture{
 	public void clear(){
 		
 		//clear image (invisible)
-		Arrays.fill(buffer, 0x00000000);
+		//if not already cleared
+		if(buffer != null){
+			Arrays.fill(buffer, 0x00000000);
 		
-		//for faster rendering set buffer temporary to null (invisible flag)
-		buffer = null;
-		
-		//clear flag
-		hasChanged = false;
+			//for faster rendering set buffer temporary to null (invisible flag)
+			buffer = null;
+			
+			//clear flag
+			hasChanged = false;
+		}
 	}
 }
