@@ -73,87 +73,87 @@ The following lua functions are available.
 Input Methods
 -
 
-poll_input() : void
+	poll_input() : void
 - Must be called in every update cycle exactly once at the beginning if keyboard and/or mouse input is needed.
 
-get_mouse_position() : int, int
+	get_mouse_position() : int, int
 - Returns first the x and second the y position of the mouse.
 
-is_mouse_pressed(int buttonCode) : boolean
+	is_mouse_pressed(int buttonCode) : boolean
 - Returns true if the button is pressed, false otherwise.
 - All button codes are available as a variable BUTTON(number(1-3))
 
-is_key_pressed(int keyCode) : boolean
+	is_key_pressed(int keyCode) : boolean
 - Returns true if the button is pressed, false otherwise.
 - All key codes are available as a variable VK_keyname
 
 Game State Methods
 -
 
-push_game_state(string gameStateName) : void
+	push_game_state(string gameStateName) : void
 - This method pushes another game state on the stack.
 - The parameter gameStateName is the name of the lua file for the game state.
 
-pop_game_state() : void
+	pop_game_state() : void
 - This method pops the current game state off the stack.
 
 Utility Methods
 -
 
-get_data_file_path(string fileName) : string
+	get_data_file_path(string fileName) : string
 - This method returns the path to the file.
 
-get_game_data() : GameData
+	get_game_data() : GameData
 - This method returns the game data object of the game.
 - This object is sometimes needed as a parameter.
 - This object provides access to the game data.
 
-get_fps() : int
+	get_fps() : int
 - This method returns the current fps of the game.
 - The fps is only updated each second and therefore is 0 in the first second.
 
 Map Methods
 -
 
-get_game_map(string name) : GameMap
+	get_game_map(string name) : GameMap
 - This method returns the game map the the given name.
 
 Graphics Methods
 -
 
-new_text_line(string text, int color): Text
+	new_text_line(string text, int color): Text
 - Returns a new drawable text.
 
-new_text_area(int chars_horizontal, int chars_vertical, int color): Text
+	new_text_area(int chars_horizontal, int chars_vertical, int color): Text
 - Returns a new drawable text with the specified area.
 - This Text object does not yet contain any data.
 
-set_window_title(string title) : void
+	set_window_title(string title) : void
 - This method sets the title of the game window.
 
-argb_to_color(int a, int r, int g, int b): int
+	argb_to_color(int a, int r, int g, int b): int
 - This method returns a single integer from the single argb color parts.
 
-rgb_to_color( int r, int g, int b): int
+	rgb_to_color( int r, int g, int b): int
 - This method returns a single integer from the single rgb color parts (full alpha).
 
-load_animation(string animation) : Animation
+	load_animation(string animation) : Animation
 - This method loads a local animation file and returns a translated animation object.
 
-udpate_tile_animations(double delta) : void
+	udpate_tile_animations(double delta) : void
 - This method should be called once every update cycle.
 - This method updates the tile animations (as the name suggests).
 
-get_textute_storage() : void
+	get_textute_storage() : void
 - This method returns the global texture storage.
 
-to_global_texture_id(string tileset, int localId) : int
+	to_global_texture_id(string tileset, int localId) : int
 - This method returns the global texture id of the local texture id of the tileset.
 
 Sound Methods
 -
 
-load_sound(string sound) : Sound
+	load_sound(string sound) : Sound
 - This method loads a sound file into a sound instance.
 - Be aware that sound objects are big and leave a lot of garbage for the gc.
 - See Sound class documentation for more methods and information.
