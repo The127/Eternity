@@ -77,16 +77,22 @@ public class Text extends Texture{
 						drawHeight += 1 + cHeight;
 						drawWidth = 0;
 					}else if(c == '\t'){
+						
+						if(drawWidth == this.width){
+							drawHeight += 1 + cHeight;
+							drawWidth = 0;
+							
+							//still space?
+							if(drawHeight >= this.height)
+								break drawStringLoop;
+						}
 
-						System.out.println("tab");
 						//a tab is at most 3 white spaces
 						int tab =  3 - (drawWidth / cWidth) % 3;
-						System.out.println(tab);
 						
 						tabLoop : for(int n = 0; n < tab; n++){
+
 							drawWidth += cWidth;
-							System.out.println("tab");
-							
 							//new line?
 							if(drawWidth == this.width){
 								drawHeight += 1 + cHeight;
@@ -102,19 +108,8 @@ public class Text extends Texture{
 						}
 					}
 				}else{
-					//draw char
-					System.out.println(drawHeight/cHeight + "/" + drawWidth/cWidth);
-					Texture charTex = gameData.getTextureStorage().getTexture(chars[i] - 32);
-					for(int y = 0; y < cHeight; y++)
-						for(int x = 0; x < cWidth; x++)
-							buffer[x + drawWidth + (y + drawHeight) * width] = 
-									textColor | charTex.buffer[x + y * cWidth];
-					
-					drawWidth += cWidth;
-					
 					//new line?
 					if(drawWidth == this.width){
-						System.out.println("new 2");
 						drawHeight += 1 + cHeight;
 						drawWidth = 0;
 						
@@ -122,6 +117,15 @@ public class Text extends Texture{
 						if(drawHeight >= this.height)
 							break drawStringLoop;
 					}
+					
+					//draw char
+					Texture charTex = gameData.getTextureStorage().getTexture(chars[i] - 32);
+					for(int y = 0; y < cHeight; y++)
+						for(int x = 0; x < cWidth; x++)
+							buffer[x + drawWidth + (y + drawHeight) * width] = 
+									textColor | charTex.buffer[x + y * cWidth];
+					
+					drawWidth += cWidth;
 				}
 				
 				//hit end of text area
