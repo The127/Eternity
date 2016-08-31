@@ -33,6 +33,7 @@ import de.eternity.support.lua.functions.NewTextLine;
 import de.eternity.support.lua.functions.PollInput;
 import de.eternity.support.lua.functions.PopGameState;
 import de.eternity.support.lua.functions.PushGameState;
+import de.eternity.support.lua.functions.RgbToColor;
 import de.eternity.support.lua.functions.SetWindowTitle;
 import de.eternity.support.lua.functions.ToGlobalTextureId;
 import de.eternity.support.lua.functions.UpdateTileAnimations;
@@ -105,6 +106,7 @@ public class EngineLuaEnvironment {
 		//init graphics methods
 		_G.set("new_text_line", new NewTextLine(game.getGameData()));
 		_G.set("argb_to_color", new ArgbToColor());
+		_G.set("rgb_to_color", new RgbToColor());
 		_G.set("load_animation", new LoadAnimation(game.getGameData()));
 		_G.set("set_window_title", new SetWindowTitle(display));
 		_G.set("update_tile_animations", new UpdateTileAnimations(game.getGameData().getTileStorage()));
