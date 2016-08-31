@@ -29,6 +29,7 @@ import de.eternity.support.lua.functions.IsKeyPressed;
 import de.eternity.support.lua.functions.IsMousePressed;
 import de.eternity.support.lua.functions.LoadAnimation;
 import de.eternity.support.lua.functions.LoadSound;
+import de.eternity.support.lua.functions.NewTextArea;
 import de.eternity.support.lua.functions.NewTextLine;
 import de.eternity.support.lua.functions.PollInput;
 import de.eternity.support.lua.functions.PopGameState;
@@ -104,6 +105,7 @@ public class EngineLuaEnvironment {
 		_G.set("get_fps", new GetFps());
 		
 		//init graphics methods
+		_G.set("new_text_area", new NewTextArea(game.getGameData()));
 		_G.set("new_text_line", new NewTextLine(game.getGameData()));
 		_G.set("argb_to_color", new ArgbToColor());
 		_G.set("rgb_to_color", new RgbToColor());
