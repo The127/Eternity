@@ -24,7 +24,7 @@ Graphics
 - highly optimised 2D rendering algorithms
 - portable rendering engine (not tied to swing or awt)
 - lightweight text rendering implementation
-- 
+
 Map and tiles
 - automatic tileset slicing
 - automatic map loading
