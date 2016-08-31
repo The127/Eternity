@@ -74,16 +74,20 @@ Input Methods
 -
 
 	poll_input() : void
+	
 - Must be called in every update cycle exactly once at the beginning if keyboard and/or mouse input is needed.
 
 	get_mouse_position() : int, int
+	
 - Returns first the x and second the y position of the mouse.
 
 	is_mouse_pressed(int buttonCode) : boolean
+	
 - Returns true if the button is pressed, false otherwise.
 - All button codes are available as a variable BUTTON(number(1-3))
 
 	is_key_pressed(int keyCode) : boolean
+	
 - Returns true if the button is pressed, false otherwise.
 - All key codes are available as a variable VK_keyname
 
@@ -91,10 +95,12 @@ Game State Methods
 -
 
 	push_game_state(string gameStateName) : void
+	
 - This method pushes another game state on the stack.
 - The parameter gameStateName is the name of the lua file for the game state.
 
 	pop_game_state() : void
+	
 - This method pops the current game state off the stack.
 
 Utility Methods
