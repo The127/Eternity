@@ -45,6 +45,9 @@ public class Text extends Texture{
 	}
 	
 	public void setText(String text){
+		if(text.equals(this.text))//don't apply same text again
+			return;
+		
 		this.text = text;
 		hasChanged = true;
 	}
