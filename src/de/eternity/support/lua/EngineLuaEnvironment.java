@@ -20,6 +20,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import de.eternity.Game;
 import de.eternity.gui.Display;
 import de.eternity.support.lua.functions.ArgbToColor;
+import de.eternity.support.lua.functions.GetDataFilePath;
 import de.eternity.support.lua.functions.GetFps;
 import de.eternity.support.lua.functions.GetGameData;
 import de.eternity.support.lua.functions.GetGameMap;
@@ -101,6 +102,7 @@ public class EngineLuaEnvironment {
 		_G.set("get_game_map", new GetGameMap(game.getGameData().getGameMaps()));
 		
 		//init utility methods
+		_G.set("get_data_file_path", new GetDataFilePath(game.getGameData()));
 		_G.set("get_game_data", new GetGameData(game.getGameData()));
 		_G.set("get_fps", new GetFps());
 		
