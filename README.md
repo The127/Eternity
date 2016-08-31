@@ -48,7 +48,8 @@ Audio
 
 -
 #Java
-The java programming part can be as easy as to write the following code:
+The java programming part can be as easy as to create a java project, incluse the eternity engine and luaj.jar.
+Then write the following code:
 
 	import java.io.IOException;
 	
@@ -58,9 +59,9 @@ The java programming part can be as easy as to write the following code:
 	
 		public static void main(String[] args) throws IOException {
 			
-			Launcher.initGame("Demo Game");
+			Launcher.initGame("Display Title");
 			//add your java-lua functions here
-			Launcher.start("in_game");
+			Launcher.start("start_game_state_name");
 		}
 	}
 
