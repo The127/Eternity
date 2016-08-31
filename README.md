@@ -58,11 +58,12 @@ get_mouse_position() : int, int
 
 is_mouse_pressed(int buttonCode) : boolean
 - Returns true if the button is pressed, false otherwise.
-- All button codes are available as a variable BUTTON<number(1-3)>
+- All button codes are available as a variable BUTTON(number(1-3))
 
 is_key_pressed(int keyCode) : boolean
 - Returns true if the button is pressed, false otherwise.
-- All key codes are available as a variable VK_<keyname>
+- All key codes are available as a variable VK_keyname
+
 #Game State Methods
 
 push_game_state(string gameStateName) : void
@@ -81,10 +82,12 @@ get_game_data() : GameData
 get_fps() : int
 - This method returns the current fps of the game.
 - The fps is only updated each second and therefore is 0 in the first second.
+
 Map Methods
 
 get_game_map(string name) : GameMap
 - This method returns the game map the the given name.
+
 #Graphics Methods
 
 new_text_line(string text, int color): Text
