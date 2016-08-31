@@ -50,7 +50,6 @@ Audio
 #Java
 The java programming part can be as easy as to write the following code:
 
- {
 	import java.io.IOException;
 	
 	import de.eternity.Launcher;
@@ -64,7 +63,6 @@ The java programming part can be as easy as to write the following code:
 			Launcher.start("in_game");
 		}
 	}
-}
 
 The rest may be implemented in lua.
 -
