@@ -66,11 +66,12 @@ Then write the following code:
 	}
 
 The rest may be implemented in lua.
--
+
 #Scripting
 The following lua functions are available.
 
-#Input Methods
+Input Methods
+-
 
 poll_input() : void
 - Must be called in every update cycle exactly once at the beginning if keyboard and/or mouse input is needed.
