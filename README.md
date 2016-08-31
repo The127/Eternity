@@ -11,6 +11,13 @@ It uses the luaj library which is available under the MIT License to allow for a
 The engine also uses toml4j and gson which are available under the MIT License and the Apache License Version 2.0 respectively.
 - https://github.com/mwanji/toml4j
 - https://github.com/google/gson
+-
+#TOML
+See: https://github.com/toml-lang/toml for more information about TOML.
+To be able to read TOML files in lua it is recomended to use a modified verision of lua-toml (available under the Happy License) which is itself available under the Happy License.
+- original: https://github.com/jonstoler/lua-toml
+- modified: 
+-
 
 #Features
 Engine
