@@ -30,6 +30,7 @@ public class Text extends Texture{
 		
 		//safe buffer
 		buffer2 = buffer;
+		clear();
 	}
 	
 	public Text(String oneLine, int textColor, GameData gameData){
