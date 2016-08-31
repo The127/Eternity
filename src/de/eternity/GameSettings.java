@@ -17,6 +17,8 @@ public class GameSettings {
 
 	private int tilesize;
 	private int oneMeter;
+	private int textWidth;
+	private int textHeight;
 	
 	private String dataFilesPath;
 	private String mapsPath;
@@ -33,6 +35,20 @@ public class GameSettings {
 	 */
 	public int getTilesize() {
 		return tilesize;
+	}
+	
+	/**
+	 * @return The text width of a single character.
+	 */
+	public int getTextWidth() {
+		return textWidth;
+	}
+	
+	/**
+	 * @return The height of a single character.
+	 */
+	public int getTextHeight() {
+		return textHeight;
 	}
 	
 	/**
