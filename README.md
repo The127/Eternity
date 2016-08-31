@@ -48,6 +48,8 @@ Audio
 
 -
 #Scripting
+The following lua functions are available.
+
 #Input Methods
 
 poll_input() : void
@@ -72,6 +74,7 @@ push_game_state(string gameStateName) : void
 
 pop_game_state() : void
 - This method pops the current game state off the stack.
+
 #Utility Methods
 
 get_game_data() : GameData
@@ -83,7 +86,7 @@ get_fps() : int
 - This method returns the current fps of the game.
 - The fps is only updated each second and therefore is 0 in the first second.
 
-Map Methods
+#Map Methods
 
 get_game_map(string name) : GameMap
 - This method returns the game map the the given name.
