@@ -48,7 +48,7 @@ Audio
 
 -
 #Scripting
-Input Methods
+#Input Methods
 
 poll_input() : void
 - Must be called in every update cycle exactly once at the beginning if keyboard and/or mouse input is needed.
@@ -63,7 +63,7 @@ is_mouse_pressed(int buttonCode) : boolean
 is_key_pressed(int keyCode) : boolean
 - Returns true if the button is pressed, false otherwise.
 - All key codes are available as a variable VK_<keyname>
-Game State Methods
+#Game State Methods
 
 push_game_state(string gameStateName) : void
 - This method pushes another game state on the stack.
@@ -71,7 +71,7 @@ push_game_state(string gameStateName) : void
 
 pop_game_state() : void
 - This method pops the current game state off the stack.
-Utility Methods
+#Utility Methods
 
 get_game_data() : GameData
 - This method returns the game data object of the game.
@@ -85,7 +85,7 @@ Map Methods
 
 get_game_map(string name) : GameMap
 - This method returns the game map the the given name.
-Graphics Methods
+#Graphics Methods
 
 new_text_line(string text, int color): Text
 - Returns a new drawable text.
@@ -116,7 +116,7 @@ get_textute_storage() : void
 to_global_texture_id(string tileset, int localId) : int
 - This method returns the global texture id of the local texture id of the tileset.
 
-Sound Methods
+#Sound Methods
 
 load_sound(string sound) : Sound
 - This method loads a sound file into a sound instance.
