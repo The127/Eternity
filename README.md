@@ -77,6 +77,9 @@ pop_game_state() : void
 
 #Utility Methods
 
+get_data_file_path(string fileName) : string
+- This method returns the path to the file.
+
 get_game_data() : GameData
 - This method returns the game data object of the game.
 - This object is sometimes needed as a parameter.
