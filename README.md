@@ -6,6 +6,7 @@ It is written in pure java and is tested under windows 7 and linux(fedora 24).
 
 It uses the luaj library which is available under the MIT License (see the license of Eternity Engine) to allow for a fully scriptable game. In fact it is the preffered way to create a game.
 - https://www.lua.org/license.html
+
 The engine also uses toml4j and gson which both are also available under the MIT License.
 - https://github.com/mwanji/toml4j
 - https://github.com/google/gson
