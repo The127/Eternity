@@ -86,8 +86,15 @@ public class TiledMap{
 		String[] split = path.replace("\\", "/").split("/");
 		String name = split[split.length-1].split("\\.")[0];
 		
+		//handle map objects
+		for(int i = 0; i < layers[1].objects.length; i++){
+			
+			int tilesetIndex = getTilesetIndex(layers[1].objects[i].gid);
+			layers[1].objects[i].initialize(gameData, tilesets[tilesetIndex].name, tilesets[tilesetIndex].firstgid);
+		}
+		
 		//return new map
-		return new GameMap(name, layers[0].data, width, gameData);
+		return new GameMap(name, layers[0].data, width, layers[1].objects, gameData);
 	}
 	
 	/**

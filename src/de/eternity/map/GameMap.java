@@ -9,6 +9,7 @@ import de.eternity.GameData;
 import de.eternity.gfx.Camera;
 import de.eternity.gfx.IRenderQueue;
 import de.eternity.gfx.TextureStorage;
+import de.eternity.support.tiled.TiledObject;
 
 /**
  * A game map holds information about a map of the game.
@@ -28,6 +29,7 @@ public class GameMap {
 	
 	private TileStorage tileStorage;
 	private TextureStorage textureStorage;
+	private TiledObject[] mapObjects;
 	
 	/**
 	 * Creates a new game map object.
@@ -36,11 +38,12 @@ public class GameMap {
 	 * @param width The width of the map.
 	 * @param gameData The game data manager object.
 	 */
-	public GameMap(String name, int[] data, int width, GameData gameData){
+	public GameMap(String name, int[] data, int width, TiledObject[] mapObjects, GameData gameData){
 		
 		this.name = name;
 		this.data = data;
 		this.width = width;
+		this.mapObjects = mapObjects;
 		
 		this.tilesize = gameData.tileSize;
 		this.tileStorage = gameData.getTileStorage();
@@ -48,6 +51,23 @@ public class GameMap {
 		
 		paddingTilesX = gameData.getSettings().getDisplayMode().getResolutionX() % tilesize > 0 ? 2 : 1; //either 2 or 1 padding
 		paddingTilesY = gameData.getSettings().getDisplayMode().getResolutionY() % tilesize > 0 ? 2 : 1; //either 2 or 1 padding
+	}
+	
+	/**
+	 * @param index The index in the mapObjects array.
+	 * @return The static map object at the given index.
+	 */
+	public TiledObject getMapObjects(int index){
+		if(index >= 0 && index < mapObjects.length)
+			return mapObjects[index];
+		throw new ArrayIndexOutOfBoundsException("Cannot access index " + index + " in mapObjects array.");
+	}
+	
+	/**
+	 * @return The amount of map objects.
+	 */
+	public int getMapObjectCount(){
+		return mapObjects.length;
 	}
 	
 	/**

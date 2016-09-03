@@ -14,4 +14,5 @@ class TiledLayer {
 	String name;
 	int height, width;
 	int[] data;
+	TiledObject[] objects;
 }

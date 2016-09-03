@@ -55,8 +55,6 @@ class TiledTileset {
 					TiledObject[] objects = tiles.get("" + i).objectgroup.objects;
 					collisionRectangles = new Rectangle[objects.length];
 					
-					System.out.println( i + " - " + collisionRectangles.length);
-					
 					for(int n = 0; n < collisionRectangles.length; n++){
 						TiledObject current = objects[n];
 						collisionRectangles[n] = new Rectangle(current.x, current.y, current.width, current.height);
