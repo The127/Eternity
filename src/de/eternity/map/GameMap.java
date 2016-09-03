@@ -8,6 +8,7 @@ package de.eternity.map;
 import de.eternity.GameData;
 import de.eternity.gfx.Camera;
 import de.eternity.gfx.IRenderQueue;
+import de.eternity.gfx.TextureStorage;
 
 /**
  * A game map holds information about a map of the game.
@@ -25,6 +26,9 @@ public class GameMap {
 	private final int paddingTilesX;
 	private final int paddingTilesY;
 	
+	private TileStorage tileStorage;
+	private TextureStorage textureStorage;
+	
 	/**
 	 * Creates a new game map object.
 	 * @param name The name of the map.
@@ -33,10 +37,15 @@ public class GameMap {
 	 * @param gameData The game data manager object.
 	 */
 	public GameMap(String name, int[] data, int width, GameData gameData){
+		
 		this.name = name;
 		this.data = data;
 		this.width = width;
+		
 		this.tilesize = gameData.tileSize;
+		this.tileStorage = gameData.getTileStorage();
+		this.textureStorage = gameData.getTextureStorage();
+		
 		paddingTilesX = gameData.getSettings().getDisplayMode().getResolutionX() % tilesize > 0 ? 2 : 1; //either 2 or 1 padding
 		paddingTilesY = gameData.getSettings().getDisplayMode().getResolutionY() % tilesize > 0 ? 2 : 1; //either 2 or 1 padding
 	}
@@ -53,19 +62,33 @@ public class GameMap {
 	 * @param renderQueue The render queue.
 	 * @param gameData The game data manager object.
 	 */
-	public void renderMap(IRenderQueue renderQueue, GameData gameData){
+	public void renderMap(IRenderQueue renderQueue){
 		
 		Camera camera = renderQueue.getCamera();
 		
 		//only draw needed tiles
-		int startX = ((int)camera.getX()) / gameData.tileSize;
-		int startY = ((int)camera.getY()) / gameData.tileSize;
-		int endX = startX + camera.getResolutionX()/gameData.tileSize + paddingTilesX;
-		int endY = startY + camera.getResolutionY()/gameData.tileSize + paddingTilesY;
+		int startX = ((int)camera.getX()) / tilesize;
+		int startY = ((int)camera.getY()) / tilesize;
+		int endX = startX + camera.getResolutionX()/tilesize + paddingTilesX;
+		int endY = startY + camera.getResolutionY()/tilesize + paddingTilesY;
 		
 		for(int x = startX; x < endX; x++)
 			for(int y = startY; y < endY; y++)
-				gameData.getTileStorage().get(data[x + y * width])
-						.applyRenderContext(renderQueue, gameData.getTextureStorage(), x*gameData.tileSize, y*gameData.tileSize);
+				tileStorage.get(data[x + y * width])
+						.applyRenderContext(renderQueue, textureStorage, x*tilesize, y*tilesize);
+	}
+	
+	public boolean collidesWithMap(int x, int y, int w, int h){
+		int xStart = x / tilesize;
+		int xEnd = (x + w) / tilesize;
+		int yStart = y / tilesize;
+		int yEnd = (y + h) / tilesize;
+		
+		for(int ix = xStart; ix <= xEnd; ix++)
+			for(int iy = yStart; iy <= yEnd; iy++)
+				if(tileStorage.get(data[ix + iy * width]).collides(ix * tilesize, iy * tilesize, x, y, w, h))
+					return true;
+		
+		return false;
 	}
 }

@@ -12,11 +12,16 @@ package de.eternity.support.tiled;
 public class TiledTile {
 
 	TiledAnimation[] animation;
+	TiledObjectGroup objectgroup;
 	
 	/**
 	 * @return True if the animation array is not null.
 	 */
 	boolean hasAnimation(){
 		return animation != null;
+	}
+
+	public boolean hasCollisionRectangles() {
+		return objectgroup != null && objectgroup.objects != null;
 	}
 }
