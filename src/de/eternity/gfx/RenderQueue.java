@@ -40,6 +40,13 @@ public class RenderQueue implements IRenderQueue {
 		if(entry != null)entry.enableBackgroundMode();
 	}
 	
+	@Override
+	public void addText(Text text, double x, double y) {
+		
+		RenderQueueEntry entry = addEntry(text, x, y);
+		if(entry != null)entry.enableTextMode();
+	}
+	
 	/**
 	 * @return The game camera.
 	 */

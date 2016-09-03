@@ -28,6 +28,14 @@ public class RenderQueueEntry {
 	public void enableBackgroundMode(){
 		depth = Renderer.BACKGROUND_DEPTH;
 	}
+
+	/**
+	 * Sets this render queue entry to text mode.
+	 * It will be drawn on top of everything else (that is not a text).
+	 */
+	public void enableTextMode() {
+		depth = Renderer.TEXT_DEPTH;
+	}
 	
 	/**
 	 * Sets the values and calculates the area of the texture that needs to be drawn.

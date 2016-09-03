@@ -32,4 +32,12 @@ public interface IRenderQueue {
 	 * @param y The background y coordinate.
 	 */
 	void addBackground(Texture texture, double x, double y);
+	
+	/**
+	 * Adds a text texture to the queue.
+	 * @param texture The background texture.
+	 * @param x The background x coordinate.
+	 * @param y The background y coordinate.
+	 */
+	void addText(Text text, double x, double y);
 }

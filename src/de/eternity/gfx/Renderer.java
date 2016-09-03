@@ -17,6 +17,7 @@ public class Renderer {
 	
 	public static final int BACKGROUND_DEPTH = -1337;
 	public static final int CLEAR_COLOR = 0x00000000;
+	public static final int TEXT_DEPTH = 0xFFFFFF;//this number should be big enough that no calculated depth value ever reaches it even closely
 	
 	private Object waitLock = new Object(){};
 	AtomicBoolean waitState = new AtomicBoolean(false);
