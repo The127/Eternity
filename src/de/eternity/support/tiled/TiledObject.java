@@ -11,17 +11,21 @@ import de.eternity.gfx.RenderQueue;
 public class TiledObject {
 
 	int gid, x, y, width, height;
+	String name;
 
 	private transient GameData gameData;
 	
 	void initialize(GameData gameData, String tileset, int firstgid){
 		this.gameData = gameData;
 		gid = gameData.getTextureStorage().translateToGlobalTextureId(tileset, gid - firstgid);
-		System.out.println(gid);
 	}
 	
 	public void render(RenderQueue renderQueue){
 		renderQueue.addEntity(gameData.getTextureStorage().getTexture(gid), x, y);
+	}
+	
+	public String getName(){
+		return name;
 	}
 	
 	public int getTileId(){

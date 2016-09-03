@@ -7,6 +7,7 @@ package de.eternity.support.tiled;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.HashMap;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -16,6 +17,7 @@ import de.eternity.GameData;
 import de.eternity.gfx.TextureStorage;
 import de.eternity.map.GameMap;
 import de.eternity.map.TileStorage;
+import de.eternity.map.Trigger;
 
 /**
  * A wrapper class for tiled editor json export file support.
@@ -87,14 +89,24 @@ public class TiledMap{
 		String name = split[split.length-1].split("\\.")[0];
 		
 		//handle map objects
-		for(int i = 0; i < layers[1].objects.length; i++){
-			
-			int tilesetIndex = getTilesetIndex(layers[1].objects[i].gid);
-			layers[1].objects[i].initialize(gameData, tilesets[tilesetIndex].name, tilesets[tilesetIndex].firstgid);
-		}
+		if(layers.length > 1)
+			for(int i = 0; i < layers[1].objects.length; i++){
+				
+				int tilesetIndex = getTilesetIndex(layers[1].objects[i].gid);
+				layers[1].objects[i].initialize(gameData, tilesets[tilesetIndex].name, tilesets[tilesetIndex].firstgid);
+			}
+		
+		//handle trigger areas
+		HashMap<String, Trigger> triggers = new HashMap<>();
+		if(layers.length > 2);
+			for(int i = 0; i < layers[2].objects.length; i++){
+				
+				TiledObject rawTrigger = layers[2].objects[i];
+				triggers.put(rawTrigger.name, new Trigger(rawTrigger.x, rawTrigger.y, rawTrigger.width, rawTrigger.height));
+			}
 		
 		//return new map
-		return new GameMap(name, layers[0].data, width, layers[1].objects, gameData);
+		return new GameMap(name, layers[0].data, width, layers[1].objects, triggers, gameData);
 	}
 	
 	/**

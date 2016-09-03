@@ -5,6 +5,9 @@
  */
 package de.eternity.map;
 
+import java.util.HashMap;
+import java.util.Set;
+
 import de.eternity.GameData;
 import de.eternity.gfx.Camera;
 import de.eternity.gfx.IRenderQueue;
@@ -31,6 +34,8 @@ public class GameMap {
 	private TextureStorage textureStorage;
 	private TiledObject[] mapObjects;
 	
+	private HashMap<String, Trigger> triggers;
+	
 	/**
 	 * Creates a new game map object.
 	 * @param name The name of the map.
@@ -38,7 +43,9 @@ public class GameMap {
 	 * @param width The width of the map.
 	 * @param gameData The game data manager object.
 	 */
-	public GameMap(String name, int[] data, int width, TiledObject[] mapObjects, GameData gameData){
+	public GameMap(String name, int[] data, int width, TiledObject[] mapObjects, HashMap<String, Trigger> triggers, GameData gameData){
+		
+		this.triggers = triggers;
 		
 		this.name = name;
 		this.data = data;
@@ -51,6 +58,14 @@ public class GameMap {
 		
 		paddingTilesX = gameData.getSettings().getDisplayMode().getResolutionX() % tilesize > 0 ? 2 : 1; //either 2 or 1 padding
 		paddingTilesY = gameData.getSettings().getDisplayMode().getResolutionY() % tilesize > 0 ? 2 : 1; //either 2 or 1 padding
+	}
+	
+	/**
+	 * @param name The trigger name.
+	 * @return The trigger with the given name.
+	 */
+	public Trigger get(String name){
+		return triggers.get(name);
 	}
 	
 	/**
@@ -98,6 +113,13 @@ public class GameMap {
 						.applyRenderContext(renderQueue, textureStorage, x*tilesize, y*tilesize);
 	}
 	
+	/**
+	 * @param x The x coordinate of the rectangle.
+	 * @param y The y coordinate of the rectangle.
+	 * @param w The width of the rectangle.
+	 * @param h The height of the rectangle.
+	 * @return True if the rectangle colides with a tile.
+	 */
 	public boolean collidesWithMap(int x, int y, int w, int h){
 		int xStart = x / tilesize;
 		int xEnd = (x + w) / tilesize;
