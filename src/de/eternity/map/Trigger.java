@@ -16,6 +16,7 @@ public class Trigger {
 	
 	private ArrayList<LuaFunction> onEnter = new ArrayList<>();
 	private ArrayList<LuaFunction> onExit = new ArrayList<>();
+	private ArrayList<LuaFunction> onActivate = new ArrayList<>();
 	
 	public Trigger(float x, float y, int w, int h){
 		this.x = x;
@@ -40,6 +41,15 @@ public class Trigger {
 	}
 
 	public void unregisterOnEnter(int index){
+		this.onEnter.remove(index);
+	}
+	
+	public int registerOnActivate(LuaFunction onActivate){
+		this.onActivate.add(onActivate);
+		return this.onEnter.size()-1;
+	}
+
+	public void unregisterOnActivate(int index){
 		this.onEnter.remove(index);
 	}
 	
