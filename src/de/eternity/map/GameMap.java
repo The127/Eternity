@@ -6,7 +6,6 @@
 package de.eternity.map;
 
 import java.util.HashMap;
-import java.util.Set;
 
 import de.eternity.GameData;
 import de.eternity.gfx.Camera;
@@ -72,7 +71,7 @@ public class GameMap {
 	 * @param index The index in the mapObjects array.
 	 * @return The static map object at the given index.
 	 */
-	public TiledObject getMapObjects(int index){
+	public TiledObject getMapObject(int index){
 		if(index >= 0 && index < mapObjects.length)
 			return mapObjects[index];
 		throw new ArrayIndexOutOfBoundsException("Cannot access index " + index + " in mapObjects array.");

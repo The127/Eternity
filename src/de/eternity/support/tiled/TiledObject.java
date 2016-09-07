@@ -10,7 +10,8 @@ import de.eternity.gfx.RenderQueue;
 
 public class TiledObject {
 
-	int gid, x, y, width, height;
+	int gid, width, height;
+	float x, y;
 	String name;
 
 	private transient GameData gameData;
@@ -32,11 +33,11 @@ public class TiledObject {
 		return gid;
 	}
 	
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 

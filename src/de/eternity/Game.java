@@ -129,7 +129,7 @@ public class Game {
 			
 			currentGameState.update(relDelta);
 			currentGameState.applyRenderContext(queue);
-			gameData.getGameMap("demo").getMapObjects(0).render(queue);
+			//gameData.getGameMap("demo").getMapObject(0).render(queue);
 			queue.sort();
 			
 			//calculate fps

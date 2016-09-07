@@ -11,12 +11,13 @@ import org.luaj.vm2.LuaFunction;
 
 public class Trigger {
 
-	private int x, y, w, h;
+	private int w, h;
+	private float x, y;
 	
 	private ArrayList<LuaFunction> onEnter = new ArrayList<>();
 	private ArrayList<LuaFunction> onExit = new ArrayList<>();
 	
-	public Trigger(int x, int y, int w, int h){
+	public Trigger(float x, float y, int w, int h){
 		this.x = x;
 		this.y = y;
 		this.w = w;
@@ -51,11 +52,11 @@ public class Trigger {
 		this.onExit.remove(index);
 	}
 	
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 	
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 	

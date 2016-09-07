@@ -45,7 +45,7 @@ class TiledTileset {
 			Animation tileAnimation = null;
 			Rectangle[] collisionRectangles = null;
 			
-			if(tileproperties.containsKey("" + i))
+			if(tileproperties != null && tileproperties.containsKey("" + i))
 				isSolid = tileproperties.get("" + i).solid;
 			
 			if(isPresent){
@@ -57,7 +57,9 @@ class TiledTileset {
 					
 					for(int n = 0; n < collisionRectangles.length; n++){
 						TiledObject current = objects[n];
-						collisionRectangles[n] = new Rectangle(current.x, current.y, current.width, current.height);
+						Rectangle collisionRect = new Rectangle();
+						collisionRect.setFrame(current.x, current.y, current.width, current.height);
+						collisionRectangles[n] = collisionRect;
 					}
 				}
 				
